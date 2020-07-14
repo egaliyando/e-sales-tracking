@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import "./assets/style/main.css";
+import "assets/style/font.css";
 // import App from "./App";
 import AppRoute from "./router/AppRoute";
 import * as serviceWorker from "./serviceWorker";

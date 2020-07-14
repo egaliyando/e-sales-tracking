@@ -1,0 +1,11 @@
+@font-face {
+  font-family: "Montserrat";
+  src: local("Montserrat"), url(../font/Montserrat-Medium.ttf) format("ttf");
+}
+
+* {
+  font-family: Montserrat;
+}
+.fonts-gray {
+  color: #848484;
+}
