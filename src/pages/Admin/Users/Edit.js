@@ -68,7 +68,7 @@ function Edit() {
               type="button"
               style={{ transition: "all .15s ease" }}
             >
-              Batal
+              Cancel
             </button>
             <Link
               to="/admin/users/"

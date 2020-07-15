@@ -7,42 +7,21 @@ function Edit() {
     <div className="flex">
       <Navigation />
       <div className="w-11/12 p-3">
-        <p className="my-3 font-bold">Edit Product</p>
+        <p className="my-3 font-bold">Edit Apotik</p>
         <div className="bg-white rounded-lg shadow-lg p-5">
-          <div className="mb-5">
-            <label className="text-xs">Nama Produk</label>
-            <input
-              className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
-              type="text"
-            />
-          </div>
           <div className="grid grid-cols-2 gap-5">
             <div>
-              <label className="text-xs">Tanggal Expired</label>
+              <label className="text-xs">Nama Apotik</label>
               <input
-                className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
-                type="date"
+                className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+                type="text"
               />
             </div>
             <div>
-              <label className="text-xs">Harga</label>
+              <label className="text-xs">Alamat</label>
               <input
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
-                type="number"
-              />
-            </div>
-            <div>
-              <label className="text-xs">Stok</label>
-              <input
-                className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
-                type="number"
-              />
-            </div>
-            <div>
-              <label className="text-xs">Gambar</label>
-              <input
-                className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
-                type="file"
+                type="Text"
               />
             </div>
           </div>
@@ -52,10 +31,10 @@ function Edit() {
               type="button"
               style={{ transition: "all .15s ease" }}
             >
-              Cancel
+              Batal
             </button>
             <Link
-              to="/admin/product"
+              to="/admin/apotik"
               className="bg-green-500 ml-3 px-3 shadow-lg p-2 rounded-lg text-white active:bg-green-600 font-bold text-sm rounded shadow hover:shadow-lg outline-none focus:outline-none"
             >
               Edit

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="76" height="76" viewBox="0 0 76 76">
+  <g id="Group_211" data-name="Group 211" transform="translate(-1783 -846)">
+    <g id="Group_210" data-name="Group 210" transform="translate(124 -29)">
+      <circle id="Ellipse_12" data-name="Ellipse 12" cx="38" cy="38" r="38" transform="translate(1659 875)" fill="#ff9835"/>
+    </g>
+    <g id="Group_212" data-name="Group 212" transform="translate(0 -1.26)">
+      <g id="Icon_ionic-ios-home" data-name="Icon ionic-ios-home" transform="translate(1807.991 861.26)">
+        <path id="Path_128" data-name="Path 128" d="M17.018,7.313a.248.248,0,0,0-.316,0L6.845,15.2a.265.265,0,0,0-.095.2V29.928a.127.127,0,0,0,.126.126H13.7a.127.127,0,0,0,.126-.126V21.081a.127.127,0,0,1,.126-.126h5.813a.127.127,0,0,1,.126.126v8.846a.127.127,0,0,0,.126.126h6.824a.127.127,0,0,0,.126-.126V15.395a.255.255,0,0,0-.095-.2Z" transform="translate(-3.716 -3.768)" fill="#fff"/>
+        <path id="Path_129" data-name="Path 129" d="M29.326,13.245,17.383,3.678a1.387,1.387,0,0,0-1.731,0l-5.2,4.227V5.239a.127.127,0,0,0-.126-.126H6.534a.127.127,0,0,0-.126.126v5.826l-2.7,2.218A.884.884,0,0,0,3.634,14.6a.879.879,0,0,0,.626.259.89.89,0,0,0,.556-.2l11.62-9.352a.113.113,0,0,1,.082-.025.153.153,0,0,1,.082.025l11.62,9.314a.89.89,0,0,0,.556.2.9.9,0,0,0,.891-.935A.9.9,0,0,0,29.326,13.245Z" transform="translate(-3.374 -3.375)" fill="#fff"/>
+      </g>
+      <text id="Apotik" transform="translate(1799 902.956)" fill="#fff" font-size="13" font-family="Montserrat-Bold, Montserrat" font-weight="700"><tspan x="0" y="0">Apotik</tspan></text>
+    </g>
+  </g>
+</svg>
