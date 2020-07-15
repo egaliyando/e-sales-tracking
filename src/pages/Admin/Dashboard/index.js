@@ -6,7 +6,7 @@ function Dashboard() {
     <div className="flex">
       <Navigation />
       <div style={{ backgroundColor: "#F7F7F7" }} className="w-11/12 h-screen p-3">
-        <p className="my-3">Dashboard</p>
+        <p className="my-3 font-bold">Dashboard</p>
         <div className="grid grid-cols-4 gap-3">
           <div className="bg-white rounded-lg p-3 flex">
             <img className="w-1/4" src={require(`assets/icons/ic_bag.svg`)} alt="ic" />
