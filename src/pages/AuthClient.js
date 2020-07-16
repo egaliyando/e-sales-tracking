@@ -1,15 +1,18 @@
 import React from "react";
 import Container from "components/Container";
+import { Link } from "react-router-dom";
 
 function AuthClient() {
   return (
     <Container>
-      <img
-        style={{ width: "-webkit-fill-available" }}
-        className="absolute top-0"
-        src={require(`assets/image/auth_style_top.png`)}
-        alt="top"
-      />
+      <div className="w-full absolute top-0">
+        <img
+          // style={{ width: "-webkit-fill-available" }}
+          className="w-full"
+          src={require(`assets/image/auth_style_top.png`)}
+          alt="top"
+        />
+      </div>
       <div style={{ backgroundColor: "#F8F8F8" }} className="flex flex-col h-screen">
         <div className="p-5 m-auto">
           <img className="mx-auto mb-5" src={require(`assets/image/logo.png`)} alt="logo" />
@@ -25,21 +28,25 @@ function AuthClient() {
             placeholder="Password"
             type="password"
           />
-          <button
-            style={{ backgroundColor: "#FFA14B" }}
-            className="w-full text-white font-bold neumorphism p-3 rounded-lg focus:outline-none"
-          >
-            Login
-          </button>
+          <Link to="/sales/dashboard">
+            <button
+              style={{ backgroundColor: "#FFA14B" }}
+              className="w-full text-white font-bold neumorphism p-3 rounded-lg focus:outline-none"
+            >
+              Login
+            </button>
+          </Link>
         </div>
       </div>
 
-      <img
-        style={{ width: "-webkit-fill-available" }}
-        className="absolute bottom-0"
-        src={require(`assets/image/auth_style_bot.png`)}
-        alt="bot"
-      />
+      <div className="w-full absolute bottom-0">
+        <img
+          // style={{ width: "-webkit-fill-available" }}
+          className="w-full"
+          src={require(`assets/image/auth_style_bot.png`)}
+          alt="bot"
+        />
+      </div>
     </Container>
   );
 }

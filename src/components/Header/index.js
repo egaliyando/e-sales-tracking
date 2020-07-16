@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Header() {
+  const [enable, setEnable] = useState(false);
   return (
-    <div className="w-full h-16 flex justify-between px-3 shadow-md bg-white">
-      <img className="self-center" src={require(`assets/icons/header/ic_mores.svg`)} alt="img" />
-      <button className="mr-6">
-        <img src={require(`assets/icons/header/ic_open.svg`)} alt="btn" />
+    <div className="w-full h-16 flex justify-between px-3 bg-white">
+      <button className="self-center focus:outline-none" onClick={() => setEnable(!enable)}>
+        {enable ? (
+          <img src={require(`assets/icons/header/ic_open.svg`)} alt="btn" />
+        ) : (
+          <img src={require(`assets/icons/header/ic_close.svg`)} alt="btn" />
+        )}
       </button>
-      <img src={require(`assets/icons/header/ic_logo.svg`)} alt="img" />
+      <img className="mr-10" src={require(`assets/icons/header/icon_sales.svg`)} alt="img" />
+      <button className="self-center">
+        <img src={require(`assets/icons/header/ic_more.svg`)} alt="img" />
+      </button>
     </div>
   );
 }

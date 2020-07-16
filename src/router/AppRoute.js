@@ -51,12 +51,12 @@ export default function AppRoute() {
         <Route exact path="/admin/order/detail" component={Detail} />
 
         {/* AUTH */}
-        <Route exact path="/client/auth" component={AuthClient} />
+        <Route exact path="/auth" component={AuthClient} />
         {/* Router Supervisor */}
-        <Route exact path="/sv/dashboard" component={DashboardSupervisor} />
+        <Route exact path="/supervisor/dashboard" component={DashboardSupervisor} />
 
         {/* Router Sales */}
-        <Route exact path="/sls/dashboard" component={DashboardSales} />
+        <Route exact path="/sales/dashboard" component={DashboardSales} />
       </Switch>
     </Router>
   );

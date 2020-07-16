@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80" height="80" viewBox="0 0 80 80">
+  <defs>
+    <filter id="Ellipse_22" x="0" y="0" width="80" height="80" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_151" data-name="Group 151" transform="translate(-278 -490)">
+    <g transform="matrix(1, 0, 0, 1, 278, 490)" filter="url(#Ellipse_22)">
+      <circle id="Ellipse_22-2" data-name="Ellipse 22" cx="25" cy="25" r="25" transform="translate(15 12)" fill="#fff"/>
+    </g>
+    <g id="Icon_ionic-ios-chatboxes" data-name="Icon ionic-ios-chatboxes" transform="translate(302.625 511.625)">
+      <path id="Path_27" data-name="Path 27" d="M26.437,11.981H13.85a2.167,2.167,0,0,0-2.164,2.164V22.91a2.162,2.162,0,0,0,2.164,2.158h7.2a.621.621,0,0,1,.432.182l3.578,3.3c.2.193.528.114.528-.165V25.511c0-.341.216-.449.557-.449H26.2A2.364,2.364,0,0,0,28.6,22.9V14.145A2.155,2.155,0,0,0,26.437,11.981Z" transform="translate(-1.597 -1.654)" fill="#ff9c36"/>
+      <path id="Path_28" data-name="Path 28" d="M10.555,8.936H20.631V5.227a1.852,1.852,0,0,0-1.852-1.852H5.227A1.852,1.852,0,0,0,3.375,5.227V14.61a1.852,1.852,0,0,0,1.852,1.852H8.7V10.787A1.861,1.861,0,0,1,10.555,8.936Z" fill="#ff9c36"/>
+    </g>
+  </g>
+</svg>
