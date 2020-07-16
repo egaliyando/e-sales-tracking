@@ -10,7 +10,7 @@ function Apotik() {
       <div style={{ backgroundColor: "#F7F7F7" }} className="w-11/12 p-3 relative">
         <p className="my-3 font-bold">Apotik</p>
         <Table
-          thead={["No", "Nama Apotik", "Alamat", "Status", "Aksi"]}
+          thead={["No", "Apotik Name", "Address", "Status", "Action"]}
           tbody={[
             "1",
             "Apotik Persada",

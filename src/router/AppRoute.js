@@ -20,6 +20,8 @@ import Order from "pages/Admin/Order";
 import DashboardSupervisor from "pages/Supervisor/Dashboard";
 //Sales
 import DashboardSales from "pages/Sales/Dashboard";
+import AuthClient from "pages/AuthClient";
+import Detail from "pages/Admin/Order/Detail";
 
 export default function AppRoute() {
   return (
@@ -46,7 +48,10 @@ export default function AppRoute() {
         <Route exact path="/admin/chat" component={Chat} />
         {/* ORDER */}
         <Route exact path="/admin/order" component={Order} />
+        <Route exact path="/admin/order/detail" component={Detail} />
 
+        {/* AUTH */}
+        <Route exact path="/client/auth" component={AuthClient} />
         {/* Router Supervisor */}
         <Route exact path="/sv/dashboard" component={DashboardSupervisor} />
 

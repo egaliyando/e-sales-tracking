@@ -11,7 +11,7 @@ function Users() {
         <p className="my-3 font-bold">Users</p>
         {/* MODAL */}
         <Table
-          thead={["No", "NIK", "Nama", "Alamat", "TTL", "Password", "Level", "Aksi"]}
+          thead={["No", "NIK", "Name", "Address", "TTL", "Password", "Level", "Action"]}
           tbody={[
             "1",
             "233434",

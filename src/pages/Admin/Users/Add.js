@@ -11,7 +11,7 @@ function Add() {
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="grid grid-cols-2 gap-5">
             <div>
-              <label className="text-xs">Nama Lengkap</label>
+              <label className="text-xs">Full Name</label>
               <input
                 className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="text"
@@ -26,14 +26,14 @@ function Add() {
             </div>
             <div className="flex">
               <div>
-                <label className="text-xs">Tempat Lahir</label>
+                <label className="text-xs">Place of Birth</label>
                 <input
                   className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                   type="text"
                 />
               </div>
               <div className="ml-3">
-                <label className="text-xs">Tanggal Lahir</label>
+                <label className="text-xs">Birth Date</label>
                 <input
                   className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                   type="date"
@@ -41,7 +41,7 @@ function Add() {
               </div>
             </div>
             <div>
-              <label className="text-xs">Alamat</label>
+              <label className="text-xs">Address</label>
               <input
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="text"
@@ -55,7 +55,7 @@ function Add() {
               </select>
             </div>
             <div>
-              <label className="text-xs">Password baru</label>
+              <label className="text-xs">New Password</label>
               <input
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="text"
@@ -74,7 +74,7 @@ function Add() {
               to="/admin/users/"
               className="bg-green-500 ml-3 px-3 shadow-lg p-2 rounded-lg text-white active:bg-green-600 font-bold text-sm rounded shadow hover:shadow-lg outline-none focus:outline-none"
             >
-              Tambah
+              Add
             </Link>
           </div>
         </div>

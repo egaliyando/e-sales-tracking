@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="24" viewBox="0 0 12 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="12" height="24" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="ic_more_vert_white" clip-path="url(#clip-path)">
+    <path id="path" d="M12,0H0V-24H12Z" transform="translate(0 24)" fill="none" fill-rule="evenodd"/>
+    <path id="path-2" data-name="path" d="M5-16a2.006,2.006,0,0,0,2-2,2.006,2.006,0,0,0-2-2,2.006,2.006,0,0,0-2,2,2.006,2.006,0,0,0,2,2Zm0,2a2.006,2.006,0,0,0-2,2,2.006,2.006,0,0,0,2,2,2.006,2.006,0,0,0,2-2,2.006,2.006,0,0,0-2-2ZM5-8A2.006,2.006,0,0,0,3-6,2.006,2.006,0,0,0,5-4,2.006,2.006,0,0,0,7-6,2.006,2.006,0,0,0,5-8Z" transform="translate(0 24)" fill="#9b9b9b" fill-rule="evenodd"/>
+  </g>
+</svg>

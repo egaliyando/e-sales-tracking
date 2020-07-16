@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./assets/style/main.css";
 import "assets/style/font.css";
+import "assets/style/neumorphism.css";
 // import App from "./App";n
 
 import AppRoute from "./router/AppRoute";

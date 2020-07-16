@@ -8,10 +8,10 @@ export default function Product() {
     <div className="flex">
       <Navigation />
       <div style={{ backgroundColor: "#F7F7F7" }} className="w-11/12 p-3 relative">
-        <p className="my-3 font-bold">Produk</p>
+        <p className="my-3 font-bold">Product</p>
         {/* MODAL */}
         <Table
-          thead={["No", "Nama Produk", "Tanggal ex", "Harga", "Stok", "Gambar", "Aksi"]}
+          thead={["No", "Product Name", "Expired", "Price", "Stock", "Image", "Action"]}
           tbody={[
             "1",
             "Broncitin",

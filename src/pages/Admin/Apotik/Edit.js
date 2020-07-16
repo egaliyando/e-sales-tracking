@@ -11,14 +11,14 @@ function Edit() {
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="grid grid-cols-2 gap-5">
             <div>
-              <label className="text-xs">Nama Apotik</label>
+              <label className="text-xs">Apotik Name</label>
               <input
                 className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="text"
               />
             </div>
             <div>
-              <label className="text-xs">Alamat</label>
+              <label className="text-xs">Address</label>
               <input
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="Text"
@@ -31,7 +31,7 @@ function Edit() {
               type="button"
               style={{ transition: "all .15s ease" }}
             >
-              Batal
+              Cancel
             </button>
             <Link
               to="/admin/apotik"

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="76" height="76" viewBox="0 0 76 76">
+  <g id="Group_218" data-name="Group 218" transform="translate(-1783 -946)">
+    <g id="Group_145" data-name="Group 145" transform="translate(124 71)">
+      <circle id="Ellipse_12" data-name="Ellipse 12" cx="38" cy="38" r="38" transform="translate(1659 875)" fill="#ff9835"/>
+    </g>
+    <path id="Icon_awesome-print" data-name="Icon awesome-print" d="M27.71,11.876v-7.1a1.98,1.98,0,0,0-.58-1.4l-2.8-2.8a1.979,1.979,0,0,0-1.4-.58H5.938A1.98,1.98,0,0,0,3.959,1.979v9.9A3.958,3.958,0,0,0,0,15.834v6.928a.989.989,0,0,0,.99.99H3.959V29.69a1.98,1.98,0,0,0,1.979,1.979H25.731A1.98,1.98,0,0,0,27.71,29.69V23.752h2.969a.989.989,0,0,0,.99-.99V15.834A3.958,3.958,0,0,0,27.71,11.876ZM23.752,27.71H7.917V21.772H23.752Zm0-13.855H7.917v-9.9H19.793V6.928a.989.989,0,0,0,.99.99h2.969Zm2.969,4.453a1.484,1.484,0,1,1,1.484-1.484A1.485,1.485,0,0,1,26.721,18.309Z" transform="translate(1805 968)" fill="#fff"/>
+  </g>
+</svg>
