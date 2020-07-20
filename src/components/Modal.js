@@ -46,20 +46,6 @@ function Modal() {
                       type="number"
                       placeholder="Stok"
                     />
-                    <input
-                      className="bg-gray-200 border p-2 rounded-lg border-1 border-gray-300 focus:outline-none"
-                      type="date"
-                    />
-                    <input
-                      className="bg-gray-200 border p-2 rounded-lg border-1 border-gray-300 focus:outline-none"
-                      type="number"
-                      placeholder="Harga"
-                    />
-                    <input
-                      className="bg-gray-200 border p-2 rounded-lg border-1 border-gray-300 focus:outline-none"
-                      type="file"
-                      placeholder="image"
-                    />
                   </div>
                 </div>
                 {/*footer*/}

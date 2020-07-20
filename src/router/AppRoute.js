@@ -22,6 +22,10 @@ import DashboardSupervisor from "pages/Supervisor/Dashboard";
 import DashboardSales from "pages/Sales/Dashboard";
 import AuthClient from "pages/AuthClient";
 import Detail from "pages/Admin/Order/Detail";
+import Visit from "pages/Sales/Visit";
+import History from "pages/Sales/History";
+import SalesOrder from "pages/Sales/Visit/Order";
+import DetailVisit from "pages/Sales/Visit/DetailVisit";
 
 export default function AppRoute() {
   return (
@@ -57,6 +61,10 @@ export default function AppRoute() {
 
         {/* Router Sales */}
         <Route exact path="/sales/dashboard" component={DashboardSales} />
+        <Route exact path="/sales/visit" component={Visit} />
+        <Route exact path="/sales/history" component={History} />
+        <Route exact path="/sales/visit/detail-visit/order" component={SalesOrder} />
+        <Route exact path="/sales/visit/detail-visit" component={DetailVisit} />
       </Switch>
     </Router>
   );

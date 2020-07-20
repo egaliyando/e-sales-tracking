@@ -6,7 +6,7 @@ import MobileNav from "components/Navigation/MobileNav";
 function Dashboard() {
   return (
     <Container>
-      <Header />
+      <Header hSales={true} />
       <p className="ml-3 mt-3 text-gray-600">Dashboard</p>
       <div className="grid grid-cols-2 gap-3 px-3 pt-2">
         <div className="bg-white w-full h-auto rounded-lg p-3">
@@ -33,7 +33,25 @@ function Dashboard() {
       <p className="ml-3 mt-3 text-gray-600">Visit List</p>
 
       {/* CARD LIST KUNJUNGAN */}
-      <div className="overflow-y-auto h-64">
+      <div className="overflow-y-auto h-64 sm:pb-12">
+        <div className="mt-2 px-3">
+          <div className="w-full p-2 rounded-lg bg-white h-auto flex">
+            <img src={require(`assets/image/apotek.png`)} alt="img" />
+            <div className="ml-3">
+              <p className="font-bold text-gray-600">Apotek Rosa</p>
+              <p className="text-xs text-gray-600">Jl Abdul Muis Rajabasa</p>
+            </div>
+          </div>
+        </div>
+        <div className="mt-2 px-3">
+          <div className="w-full p-2 rounded-lg bg-white h-auto flex">
+            <img src={require(`assets/image/apotek.png`)} alt="img" />
+            <div className="ml-3">
+              <p className="font-bold text-gray-600">Apotek Rosa</p>
+              <p className="text-xs text-gray-600">Jl Abdul Muis Rajabasa</p>
+            </div>
+          </div>
+        </div>
         <div className="mt-2 px-3">
           <div className="w-full p-2 rounded-lg bg-white h-auto flex">
             <img src={require(`assets/image/apotek.png`)} alt="img" />
@@ -72,11 +90,11 @@ function Dashboard() {
         </div>
       </div>
 
-      <button className="absolute bottom-0 right-0 z-20 mb-16">
+      <button className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none">
         <img src={require(`assets/icons/dashboard/ic_chat.svg`)} alt="chat" />
       </button>
-      <div className="fixed bottom-0 w-full">
-        <MobileNav />
+      <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
+        <MobileNav isSales={true} />
       </div>
     </Container>
   );

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="61" height="61" viewBox="0 0 61 61">
+  <defs>
+    <filter id="Ellipse_29" x="0" y="0" width="61" height="61" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="ic_done" transform="translate(9 5.508)">
+    <g transform="matrix(1, 0, 0, 1, -9, -5.51)" filter="url(#Ellipse_29)">
+      <circle id="Ellipse_29-2" data-name="Ellipse 29" cx="21.5" cy="21.5" r="21.5" transform="translate(9 6)" fill="#ff9c36"/>
+    </g>
+    <path id="Icon_awesome-check-double" data-name="Icon awesome-check-double" d="M16.985,5.879,15.653,4.547a.8.8,0,0,0-1.14,0L6.457,12.6,2.709,8.852a.8.8,0,0,0-1.14,0L.234,10.188a.808.808,0,0,0,0,1.144l5.651,5.654a.8.8,0,0,0,1.14,0l9.957-9.963A.811.811,0,0,0,16.985,5.879ZM6.076,9.445a.534.534,0,0,0,.76,0l7-7a.54.54,0,0,0,0-.76L12.313.157a.534.534,0,0,0-.76,0l-5.1,5.1L4.593,3.386a.534.534,0,0,0-.76,0L2.309,4.91a.54.54,0,0,0,0,.76Z" transform="translate(13.12 13.118)" fill="#fff"/>
+  </g>
+</svg>
