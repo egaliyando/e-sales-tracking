@@ -2,12 +2,56 @@ import React from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
+import { Link } from "react-router-dom";
+
+const list = [
+  {
+    id: 1,
+    name: "Apotik Persada",
+    address: "Jl. Z.A Pagaralam",
+  },
+  {
+    id: 2,
+    name: "Apotik Rossa",
+    address: "Jl. Z.A Pagaralam",
+  },
+  {
+    id: 3,
+    name: "Apotik Mawar",
+    address: "Jl. Z.A Pagaralam",
+  },
+  {
+    id: 4,
+    name: "Apotik Melati",
+    address: "Jl. Z.A Pagaralam",
+  },
+];
 
 function History() {
   return (
     <Container>
       <Header hSales={true} />
 
+      <div className="p-3">
+        <p className="text-gray-600">History kunjungan</p>
+        {/* MAPS History */}
+        <div className="w-full h-64 bg-gray-400 mt-3 rounded-md"></div>
+        <div className="overflow-y-auto h-64 pb-12">
+          {list.map((item) => (
+            <Link to="/sales/history/detail">
+              <div className="mt-2" key={item.id}>
+                <div className="w-full p-2 rounded-lg bg-white h-auto flex">
+                  <img src={require(`assets/image/apotek.png`)} alt="img" />
+                  <div className="ml-3">
+                    <p className="font-bold text-gray-600">{item.name}</p>
+                    <p className="text-xs text-gray-600">{item.address}</p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
         <MobileNav isSales={true} />
       </div>

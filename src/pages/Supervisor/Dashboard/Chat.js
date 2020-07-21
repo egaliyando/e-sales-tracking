@@ -2,21 +2,24 @@ import React from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
-import { Link } from "react-router-dom";
 
-function Dashboard() {
+function ChatSupervisor() {
   return (
     <Container>
       <Header hSupervisor={true} />
 
-      <Link to="/supervisor/chat" className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none">
-        <img src={require(`assets/icons/dashboard/ic_chat.svg`)} alt="chat" />
-      </Link>
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
+        <div className="w-full h-12 bg-white flex justify-between py-2 px-5 mb-1">
+          <input className="focus:outline-none w-full" type="text" placeholder="Write Something.." />
+
+          <button className="focus:outline-none">
+            <img src={require(`assets/icons/ic_send.svg`)} alt="send" />
+          </button>
+        </div>
         <MobileNav isSupervisor={true} />
       </div>
     </Container>
   );
 }
 
-export default Dashboard;
+export default ChatSupervisor;

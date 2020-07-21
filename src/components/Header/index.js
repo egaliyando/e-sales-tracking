@@ -23,11 +23,12 @@ function Header(props) {
   }
   if (hSupervisor) {
     return (
-      <div className="w-full h-16 flex justify-center px-3 bg-white">
+      <div className="w-full h-16 flex justify-center px-3 bg-white justify-between">
+        <div></div>
         <img src={require(`assets/icons/header/icon_sales.svg`)} alt="img" />
-        {/* <button className="self-center">
+        <button className="self-center focus:outline-none">
           <img src={require(`assets/icons/header/ic_more.svg`)} alt="img" />
-        </button> */}
+        </button>
       </div>
     );
   }

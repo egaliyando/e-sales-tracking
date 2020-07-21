@@ -26,13 +26,22 @@ import Visit from "pages/Sales/Visit";
 import History from "pages/Sales/History";
 import SalesOrder from "pages/Sales/Visit/Order";
 import DetailVisit from "pages/Sales/Visit/DetailVisit";
+import DetailHistory from "pages/Sales/History/Detail";
+import Profile from "pages/Sales/Profile";
+import ChatSales from "pages/Sales/Chat";
+import ChatSupervisor from "pages/Supervisor/Dashboard/Chat";
+import ListChat from "pages/Supervisor/Dashboard/ListChat";
+import ProductSV from "pages/Supervisor/Product";
+import VisitSV from "pages/Supervisor/Visit";
+import Tracking from "pages/Supervisor/Tracking";
+import ProfileSV from "pages/Supervisor/Profile";
 
 export default function AppRoute() {
   return (
     <Router>
       <Switch>
         {/* HOME */}
-        <Route exact path="/" component={Welcome} />
+        <Route exact path="/welcome" component={Welcome} />
         {/* Router Admin */}
         <Route exact path="/admin/auth" component={Auth} />
         <Route exact path="/admin/dashboard" component={DashboardAdm} />
@@ -55,16 +64,25 @@ export default function AppRoute() {
         <Route exact path="/admin/order/detail" component={Detail} />
 
         {/* AUTH */}
-        <Route exact path="/auth" component={AuthClient} />
+        <Route exact path="/" component={AuthClient} />
         {/* Router Supervisor */}
-        <Route exact path="/supervisor/dashboard" component={DashboardSupervisor} />
+        <Route exact path="/supervisor/home" component={DashboardSupervisor} />
+        <Route exact path="/supervisor/chat" component={ListChat} />
+        <Route exact path="/supervisor/chat/detail" component={ChatSupervisor} />
+        <Route exact path="/supervisor/product-sv" component={ProductSV} />
+        <Route exact path="/supervisor/visit-sv" component={VisitSV} />
+        <Route exact path="/supervisor/sales-track" component={Tracking} />
+        <Route exact path="/supervisor/profile" component={ProfileSV} />
 
         {/* Router Sales */}
         <Route exact path="/sales/dashboard" component={DashboardSales} />
+        <Route exact path="/sales/profile" component={Profile} />
         <Route exact path="/sales/visit" component={Visit} />
         <Route exact path="/sales/history" component={History} />
+        <Route exact path="/sales/history/detail" component={DetailHistory} />
         <Route exact path="/sales/visit/detail-visit/order" component={SalesOrder} />
         <Route exact path="/sales/visit/detail-visit" component={DetailVisit} />
+        <Route exact path="/sales/chat" component={ChatSales} />
       </Switch>
     </Router>
   );

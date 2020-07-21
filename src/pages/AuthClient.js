@@ -6,12 +6,12 @@ function AuthClient() {
   return (
     <Container>
       <div className="w-full absolute top-0">
-        <img
+        {/* <img
           // style={{ width: "-webkit-fill-available" }}
           className="w-full"
           src={require(`assets/image/auth_style_top.png`)}
           alt="top"
-        />
+        /> */}
       </div>
       <div style={{ backgroundColor: "#F8F8F8" }} className="flex flex-col h-screen">
         <div className="p-5 m-auto">
@@ -39,14 +39,14 @@ function AuthClient() {
         </div>
       </div>
 
-      <div className="w-full absolute bottom-0">
+      {/* <div className="w-full absolute bottom-0">
         <img
           // style={{ width: "-webkit-fill-available" }}
           className="w-full"
           src={require(`assets/image/auth_style_bot.png`)}
           alt="bot"
         />
-      </div>
+      </div> */}
     </Container>
   );
 }

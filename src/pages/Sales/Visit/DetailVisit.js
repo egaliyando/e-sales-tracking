@@ -11,8 +11,6 @@ function DetailVisit() {
     <Container>
       <Header hSales={true} />
       {/* Apotik Name Detail */}
-
-      {/* LIST PRODUCT IS ORDER */}
       <div className="p-3">
         <div className="mt-2">
           <div className="w-full p-2 justify-between rounded-lg h-auto flex">
@@ -26,6 +24,7 @@ function DetailVisit() {
           </div>
         </div>
 
+        {/* LIST PRODUCT IS ORDER */}
         <div className="mt-2">
           {/* <Link to="/sales/visit/order"> */}
           <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
