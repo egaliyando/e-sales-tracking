@@ -68,7 +68,11 @@ export default function AppRoute() {
         {/* Router Supervisor */}
         <Route exact path="/supervisor/home" component={DashboardSupervisor} />
         <Route exact path="/supervisor/chat" component={ListChat} />
-        <Route exact path="/supervisor/chat/detail" component={ChatSupervisor} />
+        <Route
+          exact
+          path="/supervisor/chat/detail"
+          component={ChatSupervisor}
+        />
         <Route exact path="/supervisor/product-sv" component={ProductSV} />
         <Route exact path="/supervisor/visit-sv" component={VisitSV} />
         <Route exact path="/supervisor/sales-track" component={Tracking} />
@@ -80,7 +84,11 @@ export default function AppRoute() {
         <Route exact path="/sales/visit" component={Visit} />
         <Route exact path="/sales/history" component={History} />
         <Route exact path="/sales/history/detail" component={DetailHistory} />
-        <Route exact path="/sales/visit/detail-visit/order" component={SalesOrder} />
+        <Route
+          exact
+          path="/sales/visit/detail-visit/order"
+          component={SalesOrder}
+        />
         <Route exact path="/sales/visit/detail-visit" component={DetailVisit} />
         <Route exact path="/sales/chat" component={ChatSales} />
       </Switch>
