@@ -69,7 +69,7 @@ function VisitSV() {
 
       <div className="p-3">
         <div className="bg-white flex justify-between rounded-lg text-sm p-2 text-gray-500">
-          <input className="focus:outline-none ml-1" placeholder="Search product.." type="text" />
+          <input className="focus:outline-none ml-1" placeholder="Search visit.." type="text" />
           <img src={require(`assets/icons/visit/ic_search.svg`)} alt="search" />
         </div>
 

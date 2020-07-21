@@ -35,6 +35,8 @@ import ProductSV from "pages/Supervisor/Product";
 import VisitSV from "pages/Supervisor/Visit";
 import Tracking from "pages/Supervisor/Tracking";
 import ProfileSV from "pages/Supervisor/Profile";
+import DetailTrack from "pages/Supervisor/Tracking/DetailTrack";
+import DetailHistorySV from "pages/Supervisor/Tracking/DetailHistory";
 
 export default function AppRoute() {
   return (
@@ -72,6 +74,8 @@ export default function AppRoute() {
         <Route exact path="/supervisor/product-sv" component={ProductSV} />
         <Route exact path="/supervisor/visit-sv" component={VisitSV} />
         <Route exact path="/supervisor/sales-track" component={Tracking} />
+        <Route exact path="/supervisor/sales-track/detail" component={DetailTrack} />
+        <Route exact path="/supervisor/sales-track/detail/detail-history" component={DetailHistorySV} />
         <Route exact path="/supervisor/profile" component={ProfileSV} />
 
         {/* Router Sales */}

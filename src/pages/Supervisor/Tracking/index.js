@@ -2,6 +2,7 @@ import React from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
+import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 const listSales = [
@@ -36,15 +37,17 @@ function Tracking() {
         <div style={{ height: "28rem" }} className="overflow-y-auto pb-10">
           {listSales.map((item) => (
             <div className="mt-2" key={item.id}>
-              <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
-                <div className="flex">
-                  <img src={require(`assets/image/sales_list.png`)} alt="img" />
-                  <div className="ml-3">
-                    <p className="font-bold text-gray-600">{item.name}</p>
-                    <p className="text-xs text-gray-600">{item.status}</p>
+              <Link to="/supervisor/sales-track/detail">
+                <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
+                  <div className="flex">
+                    <img src={require(`assets/image/sales_list.png`)} alt="img" />
+                    <div className="ml-3">
+                      <p className="font-bold text-gray-600">{item.name}</p>
+                      <p className="text-xs text-green-600">{item.status}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
           ))}
         </div>
