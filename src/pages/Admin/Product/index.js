@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navigation from "components/Navigation";
 import Table from "components/Table";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchProduct } from "store/actions/product";
 
 export default function Product() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.users.token);
+  const product = useSelector((state) => state.product.product);
+  console.log(product);
+
+  const getProduct = () => {
+    dispatch(fetchProduct());
+  };
+
+  useEffect(() => {
+    getProduct();
+  }, []);
 
   if (token === "") {
     return <Redirect to="/" />;
@@ -21,6 +32,7 @@ export default function Product() {
         <p className="my-3 font-bold">Product</p>
         {/* MODAL */}
         <Table
+          data={product.data}
           thead={[
             "No",
             "Product Name",
@@ -30,25 +42,10 @@ export default function Product() {
             "Image",
             "Action",
           ]}
-          tbody={[
-            "1",
-            "Broncitin",
-            "12/12/20",
-            "Rp.200.000",
-            "100",
-            "img.jpg",
-            <div className="flex">
-              <Link to="/admin/product/edit" className="focus:outline-none w-5">
-                <img src={require(`assets/icons/ic_pencil.svg`)} alt="add" />
-              </Link>
-              <button
-                className="mx-5 focus:outline-none w-4"
-                onClick={() => alert("Yakin Menghapus?")}
-              >
-                <img src={require(`assets/icons/ic_trash.svg`)} alt="add" />
-              </button>
-            </div>,
-          ]}
+          tbody={["id", "name", "tgl_ex", "price", "stock", "image"]}
+          editUrl={"/admin/product/edit"}
+          // pages={pages}
+          // handlePageClick={handlePageClick}
         />
       </div>
       <Link
