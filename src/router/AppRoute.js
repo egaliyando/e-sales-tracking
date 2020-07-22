@@ -15,6 +15,7 @@ import AddApotik from "pages/Admin/Apotik/Add";
 import EditApotik from "pages/Admin/Apotik/Edit";
 import Chat from "pages/Admin/Chat";
 import Order from "pages/Admin/Order";
+import Logout from "pages/Admin/Logout";
 
 //SV
 import DashboardSupervisor from "pages/Supervisor/Dashboard";
@@ -64,6 +65,7 @@ export default function AppRoute() {
         {/* ORDER */}
         <Route exact path="/admin/order" component={Order} />
         <Route exact path="/admin/order/detail" component={Detail} />
+        <Route exact path="/admin/logout" component={Logout} />
 
         {/* AUTH */}
         <Route exact path="/" component={AuthClient} />
@@ -78,8 +80,16 @@ export default function AppRoute() {
         <Route exact path="/supervisor/product-sv" component={ProductSV} />
         <Route exact path="/supervisor/visit-sv" component={VisitSV} />
         <Route exact path="/supervisor/sales-track" component={Tracking} />
-        <Route exact path="/supervisor/sales-track/detail" component={DetailTrack} />
-        <Route exact path="/supervisor/sales-track/detail/detail-history" component={DetailHistorySV} />
+        <Route
+          exact
+          path="/supervisor/sales-track/detail"
+          component={DetailTrack}
+        />
+        <Route
+          exact
+          path="/supervisor/sales-track/detail/detail-history"
+          component={DetailHistorySV}
+        />
         <Route exact path="/supervisor/profile" component={ProfileSV} />
 
         {/* Router Sales */}
