@@ -26,7 +26,6 @@ function Auth(props) {
     axios
       .post("/auth/signin", data)
       .then((res) => {
-        console.log(res);
         if (res.data.code === 200) {
           localStorage.setItem("token", res.data.data.token);
           dispatch({ type: SET_TOKEN, token: res.data.data });

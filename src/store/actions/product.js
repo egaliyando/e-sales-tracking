@@ -26,3 +26,24 @@ export const fetchProduct = () => {
     }
   };
 };
+
+export const productCreate = (value, history) => {
+  const token = localStorage.token;
+
+  axios
+    .post(
+      "/product",
+      { name: value },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .then((res) => {
+      history.push("/admin/product");
+    })
+    .catch((err) => {
+      console.log(err.response);
+    });
+};
