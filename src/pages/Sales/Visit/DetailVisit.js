@@ -4,16 +4,17 @@ import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
 
-function DetailVisit() {
+function DetailVisit(props) {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <Container>
-      <Header hSales={true} />
+      <Header hSalesNormal={true} />
       {/* Apotik Name Detail */}
-      <div className="p-3">
+      <div style={{ paddingTop: "4.5rem" }} className="p-3">
         <div className="mt-2">
-          <div className="w-full p-2 justify-between rounded-lg h-auto flex">
+          <p className="text-gray-600 text-xs mb-1">Detail Visit</p>
+          <div className="w-full p-2 bg-white justify-between rounded-lg h-auto flex">
             <div className="flex">
               <img src={require(`assets/image/apotek.png`)} alt="img" />
               <div className="ml-3">
@@ -23,33 +24,36 @@ function DetailVisit() {
             </div>
           </div>
         </div>
+        <hr className="my-3" />
 
         {/* LIST PRODUCT IS ORDER */}
-        <div className="mt-2">
-          {/* <Link to="/sales/visit/order"> */}
+        <div style={{ height: "28rem" }} className="overflow-y-auto pb-10">
+          <p className="text-gray-600 text-xs mb-1">Product Order</p>
           <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
-            <div className="flex">
-              <img src={require(`assets/image/obat.png`)} alt="img" />
-              <div className="ml-3">
-                <p className="font-bold text-gray-600">Broncitin</p>
-                <p className="text-xs text-gray-600">Order : 12</p>
+            <div className="flex justify-between w-full">
+              <div className="flex">
+                <img src={require(`assets/image/obat.png`)} alt="img" />
+                <div className="ml-3">
+                  <p className="font-bold text-gray-600">Broncitin</p>
+                  <p className="text-xs text-gray-600">Order : 12</p>
+                </div>
               </div>
+              <img className="w-4 mr-3" src={require(`assets/icons/ic_trash.svg`)} alt="img" />
             </div>
           </div>
-          {/* </Link> */}
-        </div>
-        <div className="mt-2">
-          {/* <Link to="/sales/visit/order"> */}
-          <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
-            <div className="flex">
-              <img src={require(`assets/image/obat.png`)} alt="img" />
-              <div className="ml-3">
-                <p className="font-bold text-gray-600">Broncitin</p>
-                <p className="text-xs text-gray-600">Order : 12</p>
+
+          <div className="w-full p-2 mt-2 justify-between rounded-lg bg-white h-auto flex">
+            <div className="flex justify-between w-full">
+              <div className="flex">
+                <img src={require(`assets/image/obat.png`)} alt="img" />
+                <div className="ml-3">
+                  <p className="font-bold text-gray-600">Broncitin</p>
+                  <p className="text-xs text-gray-600">Order : 12</p>
+                </div>
               </div>
+              <img className="w-4 mr-3" src={require(`assets/icons/ic_trash.svg`)} alt="img" />
             </div>
           </div>
-          {/* </Link> */}
         </div>
       </div>
 
@@ -107,7 +111,7 @@ function DetailVisit() {
         <img src={require(`assets/icons/visit/ic_add.svg`)} alt="add" />
       </Link>
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
-        <MobileNav isSales={true} />
+        <MobileNav isSales={true} {...props} />
       </div>
     </Container>
   );

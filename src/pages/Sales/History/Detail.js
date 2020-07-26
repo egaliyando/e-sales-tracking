@@ -4,15 +4,17 @@ import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
 
-function DetailHistory() {
+function DetailHistory(props) {
   return (
     <Container>
-      <Header hSales={true} />
+      <Header hSalesNormal={true} />
 
       {/* Apotik Name Detail */}
-      <div className="p-3">
+      <div style={{ paddingTop: "4.6rem" }} className="p-3">
         <div className="mt-2">
-          <div className="w-full p-2 justify-between rounded-lg h-auto flex">
+          <p className="text-gray-600 text-xs mb-1">Detail History</p>
+
+          <div className="w-full p-2 bg-white justify-between rounded-lg h-auto flex">
             <div className="flex">
               <img src={require(`assets/image/apotek.png`)} alt="img" />
               <div className="ml-3">
@@ -22,9 +24,12 @@ function DetailHistory() {
             </div>
           </div>
         </div>
+        <hr className="my-3" />
 
         {/* LIST PRODUCT IS ORDER */}
         <div className="mt-2">
+          <p className="text-gray-600 text-xs mb-1">Product Order</p>
+
           {/* <Link to="/sales/visit/order"> */}
           <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
             <div className="flex">
@@ -57,7 +62,7 @@ function DetailHistory() {
       </Link>
 
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
-        <MobileNav isSales={true} />
+        <MobileNav isSales={true} {...props} />
       </div>
     </Container>
   );

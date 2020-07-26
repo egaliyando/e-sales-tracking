@@ -59,7 +59,7 @@ const listSales = [
   },
 ];
 
-function VisitSV() {
+function VisitSV(props) {
   const [showModal, setShowModal] = useState(false);
   const [enable, setEnable] = useState(false);
 
@@ -67,13 +67,13 @@ function VisitSV() {
     <Container>
       <Header hSupervisor={true} />
 
-      <div className="p-3">
+      <div style={{ paddingTop: "4.5rem" }} className="px-3">
         <div className="bg-white flex justify-between rounded-lg text-sm p-2 text-gray-500">
           <input className="focus:outline-none ml-1" placeholder="Search visit.." type="text" />
           <img src={require(`assets/icons/visit/ic_search.svg`)} alt="search" />
         </div>
 
-        <div style={{ height: "28rem" }} className="overflow-y-auto pb-10">
+        <div style={{ height: "33rem" }} className="overflow-y-auto pb-20">
           {list.map((item) => (
             <div className="mt-2" key={item.id}>
               <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
@@ -140,7 +140,7 @@ function VisitSV() {
       ) : null}
 
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
-        <MobileNav isSupervisor={true} />
+        <MobileNav isSupervisor={true} {...props} />
       </div>
     </Container>
   );

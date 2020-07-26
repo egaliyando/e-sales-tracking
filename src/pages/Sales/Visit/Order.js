@@ -25,14 +25,14 @@ const listProduct = [
   },
 ];
 
-function Order() {
+function Order(props) {
   const [showModal, setShowModal] = useState(false);
   const [count, setCount] = useState(0);
   return (
     <Container>
-      <Header hSales={true} />
+      <Header hSalesNormal={true} />
 
-      <div className="h-auto p-3">
+      <div style={{ paddingTop: "4.6rem" }} className="p-3">
         <div className="bg-white flex justify-between rounded-lg text-sm p-2 text-gray-500">
           <input className="focus:outline-none ml-1" placeholder="Search product.." type="text" />
           <img src={require(`assets/icons/visit/ic_search.svg`)} alt="search" />
@@ -112,7 +112,7 @@ function Order() {
         <img src={require(`assets/icons/visit/ic_close.svg`)} alt="add" />
       </Link>
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
-        <MobileNav isSales={true} />
+        <MobileNav isSales={true} {...props} />
       </div>
     </Container>
   );

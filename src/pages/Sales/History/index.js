@@ -61,7 +61,7 @@ const list = [
   },
 ];
 
-function History() {
+function History(props) {
   //map
   const [markerPosition, setMarkerPosition] = useState({
     lat: -5.45,
@@ -70,13 +70,13 @@ function History() {
   //map
   return (
     <Container>
-      <Header hSales={true} />
+      <Header hSalesNormal={true} />
 
-      <div className="p-3">
+      <div style={{ paddingTop: "4.6rem" }} className="p-3">
         <p className="text-gray-600">History kunjungan</p>
         {/* MAPS History */}
         <div className="w-full h-64 bg-gray-400 mt-3 rounded-md">
-          <Map markerPosition={markerPosition} />
+          <Map markerPosition={markerPosition} {...props} />
         </div>
         <div className="overflow-y-auto h-64 pb-12">
           {list.map((item) => (
@@ -95,7 +95,7 @@ function History() {
         </div>
       </div>
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
-        <MobileNav isSales={true} />
+        <MobileNav isSales={true} {...props} />
       </div>
     </Container>
   );

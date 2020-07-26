@@ -111,15 +111,15 @@ function Tracking() {
   //map
   return (
     <>
-      <div className="bg-white rounded-lg grid grid-cols-2 gap-5 justify-between mt-3 p-3">
+      <div className="bg-white rounded-lg grid grid-cols-2 gap-5 justify-between mt-2 p-3">
         <div>
-          <p className="font-bold text-gray-600 text-lg">Budi</p>
-          <p className="text-gray-600 tex-md">0876767688</p>
-          <p className="text-green-400">Active</p>
+          <p className="font-bold text-gray-600">Budi</p>
+          <p className="text-gray-600 tex-sm">0876767688</p>
+          <p className="text-sm text-green-400">Active</p>
         </div>
         <div>
-          <p className="font-bold text-gray-600 text-lg">Detail Address</p>
-          <p className="text-gray-600 tex-md">Jl. Abdul Muis no 06 </p>
+          <p className="font-bold text-gray-600">Detail Address</p>
+          <p className="text-gray-600 tex-sm">Jl. Abdul Muis no 06 </p>
         </div>
       </div>
       <div style={{ height: "21rem" }} className="rounded-lg w-full bg-gray-500 mt-2">
@@ -153,14 +153,14 @@ function History() {
   );
 }
 
-function DetailTrack() {
+function DetailTrack(props) {
   const [active, setActive] = useState(0);
 
   return (
     <Container>
       <Header hSupervisor={true} />
 
-      <div className="h-auto p-3">
+      <div style={{ paddingTop: "4.5rem" }} className="px-3">
         <div className="bg-white rounded-lg flex h-auto justify-around text-sm p-2 font-bold text-gray-500">
           {tabItems.map(({ id, title }) => (
             <TabItemComponent key={title} title={title} onItemClicked={() => setActive(id)} isActive={active === id} />
@@ -172,7 +172,7 @@ function DetailTrack() {
       </div>
 
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
-        <MobileNav isSupervisor={true} />
+        <MobileNav isSupervisor={true} {...props} />
       </div>
     </Container>
   );

@@ -24,12 +24,12 @@ const listProduct = [
   },
 ];
 
-function DetailHistorySV() {
+function DetailHistorySV(props) {
   return (
     <Container>
       <Header hSupervisor={true} />
 
-      <div className="p-3">
+      <div style={{ paddingTop: "4.5rem" }} className="px-3">
         <div className="bg-white rounded-lg w-full">
           <div className="w-full px-3 pt-3 justify-between rounded-lg h-auto flex">
             <div className="flex">
@@ -78,7 +78,7 @@ function DetailHistorySV() {
                   <div className="ml-3">
                     <p className="font-bold text-gray-600">{item.name}</p>
                     <p className="text-xs text-gray-600">{item.price}</p>
-                    <p className="text-xs text-gray-600">{item.stock}</p>
+                    <p className="text-xs text-gray-600">Order : {item.stock}</p>
                   </div>
                 </div>
               </div>
@@ -89,7 +89,7 @@ function DetailHistorySV() {
       </div>
 
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
-        <MobileNav isSupervisor={true} />
+        <MobileNav isSupervisor={true} {...props} />
       </div>
     </Container>
   );

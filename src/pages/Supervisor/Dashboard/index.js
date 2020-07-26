@@ -38,7 +38,7 @@ function Map({ markerPosition }) {
   return <div id="map" style={style} />;
 }
 
-function Dashboard() {
+function Dashboard(props) {
   //map
   const [markerPosition, setMarkerPosition] = useState({
     lat: -5.45,
@@ -49,15 +49,15 @@ function Dashboard() {
     <Container>
       <Header hSupervisor={true} />
 
-      <div className="absolute z-0 w-full h-screen">
-        <Map markerPosition={markerPosition} />
+      <div style={{ height: "100vh" }} className="absolute z-0 w-full mt-16">
+        <Map markerPosition={markerPosition} {...props} />
       </div>
 
       <Link to="/supervisor/chat" className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none">
         <img src={require(`assets/icons/dashboard/ic_chat.svg`)} alt="chat" />
       </Link>
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white z-20 bottom-0 max-w-md">
-        <MobileNav isSupervisor={true} />
+        <MobileNav isSupervisor={true} {...props} />
       </div>
     </Container>
   );
