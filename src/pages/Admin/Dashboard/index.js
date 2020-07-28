@@ -1,17 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Navigation from "components/Navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import Map from "components/Map";
+import Maps from "components/MapComponent/Maps";
 
 function Dashboard() {
-  //map
-  const [markerPosition, setMarkerPosition] = useState({
-    lat: -5.45,
-    lng: 105.26667,
-  });
-  const { lat, lng } = markerPosition;
-  //map
   const dispatch = useDispatch();
   const position = [51.505, -0.09];
   const token = useSelector((state) => state.users.token);
@@ -56,7 +49,7 @@ function Dashboard() {
         </div>
         <p className="my-3 font-bold">Lokasi Sales</p>
         <div style={{ height: "32rem" }} className="w-full bg-gray-500 rounded-lg">
-          <Map markerPosition={markerPosition} />
+          <Maps />
         </div>
       </div>
     </div>

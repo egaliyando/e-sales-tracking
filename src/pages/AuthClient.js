@@ -28,7 +28,7 @@ function AuthClient() {
             placeholder="Password"
             type="password"
           />
-          <Link to="/sales/dashboard">
+          <Link to="/supervisor/home">
             <button
               style={{ backgroundColor: "#FFA14B" }}
               className="w-full text-white font-bold neumorphism p-3 rounded-lg focus:outline-none"

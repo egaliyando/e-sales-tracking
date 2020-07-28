@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="121.337" height="132.109" viewBox="0 0 121.337 132.109">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ff8e48"/>
+      <stop offset="1" stop-color="#ff4e00"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_226" data-name="Group 226" transform="translate(-1100 2161.181)">
+    <g id="Group_224" data-name="Group 224">
+      <g id="Group_222" data-name="Group 222" transform="translate(55 24)">
+        <g id="Group_220" data-name="Group 220">
+          <path id="Union_9" data-name="Union 9" d="M0,27.824C0,12.441,3.9,0,8.724,0s8.724,12.441,8.724,27.824c0,20.868-8.724,51.674-8.724,51.674S0,48.693,0,27.824Z" transform="matrix(0.259, 0.966, -0.966, 0.259, 1161.821, -2090.502)" fill="#606060" opacity="0.153"/>
+          <path id="Union_8" data-name="Union 8" d="M0,43.224a43.224,43.224,0,0,1,86.449,0c0,32.419-43.224,80.274-43.224,80.274S0,75.643,0,43.224Z" transform="translate(1045 -2185.181)" fill="url(#linear-gradient)"/>
+          <path id="Icon_awesome-user-astronaut" data-name="Icon awesome-user-astronaut" d="M5.6,19.587h1.18a13.971,13.971,0,0,0,25.62,0h1.18a1.4,1.4,0,0,0,1.4-1.4V9.793a1.4,1.4,0,0,0-1.4-1.4H32.4a13.971,13.971,0,0,0-25.62,0H5.6a1.4,1.4,0,0,0-1.4,1.4v8.394A1.4,1.4,0,0,0,5.6,19.587Zm3.5-7.695c0-1.932,1.88-3.5,4.2-3.5H25.882c2.317,0,4.2,1.565,4.2,3.5v2.1a8.4,8.4,0,0,1-8.394,8.394h-4.2A8.4,8.4,0,0,1,9.094,13.99Zm6.3,6.3,1.049-3.148,3.148-1.049-3.148-1.049L15.39,9.793,14.34,12.941,11.192,13.99,14.34,15.04ZM28.645,28.1a16.673,16.673,0,0,1-18.118,0A11.719,11.719,0,0,0,0,39.733v.839a4.2,4.2,0,0,0,4.2,4.2h7v-5.6a2.8,2.8,0,0,1,2.8-2.8H25.183a2.8,2.8,0,0,1,2.8,2.8v5.6h7a4.2,4.2,0,0,0,4.2-4.2v-.839A11.719,11.719,0,0,0,28.645,28.1Zm-4.862,11.07a1.4,1.4,0,1,0,1.4,1.4A1.4,1.4,0,0,0,23.784,39.173Zm-8.394,0a1.4,1.4,0,0,0-1.4,1.4v4.2h2.8v-4.2A1.4,1.4,0,0,0,15.39,39.173Z" transform="translate(1068.952 -2168.504)" fill="#fff"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -42,17 +42,13 @@ function Auth(props) {
       })
       .catch((err) => {
         dispatch({ type: LOADING_FINISH });
-        console.log(err);
-        alert("error catch");
+        console.log(err.response);
+        // alert("error catch");
       });
   };
   return (
     <div className="flex h-screen w-full">
-      <img
-        className="w-2/5 m-auto"
-        src={require(`assets/image/image_auth_adm.png`)}
-        alt="img"
-      />
+      <img className="w-2/5 m-auto" src={require(`assets/image/image_auth_adm.png`)} alt="img" />
       <div className="w-2/5 h-auto p-10 m-auto bg-gray-200 content-center justify-center flex flex-col rounded-lg">
         <input
           className="w-full rounded-lg mb-3 bg-white p-3"
