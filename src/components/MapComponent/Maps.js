@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import { iconSales, iconApotik } from "components/MapComponent/IconMarker";
+import axios from "configs";
 
 export default class Maps extends Component {
   state = {
@@ -23,6 +24,24 @@ export default class Maps extends Component {
     const position = [this.state.lat, this.state.lng];
     const { data, dataApotik } = this.state;
 
+    // const getData = () => {
+    //   const { id } = this.props.match.params;
+    //   const token = localStorage.token;
+    //   axios
+    //     .get(`/apotik/${id}`, {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     })
+    //     .then((res) => {
+    //       setLat(res.data.data.lat);
+    //       setLong(res.data.data.long);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // };
+
     return (
       <Map style={{ width: "100%", height: "100%" }} center={position} zoom={this.state.zoom}>
         <TileLayer
@@ -31,7 +50,7 @@ export default class Maps extends Component {
         />
         {data.map((data, i) => {
           return (
-            <Marker position={data} icon={iconApotik}>
+            <Marker position={data} icon={iconApotik} key={i}>
               <Popup>
                 Apotik Rosa <br /> Jl. Abdul muis
               </Popup>
@@ -40,7 +59,7 @@ export default class Maps extends Component {
         })}
         {dataApotik.map((data, i) => {
           return (
-            <Marker position={data} icon={iconSales}>
+            <Marker position={data} icon={iconSales} key={i}>
               <Popup>
                 Sales - Budi <br /> Active
               </Popup>

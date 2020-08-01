@@ -4,15 +4,49 @@ import Table from "components/Table";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "store/actions/product";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import axios from "configs";
 
-export default function Product() {
+export default function Product(props) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.users.token);
   const product = useSelector((state) => state.product.product);
-  console.log(product);
+  // console.log(product);
+  const MySwal = withReactContent(Swal);
 
   const getProduct = () => {
     dispatch(fetchProduct());
+  };
+
+  const handleDelete = (id) => {
+    const token = localStorage.token;
+    MySwal.fire({
+      title: "Delete?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.value) {
+        MySwal.fire("Delete Success!", "", "Canceled");
+        axios
+          .delete(`/product/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then(function (response) {
+            // console.log(response);
+            getProduct();
+            props.history.push("/admin/product");
+          })
+          .catch(function (error) {
+            console.log(error.response);
+          });
+      }
+    });
   };
 
   useEffect(() => {
@@ -33,8 +67,9 @@ export default function Product() {
           thead={["No", "Product Name", "Expired", "Price", "Stock", "Image", "Action"]}
           tbody={["id", "name", "tgl_ex", "price", "stock", "image"]}
           editUrl={"/admin/product/edit"}
-          // pages={pages}
-          // handlePageClick={handlePageClick}
+          deleteAction={(id) => {
+            handleDelete(id);
+          }}
         />
       </div>
       <Link to="/admin/product/add" className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">

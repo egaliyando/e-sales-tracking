@@ -41,8 +41,8 @@ function History(props) {
         </div>
         <div className="overflow-y-auto h-64 pb-12">
           {list.map((item) => (
-            <Link to="/sales/history/detail">
-              <div className="mt-2" key={item.id}>
+            <Link to="/sales/history/detail" key={item.id}>
+              <div className="mt-2">
                 <div className="w-full p-2 rounded-lg bg-white h-auto flex">
                   <img src={require(`assets/image/apotek.png`)} alt="img" />
                   <div className="ml-3">

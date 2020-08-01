@@ -6,7 +6,6 @@ import Maps from "components/MapComponent/Maps";
 
 function Dashboard() {
   const dispatch = useDispatch();
-  const position = [51.505, -0.09];
   const token = useSelector((state) => state.users.token);
 
   if (token === "") {

@@ -1,12 +1,57 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navigation from "components/Navigation";
 import Table from "components/Table";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "store/actions/user";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import axios from "configs";
 
-function Users() {
+function Users(props) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.users.token);
+  const users = useSelector((state) => state.users.users);
+  console.log(users);
+  const MySwal = withReactContent(Swal);
+
+  const getUsers = () => {
+    dispatch(fetchUsers());
+  };
+
+  const handleDelete = (id) => {
+    const token = localStorage.token;
+    MySwal.fire({
+      title: "Delete?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.value) {
+        MySwal.fire("Delete Success!", "", "Canceled");
+        axios
+          .delete(`/users/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then(function (response) {
+            console.log(response);
+            getUsers();
+            props.history.push("/admin/users");
+          })
+          .catch(function (error) {
+            console.log(error.response);
+          });
+      }
+    });
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   if (token === "") {
     return <Redirect to="/" />;
@@ -18,24 +63,13 @@ function Users() {
         <p className="my-3 font-bold">Users</p>
         {/* MODAL */}
         <Table
-          thead={["No", "NIK", "Name", "Address", "TTL", "Password", "Level", "Action"]}
-          tbody={[
-            "1",
-            "233434",
-            "Budi",
-            "BandarLampung",
-            "12/12/1998",
-            "*****",
-            "Supervisor",
-            <div className="flex">
-              <Link to="/admin/users/edit" className="focus:outline-none w-5">
-                <img src={require(`assets/icons/ic_pencil.svg`)} alt="add" />
-              </Link>
-              <button className="mx-5 focus:outline-none w-4" onClick={() => alert("Yakin Menghapus?")}>
-                <img src={require(`assets/icons/ic_trash.svg`)} alt="add" />
-              </button>
-            </div>,
-          ]}
+          data={users.user}
+          thead={["No", "Fullname", "Address", "TTL", "NIK", "Role", "Action"]}
+          tbody={["id", "fullname", "address", "ttl", "nik", "role"]}
+          editUrl={"/admin/users/edit"}
+          deleteAction={(id) => {
+            handleDelete(id);
+          }}
         />
       </div>
       <Link to="/admin/users/add" className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">

@@ -1,4 +1,4 @@
-import { SET_TOKEN, SET_USERS } from "store/types";
+import { SET_TOKEN, SET_APOTIK } from "store/types";
 
 let token = localStorage.getItem("token");
 if (!token) {
@@ -6,7 +6,7 @@ if (!token) {
 }
 const initialState = {
   token: token,
-  users: [],
+  apotik: [],
 };
 
 export default function (state = initialState, action) {
@@ -16,10 +16,10 @@ export default function (state = initialState, action) {
         ...state,
         token: action.token,
       };
-    case SET_USERS:
+    case SET_APOTIK:
       return {
         ...state,
-        users: action.users,
+        apotik: action.apotik,
       };
     default:
       return state;

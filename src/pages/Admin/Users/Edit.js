@@ -1,6 +1,5 @@
 import React from "react";
 import Navigation from "components/Navigation";
-import { Link } from "react-router-dom";
 
 function Edit() {
   return (
@@ -70,12 +69,9 @@ function Edit() {
             >
               Cancel
             </button>
-            <Link
-              to="/admin/users/"
-              className="bg-green-500 ml-3 px-3 shadow-lg p-2 rounded-lg text-white active:bg-green-600 font-bold text-sm rounded shadow hover:shadow-lg outline-none focus:outline-none"
-            >
+            <button className="bg-green-500 ml-3 px-3 shadow-lg p-2 rounded-lg text-white active:bg-green-600 font-bold text-sm rounded shadow hover:shadow-lg outline-none focus:outline-none">
               Add
-            </Link>
+            </button>
           </div>
         </div>
       </div>

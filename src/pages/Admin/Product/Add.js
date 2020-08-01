@@ -1,8 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import Navigation from "components/Navigation";
-import { Link } from "react-router-dom";
+import axios from "configs";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
-function Add() {
+function Add(props) {
+  const [product, setProduct] = useState("");
+  const [expired, setExpired] = useState("");
+  const [price, setPrice] = useState("");
+  const [stock, setStock] = useState("");
+  const [image, setImage] = useState([0]);
+  const token = localStorage.token;
+  const MySwal = withReactContent(Swal);
+
+  const handleSubmit = () => {
+    axios
+      .post(
+        "/product",
+        {
+          name: product,
+          tgl_ex: expired,
+          price: price,
+          stock: stock,
+          image: image,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then(function (response) {
+        console.log(response);
+        props.history.push("/admin/product");
+      })
+      .catch(function (error) {
+        console.log(error.response.data.error);
+        let err = [];
+        for (let i = 0; i < error.response.data.error.length; i++) {
+          err.push(error.response.data.error[i].param);
+        }
+        alert(err);
+      });
+  };
+
   return (
     <div className="flex">
       <Navigation />
@@ -12,6 +53,7 @@ function Add() {
           <div className="mb-5">
             <label className="text-xs">Nama Produk</label>
             <input
+              onChange={(e) => setProduct(e.target.value)}
               className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
               type="text"
             />
@@ -20,6 +62,7 @@ function Add() {
             <div>
               <label className="text-xs">Tanggal Expired</label>
               <input
+                onChange={(e) => setExpired(e.target.value)}
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="date"
               />
@@ -27,6 +70,7 @@ function Add() {
             <div>
               <label className="text-xs">Harga</label>
               <input
+                onChange={(e) => setPrice(e.target.value)}
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="number"
               />
@@ -34,6 +78,7 @@ function Add() {
             <div>
               <label className="text-xs">Stok</label>
               <input
+                onChange={(e) => setStock(e.target.value)}
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="number"
               />
@@ -41,8 +86,10 @@ function Add() {
             <div>
               <label className="text-xs">Gambar</label>
               <input
+                onChange={(e) => setImage(e.target.files[0])}
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="file"
+                name="files"
               />
             </div>
           </div>
@@ -54,12 +101,12 @@ function Add() {
             >
               Cancel
             </button>
-            <Link
-              to="/admin/product"
+            <button
+              onClick={handleSubmit}
               className="bg-green-500 ml-3 px-3 shadow-lg p-2 rounded-lg text-white active:bg-green-600 font-bold text-sm rounded shadow hover:shadow-lg outline-none focus:outline-none"
             >
               Add
-            </Link>
+            </button>
           </div>
         </div>
       </div>

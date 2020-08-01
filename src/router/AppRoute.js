@@ -51,15 +51,15 @@ export default function AppRoute() {
         {/* PRODUCT */}
         <Route exact path="/admin/product" component={Product} />
         <Route exact path="/admin/product/add" component={AddProduct} />
-        <Route exact path="/admin/product/edit" component={EditProduct} />
+        <Route exact path="/admin/product/edit/:id" component={EditProduct} />
         {/* USERS */}
         <Route exact path="/admin/users" component={Users} />
         <Route exact path="/admin/users/add" component={AddUser} />
-        <Route exact path="/admin/users/edit" component={EditUser} />
+        <Route exact path="/admin/users/edit/:id" component={EditUser} />
         {/* APOTIK */}
         <Route exact path="/admin/apotik" component={Apotik} />
         <Route exact path="/admin/apotik/add" component={AddApotik} />
-        <Route exact path="/admin/apotik/edit" component={EditApotik} />
+        <Route exact path="/admin/apotik/edit/:id" component={EditApotik} />
         {/* CHAT */}
         <Route exact path="/admin/chat" component={Chat} />
         {/* ORDER */}
