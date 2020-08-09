@@ -24,24 +24,6 @@ export default class Maps extends Component {
     const position = [this.state.lat, this.state.lng];
     const { data, dataApotik } = this.state;
 
-    // const getData = () => {
-    //   const { id } = this.props.match.params;
-    //   const token = localStorage.token;
-    //   axios
-    //     .get(`/apotik/${id}`, {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       setLat(res.data.data.lat);
-    //       setLong(res.data.data.long);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // };
-
     return (
       <Map style={{ width: "100%", height: "100%" }} center={position} zoom={this.state.zoom}>
         <TileLayer

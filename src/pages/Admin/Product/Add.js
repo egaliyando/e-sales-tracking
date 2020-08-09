@@ -9,27 +9,25 @@ function Add(props) {
   const [expired, setExpired] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
-  const [image, setImage] = useState([0]);
+  const [image, setImage] = useState("");
   const token = localStorage.token;
   const MySwal = withReactContent(Swal);
 
   const handleSubmit = () => {
+    console.log(image);
+    let formData = new FormData(); //formdata object
+    formData.append("name", product);
+    formData.append("tgl_ex", expired);
+    formData.append("price", price);
+    formData.append("stock", stock);
+    formData.append("image", image);
+
     axios
-      .post(
-        "/product",
-        {
-          name: product,
-          tgl_ex: expired,
-          price: price,
-          stock: stock,
-          image: image,
+      .post("/product", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      })
       .then(function (response) {
         console.log(response);
         props.history.push("/admin/product");
@@ -89,7 +87,7 @@ function Add(props) {
                 onChange={(e) => setImage(e.target.files[0])}
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="file"
-                name="files"
+                name="file"
               />
             </div>
           </div>

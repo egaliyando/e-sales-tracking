@@ -2,8 +2,10 @@ import React from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
+import useGeolocation from "react-hook-geolocation";
 
 function ChatSupervisor(props) {
+  const geolocation = useGeolocation();
   return (
     <Container>
       <Header hSupervisor={true} />
@@ -17,6 +19,14 @@ function ChatSupervisor(props) {
           <p className="text-xs text-gray-400">18/19/2020</p>
           <p className="text-sm">Laporan diterima! Laksanakan!</p>
         </div>
+      </div>
+      <div>
+        <p>Latitude: {geolocation.latitude}</p>
+        <p>Longitude: {geolocation.longitude}</p>
+        <p>Location accuracy: {geolocation.accuracy}</p>
+        <p>Heading: {geolocation.heading}</p>
+        <p>Speed: {geolocation.speed}</p>
+        <p>Timestamp: {geolocation.timestamp}</p>
       </div>
 
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">

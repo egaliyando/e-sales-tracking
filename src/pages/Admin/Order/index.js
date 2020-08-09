@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navigation from "components/Navigation";
 import Table from "components/Table";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchTrip } from "store/actions/trip";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
-function Order() {
+function Order(props) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.users.token);
+  const trip = useSelector((state) => state.trip.trip);
+  // const MySwal = withReactContent(Swal);
+  console.log(trip);
+  const getTrip = () => {
+    dispatch(fetchTrip());
+  };
+  useEffect(() => {
+    getTrip();
+  }, []);
 
   if (token === "") {
     return <Redirect to="/" />;
@@ -14,10 +26,7 @@ function Order() {
   return (
     <div className="flex">
       <Navigation />
-      <div
-        style={{ backgroundColor: "#F7F7F7" }}
-        className="w-11/12 p-3 relative"
-      >
+      <div style={{ backgroundColor: "#F7F7F7" }} className="w-11/12 p-3 relative">
         <p className="my-3 font-bold">Order</p>
         {/* MODAL */}
         <Table
@@ -47,10 +56,7 @@ function Order() {
             // "....",
             // "img.jpg", masuk detail
             "Order/Tidak",
-            <Link
-              to="/admin/order/detail"
-              className="bg-green-500 px-2 py-1 rounded-lg text-white"
-            >
+            <Link to="/admin/order/detail" className="bg-green-500 px-2 py-1 rounded-lg text-white">
               Detail
             </Link>,
           ]}

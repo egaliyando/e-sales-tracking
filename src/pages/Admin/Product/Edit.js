@@ -47,13 +47,14 @@ function Edit() {
             </div>
           </div>
           <div className="flex mt-5 justify-end">
-            <button
+            <Link
+              to="/admin/product"
               className="text-white bg-red-500 px-3 shadow-lg p-2 rounded-lg background-transparent font-bold text-sm outline-none focus:outline-none"
               type="button"
               style={{ transition: "all .15s ease" }}
             >
               Cancel
-            </button>
+            </Link>
             <Link
               to="/admin/product"
               className="bg-green-500 ml-3 px-3 shadow-lg p-2 rounded-lg text-white active:bg-green-600 font-bold text-sm rounded shadow hover:shadow-lg outline-none focus:outline-none"

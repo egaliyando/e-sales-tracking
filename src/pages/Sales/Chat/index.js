@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "components/Header";
 import Container from "components/Container";
 import MobileNav from "components/Navigation/MobileNav";
 
 function ChatSales(props) {
+  const [message, setMessage] = useState("");
   return (
     <Container>
       <Header hSalesNormal={true} />
@@ -15,7 +16,7 @@ function ChatSales(props) {
         </div>
         <div className="w-64 p-2 h-auto bg-white float-right rounded-lg mt-3">
           <p className="text-xs text-gray-400">18/19/2020</p>
-          <p className="text-sm">Laporan diterima! Laksanakan!</p>
+          <p className="text-sm">{message}</p>
         </div>
       </div>
 
@@ -23,7 +24,7 @@ function ChatSales(props) {
         <div className="w-full h-12 bg-white flex justify-between py-2 px-5">
           <input className="focus:outline-none w-full" type="text" placeholder="Write Something.." />
 
-          <button className="focus:outline-none">
+          <button onClick={() => setMessage("Message Send")} className="focus:outline-none">
             <img src={require(`assets/icons/ic_send.svg`)} alt="send" />
           </button>
         </div>

@@ -21,10 +21,10 @@ function Navigation() {
           <img className="m-auto" src={require(`assets/icons/ic_apotik.svg`)} alt="ic" />
           <p className="text-gray-700 text-center text-xs mt-2">Apotik</p>
         </Link>
-        {/* <Link to="/admin/chat" className="mb-5 focus:outline-none">
-          <img className="m-auto" src={require(`assets/icons/ic_chat.svg`)} alt="ic" />
-          <p className="text-gray-700 text-center text-xs mt-2">Chat</p>
-        </Link> */}
+        <Link to="/admin/trip" className="mb-5 focus:outline-none">
+          <img className="m-auto" src={require(`assets/icons/ic_visit.svg`)} alt="ic" />
+          <p className="text-gray-700 text-center text-xs mt-2">Trip</p>
+        </Link>
         <Link to="/admin/order" className="mb-5 focus:outline-none">
           <img className="m-auto" src={require(`assets/icons/ic_transaction.svg`)} alt="ic" />
           <p className="text-gray-700 text-center text-xs mt-2">Order</p>

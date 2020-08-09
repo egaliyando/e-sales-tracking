@@ -11,11 +11,13 @@ import Users from "pages/Admin/Users";
 import AddUser from "pages/Admin/Users/Add";
 import EditUser from "pages/Admin/Users/Edit";
 import Apotik from "pages/Admin/Apotik";
+import Trip from "pages/Admin/Trip";
 import AddApotik from "pages/Admin/Apotik/Add";
 import EditApotik from "pages/Admin/Apotik/Edit";
 import Chat from "pages/Admin/Chat";
 import Order from "pages/Admin/Order";
 import Logout from "pages/Admin/Logout";
+import Add from "pages/Admin/Trip/Add";
 
 //SV
 import DashboardSupervisor from "pages/Supervisor/Dashboard";
@@ -60,6 +62,9 @@ export default function AppRoute() {
         <Route exact path="/admin/apotik" component={Apotik} />
         <Route exact path="/admin/apotik/add" component={AddApotik} />
         <Route exact path="/admin/apotik/edit/:id" component={EditApotik} />
+        {/* TRIP */}
+        <Route exact path="/admin/trip" component={Trip} />
+        <Route exact path="/admin/trip/add" component={Add} />
         {/* CHAT */}
         <Route exact path="/admin/chat" component={Chat} />
         {/* ORDER */}

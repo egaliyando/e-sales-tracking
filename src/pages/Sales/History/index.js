@@ -3,7 +3,7 @@ import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
-import Maps from "components/MapComponent/Maps";
+import MapsHook from "components/MapComponent/MapsHook";
 
 const list = [
   {
@@ -37,7 +37,7 @@ function History(props) {
         <p className="text-gray-600 font-bold">History kunjungan</p>
         {/* MAPS History */}
         <div className="w-full h-64 bg-gray-400 mt-3 rounded-md">
-          <Maps />
+          <MapsHook />
         </div>
         <div className="overflow-y-auto h-64 pb-12">
           {list.map((item) => (

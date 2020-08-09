@@ -12,7 +12,6 @@ export default function Product(props) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.users.token);
   const product = useSelector((state) => state.product.product);
-  // console.log(product);
   const MySwal = withReactContent(Swal);
 
   const getProduct = () => {

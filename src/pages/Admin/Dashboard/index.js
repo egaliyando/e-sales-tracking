@@ -2,7 +2,8 @@ import React from "react";
 import Navigation from "components/Navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import Maps from "components/MapComponent/Maps";
+// import Maps from "components/MapComponent/Maps";
+import MapsHook from "components/MapComponent/MapsHook";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ function Dashboard() {
         </div>
         <p className="my-3 font-bold">Lokasi Sales</p>
         <div style={{ height: "32rem" }} className="w-full bg-gray-500 rounded-lg">
-          <Maps />
+          <MapsHook />
         </div>
       </div>
     </div>

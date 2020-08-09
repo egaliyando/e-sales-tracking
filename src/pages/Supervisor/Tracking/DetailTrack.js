@@ -3,7 +3,7 @@ import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
-import Maps from "components/MapComponent/Maps";
+import MapsHook from "components/MapComponent/MapsHook";
 
 //list apotik
 const list = [
@@ -84,7 +84,7 @@ function Tracking() {
         </div>
       </div>
       <div style={{ height: "21rem" }} className="rounded-lg w-full bg-gray-500 mt-2">
-        <Maps />
+        <MapsHook />
       </div>
     </>
   );

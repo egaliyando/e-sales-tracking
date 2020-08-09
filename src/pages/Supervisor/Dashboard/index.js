@@ -3,7 +3,7 @@ import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
-import Maps from "components/MapComponent/Maps";
+import MapsHook from "components/MapComponent/MapsHook";
 
 function Dashboard(props) {
   return (
@@ -11,7 +11,7 @@ function Dashboard(props) {
       <Header hSupervisor={true} />
 
       <div style={{ height: "100vh" }} className="absolute z-0 w-full mt-16">
-        <Maps />
+        <MapsHook />
       </div>
 
       <Link to="/supervisor/chat" className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none">

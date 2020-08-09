@@ -37,7 +37,7 @@ function Apotik(props) {
             },
           })
           .then(function (response) {
-            // console.log(response);
+            console.log(response);
             getApotik();
             props.history.push("/admin/apotik");
           })
