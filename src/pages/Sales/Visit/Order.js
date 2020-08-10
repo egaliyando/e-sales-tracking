@@ -1,33 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "components/Header";
 import Container from "components/Container";
 import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
-
-const listProduct = [
-  {
-    id: 1,
-    name: "Broncitin",
-    price: "Rp. 200.000",
-    stock: "12",
-  },
-  {
-    id: 2,
-    name: "Bodrex",
-    price: "Rp. 10.000",
-    stock: "120",
-  },
-  {
-    id: 3,
-    name: "Ultraflu",
-    price: "Rp. 25.000",
-    stock: "120",
-  },
-];
+import axios from "configs";
 
 function Order(props) {
   const [showModal, setShowModal] = useState(false);
   const [count, setCount] = useState(0);
+
+  const [data, setData] = useState([]);
+  console.log("product");
+  console.log(data);
+
+  const getProduct = () => {
+    const token = localStorage.token;
+    axios
+      .get(`/product`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setData(res.data.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getProduct();
+  }, []);
   return (
     <Container>
       <Header hSalesNormal={true} />
@@ -39,12 +42,12 @@ function Order(props) {
         </div>
 
         <div style={{ height: "28rem" }} className="overflow-y-auto pb-10">
-          {listProduct.map((item) => (
-            <div className="mt-2" key={item.id} onClick={() => setShowModal(true)}>
+          {data.map((item, i) => (
+            <div className="mt-2" key={i} onClick={() => setShowModal(true)}>
               {/* <Link to="/sales/visit/order"> */}
               <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                 <div className="flex">
-                  <img src={require(`assets/image/obat.png`)} alt="img" />
+                  <img className="h-16 w-16" src={`${process.env.REACT_APP_HOST_HEROKU}${item.image}`} alt="img" />
                   <div className="ml-3">
                     <p className="font-bold text-gray-600">{item.name}</p>
                     <p className="text-xs text-gray-600">{item.price}</p>

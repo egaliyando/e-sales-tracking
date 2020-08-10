@@ -21,25 +21,36 @@ function Add(props) {
     formData.append("price", price);
     formData.append("stock", stock);
     formData.append("image", image);
-
-    axios
-      .post("/product", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(function (response) {
-        console.log(response);
-        props.history.push("/admin/product");
-      })
-      .catch(function (error) {
-        console.log(error.response.data.error);
-        let err = [];
-        for (let i = 0; i < error.response.data.error.length; i++) {
-          err.push(error.response.data.error[i].param);
-        }
-        alert(err);
-      });
+    MySwal.fire({
+      title: "Add Product?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.value) {
+        MySwal.fire("Add Success!", "", "Canceled");
+        axios
+          .post("/product", formData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then(function (response) {
+            console.log(response);
+            props.history.push("/admin/product");
+          })
+          .catch(function (error) {
+            console.log(error.response.data.error);
+            let err = [];
+            for (let i = 0; i < error.response.data.error.length; i++) {
+              err.push(error.response.data.error[i].param);
+            }
+            alert(err);
+          });
+      }
+    });
   };
 
   return (

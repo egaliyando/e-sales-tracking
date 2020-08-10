@@ -1,48 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Container from "components/Container";
 import MobileNav from "components/Navigation/MobileNav";
 import Header from "components/Header";
+import axios from "configs";
 
-const listProduct = [
-  {
-    id: 1,
-    name: "Broncitin",
-    price: "Rp. 200.000",
-    stock: "12",
-  },
-  {
-    id: 2,
-    name: "Bodrex",
-    price: "Rp. 10.000",
-    stock: "120",
-  },
-  {
-    id: 3,
-    name: "Ultraflu",
-    price: "Rp. 25.000",
-    stock: "120",
-  },
-  {
-    id: 4,
-    name: "Broncitin",
-    price: "Rp. 200.000",
-    stock: "12",
-  },
-  {
-    id: 5,
-    name: "Bodrex",
-    price: "Rp. 10.000",
-    stock: "120",
-  },
-  {
-    id: 6,
-    name: "Ultraflu",
-    price: "Rp. 25.000",
-    stock: "120",
-  },
-];
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 function ProductSV(props) {
+  const [data, setData] = useState([]);
+  console.log("product");
+  console.log(data);
+  const getProduct = () => {
+    const token = localStorage.token;
+    axios
+      .get(`/product`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setData(res.data.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getProduct();
+  }, []);
+
   return (
     <Container>
       <Header hSupervisor={true} />
@@ -54,22 +41,22 @@ function ProductSV(props) {
       </div>
       <div className="px-3">
         <div style={{ height: "33rem" }} className="overflow-y-auto pb-20">
-          {listProduct.map((item) => (
-            <div className="mt-2" key={item.id}>
-              {/* <Link to="/sales/visit/order"> */}
-              <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
-                <div className="flex">
-                  <img src={require(`assets/image/obat.png`)} alt="img" />
-                  <div className="ml-3">
-                    <p className="font-bold text-gray-600">{item.name}</p>
-                    <p className="text-xs text-gray-600">{item.price}</p>
-                    <p className="text-xs text-gray-600">Stock : {item.stock}</p>
+          {data.map((data, i) => {
+            return (
+              <div className="mt-2" key={i}>
+                <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
+                  <div className="flex">
+                    <img className="h-16 w-16" src={`${process.env.REACT_APP_HOST_HEROKU}${data.image}`} alt="img" />
+                    <div className="ml-3">
+                      <p className="font-bold text-gray-600">{data.name}</p>
+                      <p className="text-xs text-gray-600">{data.price}</p>
+                      <p className="text-xs text-gray-600">Stock : {data.stock}</p>
+                    </div>
                   </div>
                 </div>
               </div>
-              {/* </Link> */}
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

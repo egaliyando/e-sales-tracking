@@ -1,67 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
-
-const list = [
-  {
-    id: 1,
-    apotik: "Apotik",
-    address: "Address",
-  },
-  {
-    id: 2,
-    apotik: "Apotik",
-    address: "Address",
-  },
-  {
-    id: 3,
-    apotik: "Apotik",
-    address: "Address",
-  },
-  {
-    id: 4,
-    apotik: "Apotik",
-    address: "Address",
-  },
-  {
-    id: 5,
-    apotik: "Apotik",
-    address: "Address",
-  },
-  {
-    id: 6,
-    apotik: "Apotik",
-    address: "Address",
-  },
-  {
-    id: 7,
-    apotik: "Apotik",
-    address: "Address",
-  },
-];
-
-const listSales = [
-  {
-    id: 1,
-    name: "Budi",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Arif",
-    status: "Close",
-  },
-  {
-    id: 3,
-    name: "Melati",
-    status: "Active",
-  },
-];
+import axios from "configs";
 
 function VisitSV(props) {
+  const listSales = [
+    {
+      id: 1,
+      name: "Budi",
+      status: "Active",
+    },
+    {
+      id: 2,
+      name: "Arif",
+      status: "Close",
+    },
+    {
+      id: 3,
+      name: "Melati",
+      status: "Active",
+    },
+  ];
   const [showModal, setShowModal] = useState(false);
   const [enable, setEnable] = useState(false);
+
+  const [list, setList] = useState([]);
+  console.log("list");
+  console.log(list);
+
+  const getTrip = () => {
+    const token = localStorage.token;
+    axios
+      .get(`/trip`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setList(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getTrip();
+  }, []);
 
   return (
     <Container>
@@ -74,22 +59,24 @@ function VisitSV(props) {
         </div>
 
         <div style={{ height: "33rem" }} className="overflow-y-auto pb-20">
-          {list.map((item) => (
-            <div className="mt-2" key={item.id}>
-              <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
-                <div className="flex">
-                  <img src={require(`assets/image/apotek.png`)} alt="img" />
-                  <div className="ml-3">
-                    <p className="font-bold text-gray-600">{item.apotik}</p>
-                    <p className="text-xs text-gray-600">{item.address}</p>
+          {list.map((list, i) => {
+            return (
+              <div className="mt-2" key={i}>
+                <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
+                  <div className="flex">
+                    <img src={require(`assets/image/apotek.png`)} alt="img" />
+                    <div className="ml-3">
+                      <p className="font-bold text-gray-600">{list.name_apotik}</p>
+                      <p className="text-xs text-gray-600">{list.address_apotik}</p>
+                    </div>
                   </div>
+                  <button className="mr-3 focus:outline-none" onClick={() => setShowModal(true)}>
+                    <img src={require(`assets/icons/ic_add_visit.svg`)} alt="img" />
+                  </button>
                 </div>
-                <button className="mr-3 focus:outline-none" onClick={() => setShowModal(true)}>
-                  <img src={require(`assets/icons/ic_add_visit.svg`)} alt="img" />
-                </button>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
