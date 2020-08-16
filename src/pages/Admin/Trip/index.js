@@ -4,20 +4,49 @@ import Table from "components/Table";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrip } from "store/actions/trip";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import axios from "configs";
 
-export default function Trip() {
+export default function Trip(props) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.users.token);
   const trip = useSelector((state) => state.trip.trip);
+  const MySwal = withReactContent(Swal);
   console.log("trip");
   console.log(trip);
 
-  const handleDelete = () => {
-    return null;
-  };
-
   const getTrip = () => {
     dispatch(fetchTrip());
+  };
+  const handleDelete = (id) => {
+    const token = localStorage.token;
+    MySwal.fire({
+      title: "Delete?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.value) {
+        MySwal.fire("Delete Success!", "", "Canceled");
+        axios
+          .delete(`/trip/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then(function (response) {
+            // console.log(response);
+            getTrip();
+            props.history.push("/admin/trip");
+          })
+          .catch(function (error) {
+            console.log(error.response);
+          });
+      }
+    });
   };
   useEffect(() => {
     getTrip();
@@ -34,8 +63,8 @@ export default function Trip() {
           <p className="my-3 font-bold">Trip/Kujnjungan</p>
           <Table
             data={trip}
-            thead={["no", "Day", "Apotik Name", "Address", "Action"]}
-            tbody={["id", "address_apotik", "day", "name_apotik"]}
+            thead={["no", "Day", "Apotik Name", "Address", "Image", "Action"]}
+            tbody={["id", "address_apotik", "day", "image", "name_apotik"]}
             editUrl={"/admin/trip/edit"}
             deleteAction={(id) => {
               handleDelete(id);

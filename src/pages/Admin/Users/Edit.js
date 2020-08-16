@@ -1,7 +1,96 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navigation from "components/Navigation";
+import { Link } from "react-router-dom";
+import axios from "configs";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
-function Edit() {
+function Edit(props) {
+  const MySwal = withReactContent(Swal);
+
+  const [fullName, setFullname] = useState("");
+  const [address, setAddress] = useState("");
+  const [birthDay, setBirthday] = useState("");
+  const [userName, setUsername] = useState("");
+  const [nik, setNik] = useState("");
+  const [role, setRole] = useState("");
+  const [password, setPassword] = useState("");
+  const [userId, setUserId] = useState("");
+
+  // console.log("userId");
+  // console.log(userId);
+
+  const getData = () => {
+    const { id } = props.match.params;
+    const token = localStorage.token;
+
+    axios
+      .get(`/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setFullname(res.data.data.fullname);
+        setAddress(res.data.data.address);
+        setBirthday(res.data.data.ttl);
+        setNik(res.data.data.user.nik);
+        setUsername(res.data.data.user.username);
+        setRole(res.data.data.user.role);
+        setPassword(res.data.data.user.password);
+        setUserId(res.data.data.user_id);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleUpdate = () => {
+    const { id } = props.match.params;
+    const token = localStorage.token;
+
+    MySwal.fire({
+      title: "Edit User?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((res) => {
+      MySwal.fire("Edit Success", "", "success", "Canceled");
+      if (res) {
+        axios
+          .put(
+            `/users/${id}`,
+            {
+              nik: nik,
+              password: password,
+              role: role,
+              address: address,
+              ttl: birthDay,
+              fullname: fullName,
+              username: userName,
+              user_id: userId,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then(function (res) {
+            console.log("res");
+            console.log(res);
+            props.history.push("/admin/users");
+          });
+      }
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <div className="flex">
       <Navigation />
@@ -14,6 +103,9 @@ function Edit() {
               <input
                 className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="text"
+                name="fullname"
+                value={fullName}
+                onChange={(e) => setFullname(e.target.value)}
               />
             </div>
             <div>
@@ -21,14 +113,20 @@ function Edit() {
               <input
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="number"
+                name="nik"
+                value={nik}
+                onChange={(e) => setNik(e.target.value)}
               />
             </div>
             <div className="flex">
               <div>
-                <label className="text-xs">Place of Birth</label>
+                <label className="text-xs">Username</label>
                 <input
                   className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                   type="text"
+                  name="username"
+                  value={userName}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
               <div className="ml-3">
@@ -36,6 +134,9 @@ function Edit() {
                 <input
                   className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                   type="date"
+                  name="ttl"
+                  value={birthDay}
+                  onChange={(e) => setBirthday(e.target.value)}
                 />
               </div>
             </div>
@@ -44,33 +145,47 @@ function Edit() {
               <input
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="text"
+                name="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
               />
             </div>
             <div>
               <label className="text-xs">Level/Role</label>
-              <select className="bg-gray-200 w-full text-xs text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none">
-                <option>Supervisor</option>
-                <option>Sales</option>
+              <select
+                onChange={(e) => setRole(e.target.value)}
+                value={role}
+                className="bg-gray-200 w-full text-xs text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+              >
+                <option value="supervisor">Supervisor</option>
+                <option value="sales">Sales</option>
               </select>
             </div>
             <div>
-              <label className="text-xs">New Password</label>
+              <label className="text-xs">Password</label>
               <input
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="text"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
           <div className="flex mt-5 justify-end">
-            <button
+            <Link
+              to="/admin/users"
               className="text-white bg-red-500 px-3 shadow-lg p-2 rounded-lg background-transparent font-bold text-sm outline-none focus:outline-none"
               type="button"
               style={{ transition: "all .15s ease" }}
             >
               Cancel
-            </button>
-            <button className="bg-green-500 ml-3 px-3 shadow-lg p-2 rounded-lg text-white active:bg-green-600 font-bold text-sm rounded shadow hover:shadow-lg outline-none focus:outline-none">
-              Add
+            </Link>
+            <button
+              onClick={handleUpdate}
+              className="bg-green-500 ml-3 px-3 shadow-lg p-2 rounded-lg text-white active:bg-green-600 font-bold text-sm rounded shadow hover:shadow-lg outline-none focus:outline-none"
+            >
+              Edit
             </button>
           </div>
         </div>

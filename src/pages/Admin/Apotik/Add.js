@@ -8,6 +8,7 @@ import withReactContent from "sweetalert2-react-content";
 function Add(props) {
   const [Name, setName] = useState("");
   const [Address, setAddress] = useState("");
+  const [Image, setImage] = useState("");
   const [Lat, setLat] = useState("");
   const [Long, setLong] = useState("");
   const token = localStorage.token;
@@ -15,6 +16,13 @@ function Add(props) {
   const MySwal = withReactContent(Swal);
 
   const handleSubmit = () => {
+    let formData = new FormData();
+    formData.append("name", Name);
+    formData.append("address", Address);
+    formData.append("image", Image);
+    formData.append("lat", Lat);
+    formData.append("long", Long);
+
     MySwal.fire({
       title: "Add Apotik?",
       icon: "warning",
@@ -26,20 +34,11 @@ function Add(props) {
       if (result.value) {
         MySwal.fire("Add Success!", "", "Canceled");
         axios
-          .post(
-            "/apotik",
-            {
-              lat: Lat,
-              long: Long,
-              name: Name,
-              address: Address,
+          .post("/apotik", formData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
             },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
+          })
           .then(function (response) {
             console.log(response);
             props.history.push("/admin/apotik");
@@ -93,6 +92,15 @@ function Add(props) {
                 onChange={(e) => setLong(e.target.value)}
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="Text"
+              />
+            </div>
+            <div>
+              <label className="text-xs">Image</label>
+              <input
+                onChange={(e) => setImage(e.target.files[0])}
+                className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+                type="file"
+                name="file"
               />
             </div>
           </div>

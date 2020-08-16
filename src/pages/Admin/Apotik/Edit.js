@@ -10,6 +10,7 @@ function Edit(props) {
 
   const [Name, setName] = useState("");
   const [Address, setAddress] = useState("");
+  const [Image, setImage] = useState("");
   const [Lat, setLat] = useState("");
   const [Long, setLong] = useState("");
 
@@ -27,6 +28,7 @@ function Edit(props) {
         setLong(res.data.data.long);
         setName(res.data.data.name);
         setAddress(res.data.data.address);
+        setImage(res.data.data.image);
       })
       .catch((err) => {
         console.log(err);
@@ -38,14 +40,14 @@ function Edit(props) {
     const token = localStorage.token;
     MySwal.fire({
       title: "Edit?",
-      icon: "warning",
+      icon: "success",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.value) {
-        MySwal.fire("Edit Success!", "", "Canceled");
+        MySwal.fire("Edit Success!", ":)", "info", "Canceled");
         axios
           .put(
             `/apotik/${id}`,
@@ -54,6 +56,7 @@ function Edit(props) {
               long: Long,
               name: Name,
               address: Address,
+              image: Image,
             },
             {
               headers: {
@@ -62,7 +65,7 @@ function Edit(props) {
             }
           )
           .then(function (res) {
-            // console.log(res);
+            console.log(res);
             props.history.push("/admin/apotik");
           })
           .catch(function (error) {
@@ -103,7 +106,7 @@ function Edit(props) {
                 onChange={(e) => setLong(e.target.value)}
                 className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="text"
-                name="lat"
+                name="long"
                 value={Long}
               />
             </div>
@@ -125,6 +128,15 @@ function Edit(props) {
                 type="Text"
                 name="address"
                 value={Address}
+              />
+            </div>
+            <div>
+              <label className="text-xs">Image</label>
+              <input
+                onChange={(e) => setImage(e.target.files[0])}
+                className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+                type="file"
+                name="file"
               />
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import Popper from "popper.js";
+import { Link } from "react-router-dom";
 
 const Popover = ({ color }) => {
   const [popoverShow, setPopoverShow] = React.useState(false);
@@ -34,15 +35,17 @@ const Popover = ({ color }) => {
             }
             ref={popoverRef}
           >
-            <div>
-              <div
-                className={
-                  "text-black opacity-75 font-semibold p-3 mb-0 border-b border-solid border-gray-200 rounded-lg"
-                }
-              >
-                Logout
+            <Link to="/client/logout">
+              <div>
+                <div
+                  className={
+                    "text-black opacity-75 font-semibold p-3 mb-0 border-b border-solid border-gray-200 rounded-lg"
+                  }
+                >
+                  Logout
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

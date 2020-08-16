@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import Navigation from "components/Navigation";
 import axios from "configs";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+const MySwal = withReactContent(Swal);
 
 function Add(props) {
   const [Nik, setNik] = useState("");
@@ -10,41 +13,53 @@ function Add(props) {
   const [Ttl, setTtl] = useState("");
   const [FullName, setFullname] = useState("");
   const [Username, setUsername] = useState("");
-
+  const token = localStorage.token;
+ 
   const handleSubmit = () => {
-    const token = localStorage.token;
-
-    axios
-      .post(
-        "/users",
-        {
-          nik: Nik,
-          password: Password,
-          role: Role,
-          address: Address,
-          ttl: Ttl,
-          fullname: FullName,
-          username: Username,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then(function (response) {
-        console.log(response);
-        props.history.push("/admin/users");
-      })
-      .catch(function (error) {
-        console.log(error.response);
-        // let err = [];
-        // for (let i = 0; i < error.response.data.error.length; i++) {
-        //   err.push(error.response.data.error[i].param);
-        // }
-        // alert(err);
-      });
+    MySwal.fire({
+      title: "Add User?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.value) {
+        MySwal.fire("Add Success!", ":)", "warning", "Canceled");
+        axios
+          .post(
+            "/users",
+            {
+              nik: Nik,
+              password: Password,
+              role: Role,
+              address: Address,
+              ttl: Ttl,
+              fullname: FullName,
+              username: Username,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then(function (response) {
+            console.log(response);
+            props.history.push("/admin/users");
+          })
+          .catch(function (error) {
+            console.log(error.response);
+            // let err = [];
+            // for (let i = 0; i < error.response.data.error.length; i++) {
+            //   err.push(error.response.data.error[i].param);
+            // }
+            // alert(err);
+          });
+      }
+    });
   };
+
   return (
     <div className="flex">
       <Navigation />

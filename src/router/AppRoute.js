@@ -18,12 +18,14 @@ import Chat from "pages/Admin/Chat";
 import Order from "pages/Admin/Order";
 import Logout from "pages/Admin/Logout";
 import Add from "pages/Admin/Trip/Add";
+import Edit from "pages/Admin/Trip/Edit";
 
 //SV
 import DashboardSupervisor from "pages/Supervisor/Dashboard";
 //Sales
 import DashboardSales from "pages/Sales/Dashboard";
 import AuthClient from "pages/AuthClient";
+import LogoutClient from "pages/LogoutClient";
 import Detail from "pages/Admin/Order/Detail";
 import Visit from "pages/Sales/Visit";
 import History from "pages/Sales/History";
@@ -65,6 +67,7 @@ export default function AppRoute() {
         {/* TRIP */}
         <Route exact path="/admin/trip" component={Trip} />
         <Route exact path="/admin/trip/add" component={Add} />
+        <Route exact path="/admin/trip/edit/:id" component={Edit} />
         {/* CHAT */}
         <Route exact path="/admin/chat" component={Chat} />
         {/* ORDER */}
@@ -94,6 +97,7 @@ export default function AppRoute() {
         <Route exact path="/sales/visit/detail-visit/order" component={SalesOrder} />
         <Route exact path="/sales/visit/detail-visit" component={DetailVisit} />
         <Route exact path="/sales/chat" component={ChatSales} />
+        <Route exact path="/client/logout" component={LogoutClient} />
       </Switch>
     </Router>
   );
