@@ -15,8 +15,15 @@ function VisitSV(props) {
 
   const [salesId, setSalesId] = useState("");
 
-  const [id, setId] = useState("");
+  // id trip
+  const [trip_id, setId] = useState("");
+  console.log("trip_id");
+  console.log(trip_id);
   const [sales_id, setSales_Id] = useState("");
+  // set detail trip
+  const [detailTrip, setDetailTrip] = useState([]);
+  console.log("detailTrip");
+  console.log(detailTrip);
 
   const [list, setList] = useState([]);
   console.log("list");
@@ -65,19 +72,39 @@ function VisitSV(props) {
       });
   };
 
+  const getDetailTrip = (id) => {
+    const token = localStorage.token;
+    axios
+      .get(`/supervisor/show-detail-trip/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setDetailTrip(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleGetIdTrip = (id, sales_id) => {
     setId(id);
+    getDetailTrip(id);
+    // setSales_Id(sales_id);
 
-    setSales_Id(sales_id);
-
-    console.log("sales pance" + sales_id);
+    // console.log("sales pance" + sales_id);
   };
 
   const handleAddTrip = (salesid) => {
-    console.log(id);
     const token = localStorage.token;
     console.log("sales pance o2" + sales_id);
-    if (sales_id === "") {
+    if (detailTrip.length > 0) {
+      // console.log(sales_id);
+      alert("sudah ada sales coy");
+      getDetailTrip(trip_id);
+    } else {
       MySwal.fire({
         title: "Add Trip?",
         icon: "warning",
@@ -89,8 +116,8 @@ function VisitSV(props) {
         if (result.value) {
           MySwal.fire("Add Success!", "", "Canceled");
           axios
-            .put(
-              `/supervisor/add-sales-to-trip/${id}`,
+            .post(
+              `/supervisor/add-sales-to-trip/${trip_id}`,
               {
                 sales_id: salesid,
               },
@@ -101,26 +128,16 @@ function VisitSV(props) {
               }
             )
             .then(function (response) {
-              console.log(response);
-              window.reload("/supervisor/visit-sv");
-              getSales();
-              // props.history.push("/supervisor/visit-sv");
+              getDetailTrip(trip_id);
             })
-            .catch(async (error) => {
-              await getSales();
-              window.reload("/supervisor/visit-sv");
-            });
+            .catch(async (error) => {});
         }
       });
-    } else {
-      // console.log(sales_id);
-      alert("sudah ada sales coy");
-      window.reload("/supervisor/visit-sv");
     }
     setEnable(!enable);
   };
 
-  const handleDeleteSales = () => {
+  const handleDeleteSales = (id) => {
     const token = localStorage.token;
     MySwal.fire({
       title: "Add Trip?",
@@ -133,26 +150,19 @@ function VisitSV(props) {
       if (result.value) {
         MySwal.fire("Add Success!", "", "Canceled");
         axios
-          .put(
-            `/supervisor/add-sales-to-trip/${id}`,
-            {
-              sales_id: 0,
-            },
+          .delete(
+            `/supervisor/delete-sales-to-trip/${id}`,
+
             {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             }
           )
-          .then(async (response) => {
-            console.log(response);
-            await getSales();
-            window.reload("/supervisor/visit-sv");
+          .then((response) => {
+            getDetailTrip(trip_id);
           })
-          .catch(async (error) => {
-            await getSales();
-            window.reload("/supervisor/visit-sv");
-          });
+          .catch(async (error) => {});
       }
     });
   };
@@ -168,7 +178,11 @@ function VisitSV(props) {
 
       <div style={{ paddingTop: "4.5rem" }} className="px-3">
         <div className="bg-white flex justify-between rounded-lg text-sm p-2 text-gray-500">
-          <input className="focus:outline-none ml-1" placeholder="Search visit.." type="text" />
+          <input
+            className="focus:outline-none ml-1"
+            placeholder="Search visit.."
+            type="text"
+          />
           <img src={require(`assets/icons/visit/ic_search.svg`)} alt="search" />
         </div>
 
@@ -184,9 +198,13 @@ function VisitSV(props) {
                       alt="img"
                     />
                     <div className="ml-3">
-                      <p className="font-bold text-gray-600">{list.name_apotik}</p>
+                      <p className="font-bold text-gray-600">
+                        {list.name_apotik}
+                      </p>
 
-                      <p className="text-xs text-gray-600">{list.address_apotik}</p>
+                      <p className="text-xs text-gray-600">
+                        {list.address_apotik}
+                      </p>
                     </div>
                   </div>
                   <button
@@ -196,7 +214,10 @@ function VisitSV(props) {
                       handleGetIdTrip(list.id, list.sales_id);
                     }}
                   >
-                    <img src={require(`assets/icons/ic_add_visit.svg`)} alt="img" />
+                    <img
+                      src={require(`assets/icons/ic_add_visit.svg`)}
+                      alt="img"
+                    />
                   </button>
                 </div>
               </div>
@@ -214,57 +235,79 @@ function VisitSV(props) {
                 {/*body*/}
                 <div className="flex justify-between">
                   <p className="mt-3 ml-5">List Sales</p>
-                  <p className="mr-5 mt-3 font-bold" onClick={() => setShowModal(false)}>
+                  <p
+                    className="mr-5 mt-3 font-bold"
+                    onClick={() => setShowModal(false)}
+                  >
                     X
                   </p>
                 </div>
                 <div className="relative py-2 flex-auto">
                   {/* KASIH LOGIC DISINI */}
-                  {sales_id !== "" ? (
-                    <div className="mt-3 px-3">
-                      <div style={{ width: "20rem" }} className="p-2 rounded-lg justify-between bg-white h-auto flex">
+                  {detailTrip.map((item) => (
+                    <div className="mt-3 px-3" key={item.id}>
+                      <div
+                        style={{ width: "20rem" }}
+                        className="p-2 rounded-lg justify-between bg-white h-auto flex"
+                      >
                         <div className="flex">
-                          <img src={require(`assets/image/sales_list.png`)} alt="img" />
+                          <img
+                            src={require(`assets/image/sales_list.png`)}
+                            alt="img"
+                          />
                           <div className="ml-3">
-                            <p className="font-bold text-gray-600">{}</p>
-                            <p className="text-xs text-gray-600">Status : {}</p>
+                            <p className="font-bold text-gray-600">
+                              {item.sale.fullname}
+                            </p>
+                            <p className="text-xs text-gray-600">
+                              Status : {item.sale.status}
+                            </p>
                           </div>
                         </div>
 
                         <button
                           className={
-                            "bg-white text-black h-10 px-2 font-bold uppercase text-sm rounded-md focus:outline-none"
+                            "bg-orange-400 text-white h-10 px-2 font-bold uppercase text-sm rounded-md focus:outline-none"
                           }
-                          onClick={() => handleDeleteSales()}
+                          onClick={() => handleDeleteSales(item.id)}
                         >
                           {<p>Added</p>}
                         </button>
                       </div>
                     </div>
-                  ) : (
-                    listSales.map((item) => (
-                      <div className="mt-3 px-3" key={item.id}>
-                        <div style={{ width: "20rem" }} className="p-2 rounded-lg justify-between bg-white h-auto flex">
-                          <div className="flex">
-                            <img src={require(`assets/image/sales_list.png`)} alt="img" />
-                            <div className="ml-3">
-                              <p className="font-bold text-gray-600">{item.fullname}</p>
-                              <p className="text-xs text-gray-600">Status : {item.status}</p>
-                            </div>
+                  ))}
+                  {listSales.map((item) => (
+                    <div className="mt-3 px-3" key={item.id}>
+                      <div
+                        style={{ width: "20rem" }}
+                        className="p-2 rounded-lg justify-between bg-white h-auto flex"
+                      >
+                        <div className="flex">
+                          <img
+                            src={require(`assets/image/sales_list.png`)}
+                            alt="img"
+                          />
+                          <div className="ml-3">
+                            <p className="font-bold text-gray-600">
+                              {item.fullname}
+                            </p>
+                            <p className="text-xs text-gray-600">
+                              Status : {item.status}
+                            </p>
                           </div>
-
-                          <button
-                            className={
-                              "bg-orange-400 text-white h-10 px-2 font-bold uppercase text-sm rounded-md focus:outline-none"
-                            }
-                            onClick={() => handleAddTrip(item.id)}
-                          >
-                            {<p>Add</p>}
-                          </button>
                         </div>
+
+                        <button
+                          className={
+                            "bg-orange-400 text-white h-10 px-2 font-bold uppercase text-sm rounded-md focus:outline-none"
+                          }
+                          onClick={() => handleAddTrip(item.id)}
+                        >
+                          {<p>Add</p>}
+                        </button>
                       </div>
-                    ))
-                  )}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -273,7 +316,10 @@ function VisitSV(props) {
         </>
       ) : null}
 
-      <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
+      <div
+        style={{ width: "-webkit-fill-available" }}
+        className="fixed bg-white bottom-0 max-w-md"
+      >
         <MobileNav isSupervisor={true} {...props} />
       </div>
     </Container>
