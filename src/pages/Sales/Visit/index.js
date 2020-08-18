@@ -35,33 +35,45 @@ function Visit(props) {
       <Header hSalesNormal={true} />
       <div style={{ paddingTop: "4.7rem" }} className="px-3">
         <div style={{ height: "28rem" }} className="overflow-y-auto pb-10">
-          {listRute.map((item, i) => {
-            return (
-              <div className="mt-2" key={i}>
-                <Link to="/sales/visit/detail-visit">
-                  <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
-                    <div className="flex">
-                      <img
-                        className="self-center h-16 w-16"
-                        src={`${process.env.REACT_APP_HOST_HEROKU}${item.image}`}
-                        alt="img"
-                      />
-                      <div className="ml-3">
-                        <p className="font-bold text-gray-600">{item.name_apotik}</p>
-                        <p className="text-xs text-gray-600">{item.address_apotik}</p>
+          {listRute.length > 0
+            ? listRute.map((item, i) => {
+                return (
+                  <div className="mt-2" key={i}>
+                    <Link to="/sales/visit/detail-visit">
+                      <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
+                        <div className="flex">
+                          <img
+                            className="self-center h-16 w-16"
+                            src={`${process.env.REACT_APP_HOST_HEROKU}${item.trip.apotik.image}`}
+                            alt="img"
+                          />
+                          <div className="ml-3">
+                            <p className="font-bold text-gray-600">
+                              {item.trip.apotik.name}
+                            </p>
+                            <p className="text-xs text-gray-600">
+                              {item.trip.apotik.address}
+                            </p>
+                          </div>
+                        </div>
+                        <button className="mr-3 focus:outline-none">
+                          <img
+                            src={require(`assets/icons/card/ic_arrow.svg`)}
+                            alt="img"
+                          />
+                        </button>
                       </div>
-                    </div>
-                    <button className="mr-3 focus:outline-none">
-                      <img src={require(`assets/icons/card/ic_arrow.svg`)} alt="img" />
-                    </button>
+                    </Link>
                   </div>
-                </Link>
-              </div>
-            );
-          })}
+                );
+              })
+            : ""}
         </div>
       </div>
-      <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
+      <div
+        style={{ width: "-webkit-fill-available" }}
+        className="fixed bg-white bottom-0 max-w-md"
+      >
         <MobileNav isSales={true} {...props} />
       </div>
     </Container>
