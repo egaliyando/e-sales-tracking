@@ -1,28 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
+import axios from "configs";
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 function DetailVisit(props) {
+  const [detailTrip, setDetailTrip] = useState([]);
+  // console.log("detailTrip");
+  // console.log(detailTrip);
   const [showModal, setShowModal] = useState(false);
   const MySwal = withReactContent(Swal);
-  function handleDelete() {
-    return MySwal.fire({
-      title: "Delete product?",
-      icon: "error",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.value) {
-        MySwal.fire("Deleted!", "Success delete!", "Canceled");
-      }
-    });
+
+  const { id } = props.match.params;
+  // console.log(id);
+  const getDetailTrip = () => {
+    const token = localStorage.token;
+    axios
+      .get(`/sales/cart-sales/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        setDetailTrip(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  //handle delete product
+  function handleDelete(id) {
+    // console.log(id);
+    const token = localStorage.token;
+    axios
+      .delete(`/sales/cart-sales/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+        getDetailTrip();
+      })
+      .catch(function (error) {
+        console.log(error.response);
+      });
   }
   function handleDone() {
     return MySwal.fire({
@@ -39,6 +67,10 @@ function DetailVisit(props) {
       }
     });
   }
+
+  useEffect(() => {
+    getDetailTrip();
+  }, []);
   return (
     <Container>
       <Header hSalesNormal={true} />
@@ -60,90 +92,28 @@ function DetailVisit(props) {
         <p className="text-gray-600 text-xs mb-1">Product Order</p>
         {/* LIST PRODUCT IS ORDER */}
         <div style={{ height: "28rem" }} className="overflow-y-auto pb-64">
-          <div className="w-full p-2 mt-2 justify-between rounded-lg bg-white h-auto flex">
-            <div className="flex justify-between w-full">
-              <div className="flex">
-                <img src={require(`assets/image/obat.png`)} alt="img" />
-                <div className="ml-3">
-                  <p className="font-bold text-gray-600">Broncitin</p>
-                  <p className="text-xs text-gray-600">Order : 12</p>
+          {detailTrip.map((item, i) => {
+            return (
+              <div key={i} className="w-full p-2 mt-2 justify-between rounded-lg bg-white h-auto flex">
+                <div className="flex justify-between w-full">
+                  <div className="flex">
+                    <img
+                      className="h-16 w-16"
+                      src={`${process.env.REACT_APP_HOST_HEROKU}${item.product.image}`}
+                      alt="img"
+                    />
+                    <div className="ml-3 self-center">
+                      <p className="font-bold text-gray-600">{item.product.name}</p>
+                      <p className="text-xs text-gray-600">{item.qty}</p>
+                    </div>
+                  </div>
+                  <button className="focus:outline-none" onClick={() => handleDelete(item.id)}>
+                    <img className="w-4 mr-3" src={require(`assets/icons/ic_trash.svg`)} alt="img" />
+                  </button>
                 </div>
               </div>
-              <button className="focus:outline-none" onClick={handleDelete}>
-                <img className="w-4 mr-3" src={require(`assets/icons/ic_trash.svg`)} alt="img" />
-              </button>
-            </div>
-          </div>
-          <div className="w-full p-2 mt-2 justify-between rounded-lg bg-white h-auto flex">
-            <div className="flex justify-between w-full">
-              <div className="flex">
-                <img src={require(`assets/image/obat.png`)} alt="img" />
-                <div className="ml-3">
-                  <p className="font-bold text-gray-600">Broncitin</p>
-                  <p className="text-xs text-gray-600">Order : 12</p>
-                </div>
-              </div>
-              <button className="focus:outline-none" onClick={handleDelete}>
-                <img className="w-4 mr-3" src={require(`assets/icons/ic_trash.svg`)} alt="img" />
-              </button>
-            </div>
-          </div>
-          <div className="w-full p-2 mt-2 justify-between rounded-lg bg-white h-auto flex">
-            <div className="flex justify-between w-full">
-              <div className="flex">
-                <img src={require(`assets/image/obat.png`)} alt="img" />
-                <div className="ml-3">
-                  <p className="font-bold text-gray-600">Broncitin</p>
-                  <p className="text-xs text-gray-600">Order : 12</p>
-                </div>
-              </div>
-              <button className="focus:outline-none" onClick={handleDelete}>
-                <img className="w-4 mr-3" src={require(`assets/icons/ic_trash.svg`)} alt="img" />
-              </button>
-            </div>
-          </div>
-          <div className="w-full p-2 mt-2 justify-between rounded-lg bg-white h-auto flex">
-            <div className="flex justify-between w-full">
-              <div className="flex">
-                <img src={require(`assets/image/obat.png`)} alt="img" />
-                <div className="ml-3">
-                  <p className="font-bold text-gray-600">Broncitin</p>
-                  <p className="text-xs text-gray-600">Order : 12</p>
-                </div>
-              </div>
-              <button className="focus:outline-none" onClick={handleDelete}>
-                <img className="w-4 mr-3" src={require(`assets/icons/ic_trash.svg`)} alt="img" />
-              </button>
-            </div>
-          </div>
-          <div className="w-full p-2 mt-2 justify-between rounded-lg bg-white h-auto flex">
-            <div className="flex justify-between w-full">
-              <div className="flex">
-                <img src={require(`assets/image/obat.png`)} alt="img" />
-                <div className="ml-3">
-                  <p className="font-bold text-gray-600">Broncitin</p>
-                  <p className="text-xs text-gray-600">Order : 12</p>
-                </div>
-              </div>
-              <button className="focus:outline-none" onClick={handleDelete}>
-                <img className="w-4 mr-3" src={require(`assets/icons/ic_trash.svg`)} alt="img" />
-              </button>
-            </div>
-          </div>
-          <div className="w-full p-2 mt-2 justify-between rounded-lg bg-white h-auto flex">
-            <div className="flex justify-between w-full">
-              <div className="flex">
-                <img src={require(`assets/image/obat.png`)} alt="img" />
-                <div className="ml-3">
-                  <p className="font-bold text-gray-600">Broncitin</p>
-                  <p className="text-xs text-gray-600">Order : 12</p>
-                </div>
-              </div>
-              <button className="focus:outline-none" onClick={handleDelete}>
-                <img className="w-4 mr-3" src={require(`assets/icons/ic_trash.svg`)} alt="img" />
-              </button>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
 
@@ -186,7 +156,7 @@ function DetailVisit(props) {
 
       <div style={{ width: "-webkit-fill-available" }} className="fixed mb-16 bottom-0 max-w-md">
         <div className="flex justify-center">
-          <Link to="/sales/visit/detail-visit/order" className="focus:outline-none">
+          <Link to={`/sales/visit/detail-visit/order/${id}`} className="focus:outline-none">
             <img src={require(`assets/icons/visit/ic_add.svg`)} alt="add" />
           </Link>
           <button onClick={() => setShowModal(true)} className="focus:outline-none">

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 function Visit(props) {
   const [listRute, setListRute] = useState([]);
+
   const getRute = () => {
     const token = localStorage.token;
     const sales_id = localStorage.sales_id;
@@ -26,6 +27,7 @@ function Visit(props) {
         console.log(err);
       });
   };
+
   useEffect(() => {
     getRute();
   }, []);
@@ -39,7 +41,7 @@ function Visit(props) {
             ? listRute.map((item, i) => {
                 return (
                   <div className="mt-2" key={i}>
-                    <Link to="/sales/visit/detail-visit">
+                    <Link to={`/sales/visit/detail-visit/${item.id}`}>
                       <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                         <div className="flex">
                           <img
@@ -48,19 +50,12 @@ function Visit(props) {
                             alt="img"
                           />
                           <div className="ml-3">
-                            <p className="font-bold text-gray-600">
-                              {item.trip.apotik.name}
-                            </p>
-                            <p className="text-xs text-gray-600">
-                              {item.trip.apotik.address}
-                            </p>
+                            <p className="font-bold text-gray-600">{item.trip.apotik.name}</p>
+                            <p className="text-xs text-gray-600">{item.trip.apotik.address}</p>
                           </div>
                         </div>
                         <button className="mr-3 focus:outline-none">
-                          <img
-                            src={require(`assets/icons/card/ic_arrow.svg`)}
-                            alt="img"
-                          />
+                          <img src={require(`assets/icons/card/ic_arrow.svg`)} alt="img" />
                         </button>
                       </div>
                     </Link>
@@ -70,10 +65,7 @@ function Visit(props) {
             : ""}
         </div>
       </div>
-      <div
-        style={{ width: "-webkit-fill-available" }}
-        className="fixed bg-white bottom-0 max-w-md"
-      >
+      <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
         <MobileNav isSales={true} {...props} />
       </div>
     </Container>

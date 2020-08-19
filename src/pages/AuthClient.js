@@ -17,7 +17,7 @@ function AuthClient(props) {
     password: "",
     isError: { status: false, message: "" },
   });
-  console.log(data);
+  // console.log(data);
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -28,7 +28,7 @@ function AuthClient(props) {
     axios
       .post("/sales/signin", data)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
 
         if (res.data.data.checkUser.role === "sales") {
           localStorage.setItem("token", res.data.data.token);

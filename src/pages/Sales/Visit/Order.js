@@ -6,17 +6,56 @@ import { Link } from "react-router-dom";
 import axios from "configs";
 
 function Order(props) {
+  //parsing id trip
+  const { id } = props.match.params;
+  console.log("id trip");
+  console.log(id);
+
+  //deklarasi state id product
+  const [idProduct, setIdProduct] = useState([]);
+  //deklarasi modal
   const [showModal, setShowModal] = useState(false);
+  //deklarasi counter qty
   const [count, setCount] = useState(0);
-
+  //deklarasi data product
   const [data, setData] = useState([]);
-  console.log("product");
-  console.log(data);
 
+  //deklarasi modal
+  const handleModal = (id) => {
+    setShowModal(true);
+    handleGetIdProduct(id);
+  };
+
+  // handle get id product ketika klik modal
+  const handleGetIdProduct = (id) => {
+    getProduct(id);
+    getSingleProduct(id);
+  };
+
+  //ambil data single product
+  const getSingleProduct = (id) => {
+    const token = localStorage.token;
+    axios
+      .get(`/product/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log("detail product");
+        console.log(res);
+        setIdProduct(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  //ambil semua data product
   const getProduct = () => {
     const token = localStorage.token;
     axios
-      .get(`/product`, {
+      .get(`/product/`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -28,6 +67,33 @@ function Order(props) {
         console.log(err);
       });
   };
+
+  //handle tambah product
+  const handleAddProduct = () => {
+    const { id } = props.match.params;
+    const token = localStorage.token;
+    axios
+      .post(
+        `/sales/cart-sales/${id}`,
+        {
+          product_id: idProduct.id,
+          qty: count,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        props.history.push(`/sales/visit/detail-visit/${id}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     getProduct();
   }, []);
@@ -43,7 +109,7 @@ function Order(props) {
 
         <div style={{ height: "28rem" }} className="overflow-y-auto pb-10">
           {data.map((item, i) => (
-            <div className="mt-2" key={i} onClick={() => setShowModal(true)}>
+            <div className="mt-2" key={i} onClick={() => handleModal(item.id)}>
               {/* <Link to="/sales/visit/order"> */}
               <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                 <div className="flex">
@@ -67,15 +133,22 @@ function Order(props) {
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                   {/*body*/}
                   <div className="relative p-3 flex-auto">
-                    <div className="w-64 p-2 justify-between rounded-lg bg-white h-auto flex">
-                      <div className="flex">
-                        <img src={require(`assets/image/obat.png`)} alt="img" />
+                    <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
+                      <div className="flex justify-between">
+                        <img
+                          className="h-16 w-16"
+                          src={`${process.env.REACT_APP_HOST_HEROKU}${idProduct.image}`}
+                          alt="img"
+                        />
                         <div className="ml-3">
-                          <p className="font-bold text-gray-600">Broncitin</p>
-                          <p className="text-xs text-gray-600">Rp. 200.000</p>
-                          <p className="text-xs text-gray-600">Stock: 2000</p>
+                          <p className="font-bold text-gray-600">{idProduct.name}</p>
+                          <p className="text-xs text-gray-600">{idProduct.price}</p>
+                          <p className="text-xs text-gray-600">{idProduct.stock}</p>
                         </div>
                       </div>
+                      <p className="font-bold justify-end" onClick={() => setShowModal(false)}>
+                        X
+                      </p>
                     </div>
                   </div>
                   {/*footer*/}
@@ -95,14 +168,14 @@ function Order(props) {
                     >
                       +
                     </button>
-                    <Link
-                      to="/sales/visit/detail-visit"
+                    <button
+                      onClick={handleAddProduct}
                       className="bg-orange-400 ml-10 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                       style={{ transition: "all .15s ease" }}
                     >
                       Add
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -111,7 +184,7 @@ function Order(props) {
           </>
         ) : null}
       </div>
-      <Link to="/sales/visit/detail-visit/" className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none">
+      <Link to={`/sales/visit/detail-visit/${id}`} className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none">
         <img src={require(`assets/icons/visit/ic_close.svg`)} alt="add" />
       </Link>
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">

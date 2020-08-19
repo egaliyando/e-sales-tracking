@@ -91,11 +91,11 @@ export default function AppRoute() {
         {/* Router Sales */}
         <Route exact path="/sales/dashboard" component={DashboardSales} />
         <Route exact path="/sales/profile" component={Profile} />
-        <Route exact path="/sales/visit" component={Visit} />
+        <Route exact path="/sales/visit/" component={Visit} />
         <Route exact path="/sales/history" component={History} />
         <Route exact path="/sales/history/detail" component={DetailHistory} />
-        <Route exact path="/sales/visit/detail-visit/order" component={SalesOrder} />
-        <Route exact path="/sales/visit/detail-visit" component={DetailVisit} />
+        <Route exact path="/sales/visit/detail-visit/order/:id" component={SalesOrder} />
+        <Route exact path="/sales/visit/detail-visit/:id" component={DetailVisit} />
         <Route exact path="/sales/chat" component={ChatSales} />
         <Route exact path="/client/logout" component={LogoutClient} />
       </Switch>
