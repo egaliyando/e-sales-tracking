@@ -1,23 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navigation from "components/Navigation";
 import Table from "components/Table";
-import { Link, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchTrip } from "store/actions/trip";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+import { Redirect } from "react-router-dom";
+import axios from "configs";
+const token = localStorage.token;
 
-function Order(props) {
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.users.token);
-  const trip = useSelector((state) => state.trip.trip);
-  // const MySwal = withReactContent(Swal);
-  console.log(trip);
-  const getTrip = () => {
-    dispatch(fetchTrip());
+function Order() {
+  const [order, setOrder] = useState([]);
+  const getOrder = () => {
+    const token = localStorage.token;
+
+    axios
+      .get(`/checkout`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(function (response) {
+        console.log("response");
+        console.log(response);
+        setOrder(response.data.data);
+      })
+      .catch(function (error) {
+        console.log(error.response);
+      });
   };
   useEffect(() => {
-    getTrip();
+    getOrder();
   }, []);
 
   if (token === "") {
@@ -30,36 +39,10 @@ function Order(props) {
         <p className="my-3 font-bold">Order</p>
         {/* MODAL */}
         <Table
-          thead={[
-            "No",
-            "Tanggal",
-            "Nama Sales",
-            // "Nama Apotik",
-            "Address",
-            // "Nama Produk",
-            // "Jumlah Produk",
-            "Total Harga",
-            // "Notes",
-            // "Image",
-            "Status",
-            "Aksi",
-          ]}
-          tbody={[
-            "1",
-            "12/12/20",
-            "Okta",
-            // "Apotik Rossa",
-            "Jl, Z.A Pagaralam",
-            // "Broncitin",
-            // "12",
-            "Rp.200.000",
-            // "....",
-            // "img.jpg", masuk detail
-            "Order/Tidak",
-            <Link to="/admin/order/detail" className="bg-green-500 px-2 py-1 rounded-lg text-white">
-              Detail
-            </Link>,
-          ]}
+          data={order}
+          thead={["No", "Tanggal", "Nama Sales", "Address", "Total Harga", "Status", "Aksi"]}
+          tbody={["id", "address_apotik", "nama_sales", "status", "tanggal", "total_harga"]}
+          customAction={"/admin/order/detail"}
         />
       </div>
     </div>

@@ -1,29 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
-// import { Link } from "react-router-dom";
-
-const listSales = [
-  {
-    id: 1,
-    name: "Budi",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Arif",
-    status: "Close",
-  },
-  {
-    id: 3,
-    name: "Melati",
-    status: "Active",
-  },
-];
+import axios from "configs";
 
 function Tracking(props) {
+  //deklarasi state sales open
+  const [listSales, setListSales] = useState([]);
+
+  const getSales = () => {
+    const token = localStorage.token;
+    axios
+      .get(`/supervisor/sales-open`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setListSales(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getSales();
+  }, []);
+
   return (
     <Container>
       <Header hSupervisor={true} />
@@ -37,12 +42,12 @@ function Tracking(props) {
         <div style={{ height: "33rem" }} className="overflow-y-auto pb-10">
           {listSales.map((item) => (
             <div className="mt-2" key={item.id}>
-              <Link to="/supervisor/sales-track/detail">
+              <Link to={`/supervisor/sales-track/detail/${item.id}`}>
                 <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                   <div className="flex">
                     <img src={require(`assets/image/sales_list.png`)} alt="img" />
                     <div className="ml-3">
-                      <p className="font-bold text-gray-600">{item.name}</p>
+                      <p className="font-bold text-gray-600">{item.fullname}</p>
                       <p className="text-xs text-green-600">{item.status}</p>
                     </div>
                   </div>

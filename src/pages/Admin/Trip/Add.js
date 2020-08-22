@@ -33,15 +33,15 @@ export default function Add(props) {
   //HANDLE SUBMIT TRIP
   const handleSubmit = () => {
     MySwal.fire({
-      title: "Add Apotik?",
-      icon: "warning",
+      title: "Add Trip?",
+      icon: "info",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.value) {
-        MySwal.fire("Add Success!", "", "Canceled");
+        MySwal.fire("Add Success!", ":)", "warning", "Canceled");
         axios
           .post(
             "/trip",

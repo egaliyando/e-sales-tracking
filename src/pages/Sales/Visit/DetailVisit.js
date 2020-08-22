@@ -4,21 +4,53 @@ import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
 import axios from "configs";
-
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 function DetailVisit(props) {
+  //deklarasi state detail trip
   const [detailTrip, setDetailTrip] = useState([]);
-  // console.log("detailTrip");
-  // console.log(detailTrip);
+
+  const [image, setImage] = useState();
+  const [notes, setNotes] = useState();
+
+  // deklarasi state modal
   const [showModal, setShowModal] = useState(false);
+
+  const [idApotik, setIdApotik] = useState("");
+
+  // deklarasi sweetalert
   const MySwal = withReactContent(Swal);
 
+  //parsing id memalui params
   const { id } = props.match.params;
-  // console.log(id);
+  const { apotik_id } = props.match.params;
+
+  const sales_id = localStorage.sales_id;
+  console.log("sales_id");
+  console.log(sales_id);
+
+  //function untuk get data detail trip melalui api
   const getDetailTrip = () => {
     const token = localStorage.token;
+    const apotik = [...idApotik];
+    axios
+      .get(`/apotik/${apotik_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        apotik.push(res.data.data.id);
+        apotik.push(res.data.data.name);
+        apotik.push(res.data.data.address);
+        apotik.push(res.data.data.image);
+        setIdApotik(apotik);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     axios
       .get(`/sales/cart-sales/${id}`, {
         headers: {
@@ -26,7 +58,6 @@ function DetailVisit(props) {
         },
       })
       .then((res) => {
-        console.log(res.data.data);
         setDetailTrip(res.data.data);
       })
       .catch((err) => {
@@ -36,7 +67,6 @@ function DetailVisit(props) {
 
   //handle delete product
   function handleDelete(id) {
-    // console.log(id);
     const token = localStorage.token;
     axios
       .delete(`/sales/cart-sales/${id}`, {
@@ -45,14 +75,22 @@ function DetailVisit(props) {
         },
       })
       .then(function (response) {
-        console.log(response);
         getDetailTrip();
       })
       .catch(function (error) {
         console.log(error.response);
       });
   }
+
   function handleDone() {
+    const { id } = props.match.params;
+    const { apotik_id } = props.match.params;
+    const token = localStorage.token;
+    let formData = new FormData();
+    formData.append("image", image);
+    formData.append("sales_id", sales_id);
+    formData.append("notes", notes);
+
     return MySwal.fire({
       title: "Done visited?",
       icon: "warning",
@@ -62,8 +100,30 @@ function DetailVisit(props) {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.value) {
-        MySwal.fire("Done!", "Success Visit!", "Canceled");
-        window.location.href = "/sales/history";
+        axios
+          .post(`/sales/checkout/${id}`, formData, {
+            // if (image === "") {
+            //   alert("jangan kosong");
+            // } else {
+            //   image;
+            // }
+            // if (notes === "") {
+            //   alert("jangan kosong");
+            // } else {
+            //   notes;
+            // }
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            MySwal.fire("Done!", "Success Visit!", "info", "Canceled");
+            props.history.push("/sales/visit");
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     });
   }
@@ -80,10 +140,14 @@ function DetailVisit(props) {
           <p className="text-gray-600 text-xs mb-1">Detail Visit</p>
           <div className="w-full p-2 bg-white justify-between rounded-lg h-auto flex">
             <div className="flex">
-              <img src={require(`assets/image/apotek.png`)} alt="img" />
+              <img
+                className="self-center h-16 w-16"
+                src={`${process.env.REACT_APP_HOST_HEROKU}${idApotik[3]}`}
+                alt="img"
+              />
               <div className="ml-3">
-                <p className="font-bold text-gray-600">Apotik Rossa</p>
-                <p className="text-xs text-gray-600">Jl. Abdul muis</p>
+                <p className="font-bold text-gray-600">{idApotik[1]}</p>
+                <p className="text-xs text-gray-600">{idApotik[2]}</p>
               </div>
             </div>
           </div>
@@ -120,19 +184,25 @@ function DetailVisit(props) {
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-md">
+            <div className="relative overflow-x-hidden w-auto my-6 mx-auto max-w-md">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*body*/}
                 <div className="relative p-3 flex-auto">
                   <div className="w-64 bg-gray-200 p-3">
-                    <input className="focus:outline-none" type="file" />
+                    <input
+                      onChange={(e) => setImage(e.target.files[0])}
+                      className="focus:outline-none overflow-x-hidden"
+                      type="file"
+                    />
                   </div>
                   <div className="w-64 mt-5 bg-gray-200 p-3">
                     <input
                       className="w-auto bg-gray-200 p-1 text-sm focus:outline-none"
                       type="area"
                       placeholder="Note"
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
                     />
                   </div>
                 </div>

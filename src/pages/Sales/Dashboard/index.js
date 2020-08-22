@@ -1,10 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
+import axios from "configs";
 
 function Dashboard(props) {
+  const [listTrip, setListTrip] = useState([]);
+  const getTrip = () => {
+    const token = localStorage.token;
+    const sales_id = localStorage.sales_id;
+
+    axios
+      .get(`/sales/trip-single-sales/${sales_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setListTrip(res.data.data);
+        console.log("sales rute");
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getTrip();
+  }, []);
   return (
     <Container>
       <Header hSalesWithToggle={true} />
@@ -37,60 +62,23 @@ function Dashboard(props) {
 
       {/* CARD LIST KUNJUNGAN */}
       <div className="overflow-y-auto h-64 pb-12">
-        <div className="mt-2 px-3">
-          <div className="w-full p-2 rounded-lg bg-white h-auto flex">
-            <img src={require(`assets/image/apotek.png`)} alt="img" />
-            <div className="ml-3">
-              <p className="font-bold text-gray-600">Apotek Rosa</p>
-              <p className="text-xs text-gray-600">Jl Abdul Muis Rajabasa</p>
+        {listTrip.map((data, i) => {
+          return (
+            <div className="mt-2 px-3" key={i}>
+              <div className="w-full p-2 rounded-lg bg-white h-auto flex">
+                <img
+                  className="self-center h-16 w-16"
+                  src={`${process.env.REACT_APP_HOST_HEROKU}${data.trip.apotik.image}`}
+                  alt="img"
+                />
+                <div className="ml-3">
+                  <p className="font-bold text-gray-600">{data.trip.apotik.name}</p>
+                  <p className="text-xs text-gray-600">{data.trip.apotik.address}</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div className="mt-2 px-3">
-          <div className="w-full p-2 rounded-lg bg-white h-auto flex">
-            <img src={require(`assets/image/apotek.png`)} alt="img" />
-            <div className="ml-3">
-              <p className="font-bold text-gray-600">Apotek Rosa</p>
-              <p className="text-xs text-gray-600">Jl Abdul Muis Rajabasa</p>
-            </div>
-          </div>
-        </div>
-        <div className="mt-2 px-3">
-          <div className="w-full p-2 rounded-lg bg-white h-auto flex">
-            <img src={require(`assets/image/apotek.png`)} alt="img" />
-            <div className="ml-3">
-              <p className="font-bold text-gray-600">Apotek Rosa</p>
-              <p className="text-xs text-gray-600">Jl Abdul Muis Rajabasa</p>
-            </div>
-          </div>
-        </div>
-        <div className="mt-2 px-3">
-          <div className="w-full p-2 rounded-lg bg-white h-auto flex">
-            <img src={require(`assets/image/apotek.png`)} alt="img" />
-            <div className="ml-3">
-              <p className="font-bold text-gray-600">Apotek Rosa</p>
-              <p className="text-xs text-gray-600">Jl Abdul Muis Rajabasa</p>
-            </div>
-          </div>
-        </div>
-        <div className="mt-2 px-3">
-          <div className="w-full p-2 rounded-lg bg-white h-auto flex">
-            <img src={require(`assets/image/apotek.png`)} alt="img" />
-            <div className="ml-3">
-              <p className="font-bold text-gray-600">Apotek Rosa</p>
-              <p className="text-xs text-gray-600">Jl Abdul Muis Rajabasa</p>
-            </div>
-          </div>
-        </div>
-        <div className="mt-2 px-3">
-          <div className="w-full p-2 rounded-lg bg-white h-auto flex">
-            <img src={require(`assets/image/apotek.png`)} alt="img" />
-            <div className="ml-3">
-              <p className="font-bold text-gray-600">Apotek Rosa</p>
-              <p className="text-xs text-gray-600">Jl Abdul Muis Rajabasa</p>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
 
       <Link to="/sales/chat" className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none">

@@ -5,6 +5,8 @@ import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
 
 function DetailHistory(props) {
+  const sales_id = localStorage.sales_id;
+
   return (
     <Container>
       <Header hSalesNormal={true} />
@@ -57,7 +59,7 @@ function DetailHistory(props) {
         </div>
       </div>
 
-      <Link to="/sales/history/" className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none">
+      <Link to={`/sales/history/${sales_id}`} className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none">
         <img src={require(`assets/icons/visit/ic_close.svg`)} alt="add" />
       </Link>
 

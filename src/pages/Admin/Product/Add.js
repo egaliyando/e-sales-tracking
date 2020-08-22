@@ -23,14 +23,14 @@ function Add(props) {
     formData.append("image", image);
     MySwal.fire({
       title: "Add Product?",
-      icon: "warning",
+      icon: "info",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.value) {
-        MySwal.fire("Add Success!", "", "Canceled");
+        MySwal.fire("Add Success!", ":)", "warning", "Canceled");
         axios
           .post("/product", formData, {
             headers: {

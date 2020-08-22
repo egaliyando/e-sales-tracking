@@ -6,16 +6,19 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 function Edit(props) {
+  //deklarasi sweetalert
   const MySwal = withReactContent(Swal);
-
+  //deklarasi state untuk menampung data inputan
   const [Name, setName] = useState("");
   const [Address, setAddress] = useState("");
   const [Image, setImage] = useState("");
   const [Lat, setLat] = useState("");
   const [Long, setLong] = useState("");
-
+  //function get data apotik== data di get dulu untuk diletakan di text input
   const getData = () => {
+    //deklarasi id / parsing id melalui params
     const { id } = props.match.params;
+    //deklarasi token selalu
     const token = localStorage.token;
     axios
       .get(`/apotik/${id}`, {
@@ -24,6 +27,7 @@ function Edit(props) {
         },
       })
       .then((res) => {
+        //setelah data di get, maka data yang didapat akan di set kedalam state
         setLat(res.data.data.lat);
         setLong(res.data.data.long);
         setName(res.data.data.name);
@@ -31,13 +35,18 @@ function Edit(props) {
         setImage(res.data.data.image);
       })
       .catch((err) => {
+        //untuk memangkap error ketika data miss
         console.log(err);
       });
   };
 
+  //function untuk melakukan submit ketika selesai di edit
   const handleSubmit = (e) => {
+    //parsing id jangan lupa gaes
     const { id } = props.match.params;
+    //deklarasi token selalu
     const token = localStorage.token;
+    //penggunaan sweetalert
     MySwal.fire({
       title: "Edit?",
       icon: "success",
@@ -64,13 +73,11 @@ function Edit(props) {
               },
             }
           )
-          .then(function (res) {
-            console.log(res);
+          .then(function () {
             props.history.push("/admin/apotik");
           })
           .catch(function (error) {
-            console.log(error.res.data.error);
-            // let error = [];
+            //push untuk memberitahu juka ada error / field kosong
             for (let i = 0; i < error.res.data.error.length; i++) {
               error.push(error.response.data.error[i].param);
             }
@@ -83,6 +90,7 @@ function Edit(props) {
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <div className="flex">
       <Navigation />

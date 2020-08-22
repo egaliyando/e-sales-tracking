@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Tbody({
-  data,
-  display,
-  editUrl,
-  deleteAction,
-  customAction,
-  actionNotDisplay,
-}) {
+export default function Tbody({ data, display, editUrl, deleteAction, customAction, actionNotDisplay }) {
   if (!data) return "";
   console.log(data.role);
 
@@ -32,30 +25,24 @@ export default function Tbody({
                 <td>
                   <div className="flex justify-start">
                     {editUrl && (
-                      <Link
-                        className="justify-center mr-5"
-                        to={`${editUrl}/${data.id}`}
-                      >
-                        <img
-                          src={require(`assets/icons/ic_pencil.svg`)}
-                          alt="edit"
-                        />
+                      <Link className="justify-center mr-5" to={`${editUrl}/${data.id}`}>
+                        <img src={require(`assets/icons/ic_pencil.svg`)} alt="edit" />
                       </Link>
                     )}
                     {deleteAction && (
                       <button
                         className="focus:outline-none"
                         onClick={() => {
-                          data.role === undefined
-                            ? deleteAction(data.id)
-                            : deleteAction(data.user_id);
+                          data.role === undefined ? deleteAction(data.id) : deleteAction(data.user_id);
                         }}
                       >
-                        <img
-                          src={require(`assets/icons/ic_trash.svg`)}
-                          alt="delete"
-                        />
+                        <img src={require(`assets/icons/ic_trash.svg`)} alt="delete" />
                       </button>
+                    )}
+                    {customAction && (
+                      <Link to={`${customAction}/${data.id}`} className="bg-green-500 px-2 py-1 rounded-lg text-white">
+                        Detail
+                      </Link>
                     )}
                   </div>
                 </td>

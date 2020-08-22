@@ -41,7 +41,7 @@ function Visit(props) {
             ? listRute.map((item, i) => {
                 return (
                   <div className="mt-2" key={i}>
-                    <Link to={`/sales/visit/detail-visit/${item.id}`}>
+                    <Link to={`/sales/visit/detail-visit/${item.id}/${item.trip.apotik.id}`}>
                       <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                         <div className="flex">
                           <img

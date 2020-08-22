@@ -72,7 +72,7 @@ export default function AppRoute() {
         <Route exact path="/admin/chat" component={Chat} />
         {/* ORDER */}
         <Route exact path="/admin/order" component={Order} />
-        <Route exact path="/admin/order/detail" component={Detail} />
+        <Route exact path="/admin/order/detail/:id" component={Detail} />
         <Route exact path="/admin/logout" component={Logout} />
 
         {/* AUTH */}
@@ -84,18 +84,18 @@ export default function AppRoute() {
         <Route exact path="/supervisor/product-sv" component={ProductSV} />
         <Route exact path="/supervisor/visit-sv" component={VisitSV} />
         <Route exact path="/supervisor/sales-track" component={Tracking} />
-        <Route exact path="/supervisor/sales-track/detail" component={DetailTrack} />
-        <Route exact path="/supervisor/sales-track/detail/detail-history" component={DetailHistorySV} />
+        <Route exact path="/supervisor/sales-track/detail/:id" component={DetailTrack} />
+        <Route exact path="/supervisor/sales-track/detail/detail-history/:id/:apotik_id" component={DetailHistorySV} />
         <Route exact path="/supervisor/profile" component={ProfileSV} />
 
         {/* Router Sales */}
         <Route exact path="/sales/dashboard" component={DashboardSales} />
         <Route exact path="/sales/profile" component={Profile} />
         <Route exact path="/sales/visit/" component={Visit} />
-        <Route exact path="/sales/history" component={History} />
-        <Route exact path="/sales/history/detail" component={DetailHistory} />
+        <Route exact path="/sales/history/:id" component={History} />
+        <Route exact path="/sales/history/detail/:id" component={DetailHistory} />
         <Route exact path="/sales/visit/detail-visit/order/:id" component={SalesOrder} />
-        <Route exact path="/sales/visit/detail-visit/:id" component={DetailVisit} />
+        <Route exact path="/sales/visit/detail-visit/:id/:apotik_id" component={DetailVisit} />
         <Route exact path="/sales/chat" component={ChatSales} />
         <Route exact path="/client/logout" component={LogoutClient} />
       </Switch>

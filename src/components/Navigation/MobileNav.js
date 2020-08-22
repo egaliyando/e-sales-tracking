@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Sales(props) {
+  const sales_id = localStorage.sales_id;
   const getNavigationActive = (path) => {
     return props.location.pathname === path ? "self-center" : "self-center";
   };
@@ -58,7 +59,7 @@ function Sales(props) {
           />
         </svg>
       </Link>
-      <Link className={`${getNavigationActive("/sales/history")}`} to="/sales/history">
+      <Link className={`${getNavigationActive(`/sales/history/${sales_id}`)}`} to={`/sales/history/${sales_id}`}>
         <svg
           className="m-auto"
           xmlns="http://www.w3.org/2000/svg"
@@ -71,11 +72,11 @@ function Sales(props) {
             data-name="Icon awesome-history"
             d="M26.427,13.47A12.933,12.933,0,0,1,5.379,23.563a1.251,1.251,0,0,1-.1-1.857l.588-.588a1.254,1.254,0,0,1,1.663-.1A9.6,9.6,0,1,0,6.921,6.5L9.567,9.15a.834.834,0,0,1-.59,1.424H1.4A.834.834,0,0,1,.563,9.74V2.16a.834.834,0,0,1,1.424-.59L4.561,4.144A12.932,12.932,0,0,1,26.427,13.47Zm-9.434,4.108.512-.659a1.251,1.251,0,0,0-.22-1.756l-2.122-1.651V8.071A1.251,1.251,0,0,0,13.912,6.82h-.834a1.251,1.251,0,0,0-1.251,1.251v7.074L15.237,17.8a1.252,1.252,0,0,0,1.756-.22Z"
             transform="translate(-0.563 -0.563)"
-            fill={`${props.location.pathname === "/sales/history" ? "#FF8E48" : "#bcbcbc"}`}
+            fill={`${props.location.pathname === `/sales/history/${sales_id}` ? "#FF8E48" : "#bcbcbc"}`}
           />
         </svg>
       </Link>
-      <Link className={`${getNavigationActive("/sales/profile")}`} to="/sales/profile">
+      <Link className={`${getNavigationActive(`/sales/history/${sales_id}`)}`} to="/sales/profile">
         <svg
           className="m-auto"
           xmlns="http://www.w3.org/2000/svg"

@@ -8,6 +8,7 @@ import axios from "configs";
 function Order(props) {
   //parsing id trip
   const { id } = props.match.params;
+  const { apotik_id } = props.match.params;
   console.log("id trip");
   console.log(id);
 
@@ -87,7 +88,7 @@ function Order(props) {
       )
       .then((res) => {
         console.log(res);
-        props.history.push(`/sales/visit/detail-visit/${id}`);
+        props.history.push(`/sales/visit/detail-visit/${id}/${id}`);
       })
       .catch((err) => {
         console.log(err);
@@ -97,6 +98,7 @@ function Order(props) {
   useEffect(() => {
     getProduct();
   }, []);
+
   return (
     <Container>
       <Header hSalesNormal={true} />
@@ -184,7 +186,10 @@ function Order(props) {
           </>
         ) : null}
       </div>
-      <Link to={`/sales/visit/detail-visit/${id}`} className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none">
+      <Link
+        to={`/sales/visit/detail-visit/${id}/${id}`}
+        className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none"
+      >
         <img src={require(`assets/icons/visit/ic_close.svg`)} alt="add" />
       </Link>
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">

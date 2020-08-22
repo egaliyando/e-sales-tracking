@@ -5,8 +5,6 @@ import axios from "configs";
 
 export default function MapsHook(props) {
   const [arrayTest, setArrayTest] = useState([]);
-  console.log("arrayTest");
-  console.log(arrayTest);
   const dataMaps = {
     dataApotik: [],
     lat: -5.45,

@@ -15,19 +15,25 @@ function VisitSV(props) {
 
   const [salesId, setSalesId] = useState("");
 
+  //deklarasi state untuk search
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  //handle change search
+  const handleChange = (e) => {
+    if (e.target.value == "") {
+      getTrip();
+      setSearchTerm(e.target.value);
+    } else {
+      setSearchTerm(e.target.value);
+    }
+  };
+
   // id trip
   const [trip_id, setId] = useState("");
-  console.log("trip_id");
-  console.log(trip_id);
   const [sales_id, setSales_Id] = useState("");
   // set detail trip
   const [detailTrip, setDetailTrip] = useState([]);
-  console.log("detailTrip");
-  console.log(detailTrip);
-
-  const [list, setList] = useState([]);
-  console.log("list");
-  console.log(list);
 
   const getSales = () => {
     const token = localStorage.token;
@@ -40,15 +46,11 @@ function VisitSV(props) {
       })
       .then((res) => {
         setListSales(res.data.data);
-        console.log("sales on");
-        console.log(res.data.data);
         let arrayTemp = [...salesId];
         for (let i = 0; i < res.data.data.length; i++) {
           arrayTemp.push(res.data.data[i].id);
         }
         setSalesId(arrayTemp);
-        console.log("sales id");
-        console.log(arrayTemp);
       })
       .catch((err) => {
         console.log(err);
@@ -64,8 +66,7 @@ function VisitSV(props) {
         },
       })
       .then((res) => {
-        setList(res.data.data);
-        console.log(res);
+        setSearchResults(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -81,7 +82,6 @@ function VisitSV(props) {
         },
       })
       .then((res) => {
-        console.log(res);
         setDetailTrip(res.data.data);
       })
       .catch((err) => {
@@ -171,6 +171,11 @@ function VisitSV(props) {
   };
 
   useEffect(() => {
+    const results = searchResults.filter((data) => data.name_apotik.toLowerCase().includes(searchTerm));
+    setSearchResults(results);
+  }, [searchTerm]);
+
+  useEffect(() => {
     getTrip();
     getSales();
   }, []);
@@ -181,12 +186,18 @@ function VisitSV(props) {
 
       <div style={{ paddingTop: "4.5rem" }} className="px-3">
         <div className="bg-white flex justify-between rounded-lg text-sm p-2 text-gray-500">
-          <input className="focus:outline-none ml-1" placeholder="Search visit.." type="text" />
+          <input
+            value={searchTerm}
+            onChange={handleChange}
+            className="focus:outline-none ml-1"
+            placeholder="Search visit.."
+            type="text"
+          />
           <img src={require(`assets/icons/visit/ic_search.svg`)} alt="search" />
         </div>
 
         <div style={{ height: "33rem" }} className="overflow-y-auto pb-20">
-          {list.map((list, i) => {
+          {searchResults.map((list, i) => {
             return (
               <div className="mt-2" key={i}>
                 <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
