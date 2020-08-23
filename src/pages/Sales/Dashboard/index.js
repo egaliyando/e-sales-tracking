@@ -53,8 +53,8 @@ function Dashboard(props) {
           </div>
           <div className="bg-white w-full h-auto rounded-lg p-3">
             <img className="ml-auto" src={require(`assets/icons/dashboard/ic_speed.svg`)} alt="map" />
-            <p className="text-xs mt-2 text-gray-600">Total Distance</p>
-            <p className="text-lg font-bold text-gray-600">22 Km</p>
+            <p className="text-xs mt-2 text-gray-600">Trip Success</p>
+            <p className="text-lg font-bold text-gray-600">22</p>
           </div>
         </div>
         <p className="ml-3 mt-3 text-gray-600">Visit List</p>

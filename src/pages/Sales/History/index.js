@@ -120,8 +120,33 @@ function History(props) {
               return (
                 <Marker position={[data[0], data[1]]} icon={iconSales} key={i}>
                   <Popup>
-                    <span className="text-xl">{data[2]}</span> <br /> {data[3]}
-                    <br /> <p className="text-md">Status : Telah Dikunjungi</p>
+                    <div style={{ width: 200, height: 200 }} className="overflow-y-scroll">
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <span className="text-xs text-gray-500">NIK</span> <br />
+                          <span className="text-sm">124343</span>
+                          <br />
+                          <span className="text-xs text-gray-500">Nama Sales</span>
+                          <br />
+                          <span className="text-sm">Budi Sales</span>
+                          <br />
+                          <span className="text-xs text-gray-500">No HP</span>
+                          <br />
+                          <span className="text-sm">0988788878</span>
+                        </div>
+                        <div className="w-16 h-16 pb-5 ml-5">
+                          <img className="m-auto" src={require(`assets/image/sales.png`)} alt="sales" />
+                        </div>
+                      </div>
+                      <br />
+                      <br />
+                      <div>
+                        <span className="text-sm">{data[2]}</span> <br /> {data[3]}
+                      </div>
+                      <br />
+                      <span>Dikunjungi : 12/12/20</span>
+                      <br /> <p className="text-md text-green-500">Status : Telah Dikunjungi</p>
+                    </div>
                   </Popup>
                 </Marker>
               );

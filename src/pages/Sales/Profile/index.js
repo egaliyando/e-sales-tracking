@@ -44,10 +44,18 @@ function Profile(props) {
             <p className="text-center text-gray-600">{nik}</p>
           </div>
         </div>
-        <div className="mt-3 bg-white w-full h-16 flex flex-col justify-center rounded-lg">
+        <div className="mt-3 bg-white w-full p-5 h-auto flex flex-col justify-center rounded-lg">
           <div className="flex">
-            <p className="font-bold m-auto text-gray-600">Address :</p>
-            <p className="m-auto text-gray-600">{address}</p>
+            <p className="font-bold  text-gray-600">Address :</p>
+            <p className=" ml-10 text-gray-600">Jl. Abdul muis</p>
+          </div>
+          <div className="flex mt-3">
+            <p className="font-bold  text-gray-600">Birthday :</p>
+            <p className=" ml-10 text-gray-600">20/12/1998</p>
+          </div>
+          <div className="flex mt-3">
+            <p className="font-bold  text-gray-600">Role :</p>
+            <p className="ml-20 text-gray-600">Sales</p>
           </div>
         </div>
       </div>

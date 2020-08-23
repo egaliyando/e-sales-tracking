@@ -20,14 +20,14 @@ function ChatSupervisor(props) {
           <p className="text-sm">Laporan diterima! Laksanakan!</p>
         </div>
       </div>
-      <div>
+      {/* <div>
         <p>Latitude: {geolocation.latitude}</p>
         <p>Longitude: {geolocation.longitude}</p>
         <p>Location accuracy: {geolocation.accuracy}</p>
         <p>Heading: {geolocation.heading}</p>
         <p>Speed: {geolocation.speed}</p>
         <p>Timestamp: {geolocation.timestamp}</p>
-      </div>
+      </div> */}
 
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
         <div className="w-full h-12 bg-white flex justify-between py-2 px-5 mb-1">
