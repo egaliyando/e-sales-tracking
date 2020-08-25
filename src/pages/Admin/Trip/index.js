@@ -72,6 +72,9 @@ export default function Trip(props) {
             customAction={"/admin/trip/detail"}
           />
         </div>
+        <Link to="/admin/trip/add" className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">
+        <img className="w-12 rounded-full shadow-lg " src={require(`assets/icons/ic_add.svg`)} alt="add" />
+      </Link>
       </div>
     </>
   );

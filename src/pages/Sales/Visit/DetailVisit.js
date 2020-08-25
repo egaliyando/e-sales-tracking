@@ -23,10 +23,14 @@ function DetailVisit(props) {
   const longs = parseFloat(idApotik[5]);
 
   //geolib
+  //ini function untuk lock GPS nya
   const test = geolib.isPointWithinRadius(
-    { latitude: lats, longitude: longs },
-    { latitude: userLat, longitude: userLong },
-    100000
+    { latitude: lats, longitude: longs }, // ini lat long apotik/rs nya
+    { latitude: userLat, longitude: userLong }, //ini lat long kita
+    100000000000 // itu satuanya kalau 1000 berarti 1km kalau 100 berarti 100m jangkauan kita dari apotiknya
+    // jadi radius nya pake satuan meter, kalau lokasi kita pada jangkauan tersebut, maka nilai nya "TRUE" yg artinya bisa order
+    // kalau lat long kita diluar dari satuan itu maka nilai nya "FALSE" yang artinya gabisa order alias gak ke LOCK GPS nya
+    //kalau saya ubah radiusnya jadi 1000000000
   );
   console.log("tes");
   console.log(test);
@@ -138,7 +142,7 @@ function DetailVisit(props) {
           .catch((err) => {
             console.log(err);
           });
-      } else alert("woooooy diluar");
+      } else MySwal.fire("Posisi Anda Diluar Jangkauan"); //wih udah hebat bisa ubah2 wkwkwk
     });
   }
 
