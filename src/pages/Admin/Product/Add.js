@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Navigation from "components/Navigation";
 import axios from "configs";
 import Swal from "sweetalert2";
+import {Link} from "react-router-dom"
 import withReactContent from "sweetalert2-react-content";
 
 function Add(props) {
@@ -61,7 +62,7 @@ function Add(props) {
         <p className="my-3 font-bold">Add Product</p>
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="mb-5">
-            <label className="text-xs">Nama Produk</label>
+            <label className="text-xs">Product Name</label>
             <input
               onChange={(e) => setProduct(e.target.value)}
               className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
@@ -70,7 +71,7 @@ function Add(props) {
           </div>
           <div className="grid grid-cols-2 gap-5">
             <div>
-              <label className="text-xs">Tanggal Expired</label>
+              <label className="text-xs">Expired</label>
               <input
                 onChange={(e) => setExpired(e.target.value)}
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
@@ -78,7 +79,7 @@ function Add(props) {
               />
             </div>
             <div>
-              <label className="text-xs">Harga</label>
+              <label className="text-xs">Price</label>
               <input
                 onChange={(e) => setPrice(e.target.value)}
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
@@ -86,7 +87,7 @@ function Add(props) {
               />
             </div>
             <div>
-              <label className="text-xs">Stok</label>
+              <label className="text-xs">Stock</label>
               <input
                 onChange={(e) => setStock(e.target.value)}
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
@@ -94,7 +95,7 @@ function Add(props) {
               />
             </div>
             <div>
-              <label className="text-xs">Gambar</label>
+              <label className="text-xs">Image</label>
               <input
                 onChange={(e) => setImage(e.target.files[0])}
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
@@ -104,13 +105,13 @@ function Add(props) {
             </div>
           </div>
           <div className="flex mt-5 justify-end">
-            <button
+            <Link to="/admin/product"
               className="text-white bg-red-500 px-3 shadow-lg p-2 rounded-lg background-transparent font-bold text-sm outline-none focus:outline-none"
               type="button"
               style={{ transition: "all .15s ease" }}
             >
               Cancel
-            </button>
+            </Link>
             <button
               onClick={handleSubmit}
               className="bg-green-500 ml-3 px-3 shadow-lg p-2 rounded-lg text-white active:bg-green-600 font-bold text-sm rounded shadow hover:shadow-lg outline-none focus:outline-none"

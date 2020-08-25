@@ -98,7 +98,7 @@ function Edit(props) {
         <p className="my-3 font-bold">Edit Product</p>
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="mb-5">
-            <label className="text-xs">Nama Produk</label>
+            <label className="text-xs">Product Name</label>
             <input
               className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
               type="text"
@@ -109,7 +109,7 @@ function Edit(props) {
           </div>
           <div className="grid grid-cols-2 gap-5">
             <div>
-              <label className="text-xs">Tanggal Expired</label>
+              <label className="text-xs">Expired</label>
               <input
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="date"
@@ -129,7 +129,7 @@ function Edit(props) {
               />
             </div>
             <div>
-              <label className="text-xs">Stok</label>
+              <label className="text-xs">Stock</label>
               <input
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="number"
@@ -139,7 +139,7 @@ function Edit(props) {
               />
             </div>
             <div>
-              <label className="text-xs">Gambar</label>
+              <label className="text-xs">Image</label>
               <input
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="file"

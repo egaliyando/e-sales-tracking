@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./assets/style/main.css";
 import "assets/style/font.css";
+import "react-datepicker/dist/react-datepicker.css"
 import "assets/style/neumorphism.css";
 // import App from "./App";n
 

@@ -77,14 +77,14 @@ export default function MapsHook(props) {
                     <img className="m-auto" src={require(`assets/image/sales.png`)} alt="sales" />
                   </div>
                 </div>
-                <br />
+               
                 <br />
                 <div>
-                  <span className="text-sm">{data[2]}</span> <br /> {data[3]}
+                  <span className="text-sm"> {data[2]}</span> <br /> Address : {data[3]}
                 </div>
                 <br />
+                <span className="text-md text-green-500">Status : Visited</span>  <br />
                 <span>Visited at : {data[4]}</span>
-                <br /> <p className="text-md text-green-500">Status : Visited</p>
               </div>
             </Popup>
             <Circle center={[data[0], data[1]]} fillColor="blue" radius={dataMaps.radius} />

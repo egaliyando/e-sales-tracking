@@ -80,7 +80,7 @@ export default function Product(props) {
         {/* MODAL */}
         <Table
           data={product}
-          thead={["No", "Product Name", "Price", "Stock", "Action"]}
+          thead={["ID", "Product Name", "Price", "Stock", "Action"]}
           tbody={["id", "name", "price", "stock"]}
           editUrl={"/admin/product/edit"}
           deleteAction={(id) => {

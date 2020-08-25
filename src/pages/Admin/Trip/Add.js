@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "configs";
+import moment from "moment"
+import DatePicker from "react-datepicker"
 
 import Navigation from "components/Navigation";
 import { Link, Redirect } from "react-router-dom";
@@ -12,18 +14,21 @@ export default function Add(props) {
   const token = useSelector((state) => state.users.token);
   const MySwal = withReactContent(Swal);
 
-  const [day, setDay] = useState();
+  const [day, setDay] = useState(new Date());
   const [apotik, setApotik] = useState([]);
   const [apotik_id, setApotikId] = useState();
 
+  const today = new Date()
+  console.log("today")
+  console.log(today)
   console.log("apotik");
   console.log(apotik_id);
   console.log("day");
   console.log(day);
 
   //CHANGE DAY
-  const handleDay = (e) => {
-    setDay(e.target.value);
+  const handleDay = date => {
+    setDay(date);
   };
   //CHANGE OPTION APOTIK
   const handleChange = (e) => {
@@ -41,23 +46,22 @@ export default function Add(props) {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.value) {
-        console.log(token);
-        MySwal.fire("Add Success!", ":)", "warning", "Canceled");
         axios
-          .post(
-            "/trip",
-            {
-              apotik_id: apotik_id,
-              day: day,
+        .post(
+          "/trip",
+          {
+            apotik_id: apotik_id,
+            day: day,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
             },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
+          }
           )
           .then(function (response) {
             console.log(response);
+            MySwal.fire("Add Success!", ":)", "warning", "Canceled");
             props.history.push("/admin/trip");
           })
           .catch(function (error) {
@@ -66,9 +70,9 @@ export default function Add(props) {
             for (let i = 0; i < error.response.data.error.length; i++) {
               err.push(error.response.data.error[i].param);
             }
-            alert(err);
+            MySwal.fire("Pastikan Data Terisi");
           });
-      }
+      } 
     });
   };
 
@@ -99,7 +103,7 @@ export default function Add(props) {
     <div className="flex">
       <Navigation />
       <div className="w-11/12 p-3">
-        <p className="my-3 ml-5 font-bold">Add Trip/Kunjungan</p>
+        <p className="my-3 ml-5 font-bold">Add Trip</p>
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="grid grid-cols-2 gap-5">
             <div>
@@ -124,12 +128,14 @@ export default function Add(props) {
               </select>
             </div>
             <div>
-              <label className="text-xs">Day</label>
-              <input
-                onChange={handleDay}
-                className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
-                type="date"
-              />
+              <label className="text-xs">Day</label> <br/>
+              <DatePicker
+  className="bg-gray-200 w-full self-center p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+  onChange={handleDay}
+  minDate={moment().toDate()}
+  placeholderText="Select a day"
+/>
+             
             </div>
           </div>
           <div className="flex mt-5 justify-end">

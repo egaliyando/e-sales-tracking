@@ -8,15 +8,6 @@ export default function DetailTrip(props) {
   const { id } = props.match.params;
   const token = localStorage.token;
 
-  // `${moment("tgl_ex").format("YYYY-MM-DD")}`
-
-  //   const [image, setImage] = useState("");
-  //   const [date, setDate] = useState("");
-  //   const formatDate = moment(date).format("YYYY-MM-DD");
-  //   const [stock, setStock] = useState("");
-  //   const [price, setPrice] = useState("");
-  //   const [name, setName] = useState("");
-
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [address, setAddress] = useState("");
@@ -35,7 +26,7 @@ export default function DetailTrip(props) {
       .then((res) => {
         console.log(res);
         setImage(res.data.data.apotik.image);
-        setDayTrip(res.data.day);
+        setDayTrip(res.data.data.day);
         setName(res.data.data.apotik.name);
         setAddress(res.data.data.apotik.address);
       })
