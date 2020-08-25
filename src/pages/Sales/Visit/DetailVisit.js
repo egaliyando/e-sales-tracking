@@ -23,6 +23,7 @@ function DetailVisit(props) {
   const longs = parseFloat(idApotik[5]);
 
   //geolib
+  //ini function untuk lock GPS nya
   const test = geolib.isPointWithinRadius(
     { latitude: lats, longitude: longs },
     { latitude: userLat, longitude: userLong },

@@ -120,7 +120,7 @@ function Edit(props) {
             </div>
             <div className="flex">
               <div>
-                <label className="text-xs">Username</label>
+                <label className="text-xs">Phone</label>
                 <input
                   className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                   type="text"

@@ -69,9 +69,9 @@ function Detail(props) {
           <div className="w-full grid grid-cols-2 gap-3 pb-5">
             <p className="text-sm">id_order : {idOrder}</p>
             <p className="text-sm">Sales : {sales}</p>
-            <p className="text-sm">Apotik : {apotikName}</p>
+            <p className="text-sm">Trip : {apotikName}</p>
             <p className="text-sm">Date Order : {dateFormat}</p>
-            <p className="text-sm">Alamat : {address}</p>
+            <p className="text-sm">Address : {address}</p>
             <div>
               <p className="text-sm">Note : {note}</p>
               <img
@@ -85,10 +85,10 @@ function Detail(props) {
             <table className="table-fixed w-full">
               <thead>
                 <tr style={{ backgroundColor: "#D5D5D5" }}>
-                  <th className="text-left text-sm pl-2 py-2">No</th>
-                  <th className="text-left text-sm pl-2 py-2">Produk</th>
-                  <th className="text-left text-sm pl-2 py-2">Jumlah</th>
-                  <th className="text-left text-sm pl-2 py-2">Harga</th>
+                  <th className="text-left text-sm pl-2 py-2">ID</th>
+                  <th className="text-left text-sm pl-2 py-2">Name</th>
+                  <th className="text-left text-sm pl-2 py-2">Qty</th>
+                  <th className="text-left text-sm pl-2 py-2">Price</th>
                 </tr>
               </thead>
               <tbody>
@@ -115,7 +115,7 @@ function Detail(props) {
               </tbody>
             </table>
           </div>
-          <p className="font-bold mt-5">Total Harga : {total}</p>
+          <p className="font-bold mt-5">Total : {total}</p>
         </div>
         <button className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">
           <img className="w-12 rounded-full shadow-lg" src={require(`assets/icons/ic_print.svg`)} alt="add" />
