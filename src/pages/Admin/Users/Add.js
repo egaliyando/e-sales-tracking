@@ -3,9 +3,11 @@ import Navigation from "components/Navigation";
 import axios from "configs";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { Link } from "react-router-dom";
 const MySwal = withReactContent(Swal);
 
 function Add(props) {
+  const { id } = props.match.params;
   const [Nik, setNik] = useState("");
   const [Password, setPassword] = useState("");
   const [Role, setRole] = useState("");
@@ -14,7 +16,7 @@ function Add(props) {
   const [FullName, setFullname] = useState("");
   const [Username, setUsername] = useState("");
   const token = localStorage.token;
- 
+
   const handleSubmit = () => {
     MySwal.fire({
       title: "Add User?",
@@ -25,7 +27,6 @@ function Add(props) {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.value) {
-        MySwal.fire("Add Success!", ":)", "warning", "Canceled");
         axios
           .post(
             "/users",
@@ -46,15 +47,16 @@ function Add(props) {
           )
           .then(function (response) {
             console.log(response);
+            MySwal.fire("Add Success!", ":)", "warning", "Canceled");
             props.history.push("/admin/users");
           })
           .catch(function (error) {
             console.log(error.response);
-            // let err = [];
-            // for (let i = 0; i < error.response.data.error.length; i++) {
-            //   err.push(error.response.data.error[i].param);
-            // }
-            // alert(err);
+            let err = [];
+            for (let i = 0; i < error.response.data.error.length; i++) {
+              err.push(error.response.data.error[i].param);
+            }
+            MySwal.fire("Pastikan Data Terisi");
           });
       }
     });
@@ -129,13 +131,14 @@ function Add(props) {
             </div>
           </div>
           <div className="flex mt-5 justify-end">
-            <button
+            <Link
+              to={`/admin/users/`}
               className="text-white bg-red-500 px-3 shadow-lg p-2 rounded-lg background-transparent font-bold text-sm outline-none focus:outline-none"
               type="button"
               style={{ transition: "all .15s ease" }}
             >
               Cancel
-            </button>
+            </Link>
             <button
               onClick={handleSubmit}
               className="bg-green-500 ml-3 px-3 shadow-lg p-2 rounded-lg text-white active:bg-green-600 font-bold text-sm rounded shadow hover:shadow-lg outline-none focus:outline-none"

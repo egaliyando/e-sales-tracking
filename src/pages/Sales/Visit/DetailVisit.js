@@ -26,7 +26,7 @@ function DetailVisit(props) {
   const test = geolib.isPointWithinRadius(
     { latitude: lats, longitude: longs },
     { latitude: userLat, longitude: userLong },
-    100000
+    10000000
   );
   console.log("tes");
   console.log(test);
