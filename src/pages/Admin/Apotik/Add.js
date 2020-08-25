@@ -32,7 +32,6 @@ function Add(props) {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.value) {
-        MySwal.fire("Add Success!", ":)", "warning", "Canceled");
         axios
           .post("/apotik", formData, {
             headers: {
@@ -41,6 +40,7 @@ function Add(props) {
           })
           .then(function (response) {
             console.log(response);
+            MySwal.fire("Add Success!", ":)", "warning", "Canceled");
             props.history.push("/admin/apotik");
           })
           .catch(function (error) {
@@ -49,7 +49,7 @@ function Add(props) {
             for (let i = 0; i < error.response.data.error.length; i++) {
               err.push(error.response.data.error[i].param);
             }
-            alert(err);
+            MySwal.fire("Pastikan Data Terisi");
           });
       }
     });
