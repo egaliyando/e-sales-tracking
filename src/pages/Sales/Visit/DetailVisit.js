@@ -26,7 +26,7 @@ function DetailVisit(props) {
   const test = geolib.isPointWithinRadius(
     { latitude: lats, longitude: longs },
     { latitude: userLat, longitude: userLong },
-    10000000
+    1000000000
   );
   console.log("tes");
   console.log(test);
@@ -114,7 +114,6 @@ function DetailVisit(props) {
     formData.append("image", image);
     formData.append("sales_id", sales_id);
     formData.append("notes", notes);
-
     return MySwal.fire({
       title: "Done visited?",
       icon: "warning",
@@ -135,17 +134,22 @@ function DetailVisit(props) {
             props.history.push("/sales/visit");
             console.log(res);
           })
-          .catch((err) => {
-            console.log(err);
+          .catch(function (error) {
+            console.log(error.data);
+            // let err = [];
+            // for (let i = 0; i < error.response.data.error.length; i++) {
+            //   err.push(error.response.data.error[i].param);
+            // }
+            // MySwal.fire("Pastikan Data Terisi");
           });
-      }
-      MySwal.fire({
-        position: "top",
-        icon: "error",
-        title: "Maaf Anda diluar jangkauan Trip",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      } else
+        MySwal.fire({
+          position: "top",
+          icon: "error",
+          title: "Maaf Anda diluar jangkauan Trip",
+          showConfirmButton: false,
+          timer: 1500,
+        });
     });
   }
 

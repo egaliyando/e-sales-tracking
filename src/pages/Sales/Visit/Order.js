@@ -8,7 +8,6 @@ import axios from "configs";
 function Order(props) {
   //parsing id trip
   const { id } = props.match.params;
-  const { apotik_id } = props.match.params;
   console.log("id trip");
   console.log(id);
 
@@ -20,6 +19,8 @@ function Order(props) {
   const [count, setCount] = useState(0);
   //deklarasi data product
   const [data, setData] = useState([]);
+
+  const [idTrip, setIdTrip] = useState("");
 
   //deklarasi modal
   const handleModal = (id) => {
@@ -69,6 +70,24 @@ function Order(props) {
       });
   };
 
+  const getIdTrip = () => {
+    const token = localStorage.token;
+    const sales_id = localStorage.sales_id;
+    axios
+      .get(`/sales/trip-single-sales/${sales_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log("res.data.data");
+        setIdTrip(res.data.data[0].trip.apotik.id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   //handle tambah product
   const handleAddProduct = () => {
     const { id } = props.match.params;
@@ -88,7 +107,7 @@ function Order(props) {
       )
       .then((res) => {
         console.log(res);
-        props.history.push(`/sales/visit/detail-visit/${id}/${id}`);
+        props.history.push(`/sales/visit/detail-visit/${id}/${idTrip}`);
       })
       .catch((err) => {
         console.log(err);
@@ -97,6 +116,7 @@ function Order(props) {
 
   useEffect(() => {
     getProduct();
+    getIdTrip();
   }, []);
 
   return (
@@ -187,7 +207,7 @@ function Order(props) {
         ) : null}
       </div>
       <Link
-        to={`/sales/visit/detail-visit/${id}/${id}`}
+        to={`/sales/visit/detail-visit/${id}/${idTrip}`}
         className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none"
       >
         <img src={require(`assets/icons/visit/ic_close.svg`)} alt="add" />
