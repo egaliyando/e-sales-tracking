@@ -138,7 +138,14 @@ function DetailVisit(props) {
           .catch((err) => {
             console.log(err);
           });
-      } else alert("woooooy diluar");
+      }
+      MySwal.fire({
+        position: "top",
+        icon: "error",
+        title: "Maaf Anda diluar jangkauan Trip",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     });
   }
 
