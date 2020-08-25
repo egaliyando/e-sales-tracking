@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Map, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { iconSales, iconApotik } from "components/MapComponent/IconMarker";
 import axios from "configs";
+import moment from "moment";
 
 export default function MapsHook(props) {
   const [arrayTest, setArrayTest] = useState([]);
@@ -24,6 +25,7 @@ export default function MapsHook(props) {
         },
       })
       .then((res) => {
+        console.log(res);
         let arrayTemp = [...arrayTest];
         for (let i = 0; i < res.data.data.data.length; i++) {
           arrayTemp.push([
@@ -31,6 +33,7 @@ export default function MapsHook(props) {
             parseFloat(res.data.data.data[i].long),
             res.data.data.data[i].name,
             res.data.data.data[i].address,
+            moment(res.data.data.data[i].updatedAt).format("LLLL"),
           ]);
         }
 
@@ -62,11 +65,11 @@ export default function MapsHook(props) {
                     <span className="text-xs text-gray-500">NIK</span> <br />
                     <span className="text-sm">124343</span>
                     <br />
-                    <span className="text-xs text-gray-500">Nama Sales</span>
+                    <span className="text-xs text-gray-500">Sales</span>
                     <br />
                     <span className="text-sm">Budi Sales</span>
                     <br />
-                    <span className="text-xs text-gray-500">No HP</span>
+                    <span className="text-xs text-gray-500">Handphone</span>
                     <br />
                     <span className="text-sm">0988788878</span>
                   </div>
@@ -80,8 +83,8 @@ export default function MapsHook(props) {
                   <span className="text-sm">{data[2]}</span> <br /> {data[3]}
                 </div>
                 <br />
-                <span>Dikunjungi : 12/12/20</span>
-                <br /> <p className="text-md text-green-500">Status : Telah Dikunjungi</p>
+                <span>Visited at : {data[4]}</span>
+                <br /> <p className="text-md text-green-500">Status : Visited</p>
               </div>
             </Popup>
             <Circle center={[data[0], data[1]]} fillColor="blue" radius={dataMaps.radius} />
