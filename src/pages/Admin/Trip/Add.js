@@ -41,6 +41,7 @@ export default function Add(props) {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.value) {
+        console.log(token);
         MySwal.fire("Add Success!", ":)", "warning", "Canceled");
         axios
           .post(
@@ -60,7 +61,7 @@ export default function Add(props) {
             props.history.push("/admin/trip");
           })
           .catch(function (error) {
-            console.log(error.response.data.error);
+            console.log(error.response);
             let err = [];
             for (let i = 0; i < error.response.data.error.length; i++) {
               err.push(error.response.data.error[i].param);

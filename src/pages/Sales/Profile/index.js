@@ -47,7 +47,7 @@ function Profile(props) {
         <div className="mt-3 bg-white w-full p-5 h-auto flex flex-col justify-center rounded-lg">
           <div className="flex">
             <p className="font-bold  text-gray-600">Address :</p>
-            <p className=" ml-10 text-gray-600">Jl. Abdul muis</p>
+            <p className=" ml-10 text-gray-600">{address}</p>
           </div>
           <div className="flex mt-3">
             <p className="font-bold  text-gray-600">Birthday :</p>

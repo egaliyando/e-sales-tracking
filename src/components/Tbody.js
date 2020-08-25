@@ -25,7 +25,7 @@ export default function Tbody({ data, display, editUrl, deleteAction, customActi
                 <td>
                   <div className="flex justify-start">
                     {editUrl && (
-                      <Link className="justify-center mr-5" to={`${editUrl}/${data.id}`}>
+                      <Link className="justify-center self-center mr-5" to={`${editUrl}/${data.id}`}>
                         <img src={require(`assets/icons/ic_pencil.svg`)} alt="edit" />
                       </Link>
                     )}
@@ -40,7 +40,10 @@ export default function Tbody({ data, display, editUrl, deleteAction, customActi
                       </button>
                     )}
                     {customAction && (
-                      <Link to={`${customAction}/${data.id}`} className="bg-green-500 px-2 py-1 rounded-lg text-white">
+                      <Link
+                        to={`${customAction}/${data.id}`}
+                        className="bg-green-500 ml-3 px-2 py-1 rounded-lg text-white"
+                      >
                         Detail
                       </Link>
                     )}

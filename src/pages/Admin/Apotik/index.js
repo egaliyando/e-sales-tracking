@@ -73,7 +73,7 @@ function Apotik(props) {
         <p className="my-3 font-bold">Apotik/Rumah Sakit</p>
         <Table
           data={apotik.data}
-          thead={["No", "Apotik/RS Name", "Address", "Status", "Image", "Lat", "Long", "Action"]}
+          thead={["No", "Apotik/RS Name", "Address", "Status", "Lat", "Long", "Image", "Action"]}
           tbody={["id", "name", "address", "status", "image", "lat", "long"]}
           editUrl={"/admin/apotik/edit"}
           deleteAction={(id) => {

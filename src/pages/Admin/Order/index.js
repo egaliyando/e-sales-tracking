@@ -40,8 +40,8 @@ function Order() {
         {/* MODAL */}
         <Table
           data={order}
-          thead={["No", "Tanggal", "Nama Sales", "Address", "Total Harga", "Status", "Aksi"]}
-          tbody={["id", "address_apotik", "nama_sales", "status", "tanggal", "total_harga"]}
+          thead={["No", "Date Visit", "Sales", "Address", "Total Price", "Action"]}
+          tbody={["id", "address_apotik", "nama_sales", "tanggal", "total_harga"]}
           customAction={"/admin/order/detail"}
         />
       </div>

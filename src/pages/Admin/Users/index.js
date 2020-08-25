@@ -12,6 +12,7 @@ function Users(props) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.users.token);
   const users = useSelector((state) => state.users.users);
+  console.log(users);
   // console.log(users);
   const MySwal = withReactContent(Swal);
 
@@ -58,10 +59,7 @@ function Users(props) {
   return (
     <div className="flex">
       <Navigation />
-      <div
-        style={{ backgroundColor: "#F7F7F7" }}
-        className="w-11/12 p-3 relative"
-      >
+      <div style={{ backgroundColor: "#F7F7F7" }} className="w-11/12 p-3 relative">
         <p className="my-3 font-bold">Users</p>
         {/* MODAL */}
         <Table
@@ -74,15 +72,8 @@ function Users(props) {
           }}
         />
       </div>
-      <Link
-        to="/admin/users/add"
-        className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10"
-      >
-        <img
-          className="w-12 rounded-full shadow-lg "
-          src={require(`assets/icons/ic_add.svg`)}
-          alt="add"
-        />
+      <Link to="/admin/users/add" className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">
+        <img className="w-12 rounded-full shadow-lg " src={require(`assets/icons/ic_add.svg`)} alt="add" />
       </Link>
     </div>
   );

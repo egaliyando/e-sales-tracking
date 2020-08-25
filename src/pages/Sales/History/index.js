@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import axios from "configs";
 
 //maps
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { Map, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { iconSales, iconApotik } from "components/MapComponent/IconMarker";
 
 function History(props) {
@@ -21,6 +21,7 @@ function History(props) {
     lat: -5.4,
     lng: 105.26667,
     zoom: 13,
+    radius: 50,
   };
   const position = [dataMaps.lat, dataMaps.lng];
   //maps component
@@ -113,6 +114,7 @@ function History(props) {
                     <span className="text-xl">{data[2]}</span> <br /> {data[3]}
                     <br /> <p className="text-md">Status : Belum Dikunjungi</p>
                   </Popup>
+                  <Circle center={[data[0], data[1]]} fillColor="blue" radius={dataMaps.radius} />
                 </Marker>
               );
             })}
@@ -148,6 +150,7 @@ function History(props) {
                       <br /> <p className="text-md text-green-500">Status : Telah Dikunjungi</p>
                     </div>
                   </Popup>
+                  <Circle center={[data[0], data[1]]} fillColor="blue" radius={dataMaps.radius} />
                 </Marker>
               );
             })}

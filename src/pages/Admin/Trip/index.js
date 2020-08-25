@@ -63,17 +63,15 @@ export default function Trip(props) {
           <p className="my-3 font-bold">Trip/Kujnjungan</p>
           <Table
             data={trip}
-            thead={["no", "Day", "Apotik Name", "Address", "Image", "Action"]}
-            tbody={["id", "address_apotik", "day", "image", "name_apotik"]}
+            thead={["No", "Trip Name", "Address", "Action"]}
+            tbody={["id", "name_apotik", "address_apotik"]}
             editUrl={"/admin/trip/edit"}
             deleteAction={(id) => {
               handleDelete(id);
             }}
+            customAction={"/admin/trip/detail"}
           />
         </div>
-        <Link to="/admin/trip/add" className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">
-          <img className="w-12 rounded-full shadow-lg " src={require(`assets/icons/ic_add.svg`)} alt="add" />
-        </Link>
       </div>
     </>
   );

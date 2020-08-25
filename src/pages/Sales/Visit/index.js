@@ -7,6 +7,10 @@ import { Link } from "react-router-dom";
 
 function Visit(props) {
   const [listRute, setListRute] = useState([]);
+  // console.log("listRute");
+  // console.log(listRute);
+  const [lat, setLat] = useState([]);
+  const [long, setLong] = useState([]);
 
   const getRute = () => {
     const token = localStorage.token;
@@ -19,9 +23,15 @@ function Visit(props) {
         },
       })
       .then((res) => {
+        let arrayTemp1 = [...lat];
+        let arrayTemp2 = [...long];
         setListRute(res.data.data);
-        console.log("sales rute");
-        console.log(res);
+        for (let i = 0; i < res.data.data.length; i++) {
+          arrayTemp1.push(res.data.data[i].trip.apotik.lat);
+          arrayTemp2.push(res.data.data[i].trip.apotik.long);
+        }
+        setLat(arrayTemp1);
+        setLong(arrayTemp2);
       })
       .catch((err) => {
         console.log(err);

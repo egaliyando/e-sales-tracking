@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { Map, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { iconSales, iconApotik } from "components/MapComponent/IconMarker";
 import axios from "configs";
 
 export default function MapsHook(props) {
   const [arrayTest, setArrayTest] = useState([]);
+  console.log(arrayTest);
   const dataMaps = {
     dataApotik: [],
     lat: -5.45,
     lng: 105.26667,
     zoom: 12,
+    radius: 50,
   };
   const position = [dataMaps.lat, dataMaps.lng];
 
@@ -82,6 +84,7 @@ export default function MapsHook(props) {
                 <br /> <p className="text-md text-green-500">Status : Telah Dikunjungi</p>
               </div>
             </Popup>
+            <Circle center={[data[0], data[1]]} fillColor="blue" radius={dataMaps.radius} />
           </Marker>
         );
       })}

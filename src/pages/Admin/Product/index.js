@@ -1,21 +1,39 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navigation from "components/Navigation";
 import Table from "components/Table";
 import { Link, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "store/actions/product";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import axios from "configs";
+import moment from "moment";
 
 export default function Product(props) {
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.users.token);
-  const product = useSelector((state) => state.product.product);
+  const token = localStorage.token;
+
+  const [product, setProduct] = useState([]);
+  // `${moment("tgl_ex").format("YYYY-MM-DD")}`
+
+  const [date, setDate] = useState([]);
+  console.log("data");
+  console.log(product);
+
   const MySwal = withReactContent(Swal);
 
   const getProduct = () => {
-    dispatch(fetchProduct());
+    const token = localStorage.token;
+    axios
+      .get(`/product`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data.data);
+        setProduct(res.data.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleDelete = (id) => {
@@ -37,12 +55,11 @@ export default function Product(props) {
             },
           })
           .then(function (response) {
-            // console.log(response);
             getProduct();
             props.history.push("/admin/product");
           })
           .catch(function (error) {
-            console.log(error.response);
+            console.log(error);
           });
       }
     });
@@ -62,13 +79,14 @@ export default function Product(props) {
         <p className="my-3 font-bold">Product</p>
         {/* MODAL */}
         <Table
-          data={product.data}
-          thead={["No", "Product Name", "Expired", "Price", "Stock", "Image", "Action"]}
-          tbody={["id", "name", "tgl_ex", "price", "stock", "image"]}
+          data={product}
+          thead={["No", "Product Name", "Price", "Stock", "Action"]}
+          tbody={["id", "name", "price", "stock"]}
           editUrl={"/admin/product/edit"}
           deleteAction={(id) => {
             handleDelete(id);
           }}
+          customAction={"/admin/product/detail"}
         />
       </div>
       <Link to="/admin/product/add" className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">

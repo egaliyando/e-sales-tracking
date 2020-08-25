@@ -42,6 +42,8 @@ import Tracking from "pages/Supervisor/Tracking";
 import ProfileSV from "pages/Supervisor/Profile";
 import DetailTrack from "pages/Supervisor/Tracking/DetailTrack";
 import DetailHistorySV from "pages/Supervisor/Tracking/DetailHistory";
+import ProductDetail from "pages/Admin/Product/ProductDetail";
+import DetailTrip from "pages/Admin/Trip/DetailTrip";
 
 export default function AppRoute() {
   return (
@@ -56,6 +58,7 @@ export default function AppRoute() {
         <Route exact path="/admin/product" component={Product} />
         <Route exact path="/admin/product/add" component={AddProduct} />
         <Route exact path="/admin/product/edit/:id" component={EditProduct} />
+        <Route exact path="/admin/product/detail/:id" component={ProductDetail} />
         {/* USERS */}
         <Route exact path="/admin/users" component={Users} />
         <Route exact path="/admin/users/add" component={AddUser} />
@@ -68,6 +71,7 @@ export default function AppRoute() {
         <Route exact path="/admin/trip" component={Trip} />
         <Route exact path="/admin/trip/add" component={Add} />
         <Route exact path="/admin/trip/edit/:id" component={Edit} />
+        <Route exact path="/admin/trip/detail/:id" component={DetailTrip} />
         {/* CHAT */}
         <Route exact path="/admin/chat" component={Chat} />
         {/* ORDER */}

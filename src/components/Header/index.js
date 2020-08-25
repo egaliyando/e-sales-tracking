@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Popover from "components/Popover";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import axios from "configs";
 
 function Toggle() {
   const MySwal = withReactContent(Swal);
-  const [enable, setEnable] = useState(false);
+  //deklarasi toggle
+  const [enable, setEnable] = useState("");
+
   function handleOpen() {
+    const token = localStorage.token;
+    const sales_id = localStorage.sales_id;
     return MySwal.fire({
       title: "Open Day?",
       icon: "warning",
@@ -16,12 +21,26 @@ function Toggle() {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.value) {
+        axios
+          .put(`/sales/change-status/${sales_id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         MySwal.fire("Open Day!", "Welcome!", "Canceled");
         setEnable(!enable);
       }
     });
   }
   function handleClose() {
+    const token = localStorage.token;
+    const sales_id = localStorage.sales_id;
     return MySwal.fire({
       title: "Close Day?",
       icon: "warning",
@@ -31,20 +50,55 @@ function Toggle() {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.value) {
+        axios
+          .put(`/sales/change-status/${sales_id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         MySwal.fire("Close Day!", "Bye-bye!", "Canceled");
         setEnable(!enable);
+        window.location.reload(true);
       }
     });
   }
+
+  const getUser = () => {
+    const token = localStorage.token;
+    const sales_id = localStorage.sales_id;
+    axios
+      .get(`/users/${sales_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setEnable(res.data.data.status);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <div className="self-center mt-2">
-      {enable ? (
-        <button className="focus:outline-none" onClick={handleClose}>
-          <img src={require(`assets/icons/header/ic_open.svg`)} alt="btn" />
-        </button>
-      ) : (
+      {enable == "Close" ? (
         <button className="focus:outline-none" onClick={handleOpen}>
           <img src={require(`assets/icons/header/ic_close.svg`)} alt="btn" />
+        </button>
+      ) : (
+        <button className="focus:outline-none" onClick={handleClose}>
+          <img src={require(`assets/icons/header/ic_open.svg`)} alt="btn" />
         </button>
       )}
     </div>

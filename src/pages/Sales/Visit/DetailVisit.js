@@ -6,8 +6,30 @@ import { Link } from "react-router-dom";
 import axios from "configs";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import useGeolocation from "react-hook-geolocation";
+import * as geolib from "geolib";
 
 function DetailVisit(props) {
+  // deklarasi sweetalert
+  const MySwal = withReactContent(Swal);
+  //deklarasi geolocation
+  const geolocation = useGeolocation();
+  //state trip & apotik
+  const [idApotik, setIdApotik] = useState("");
+
+  const userLat = parseFloat(geolocation.latitude);
+  const userLong = parseFloat(geolocation.longitude);
+  const lats = parseFloat(idApotik[4]);
+  const longs = parseFloat(idApotik[5]);
+
+  //geolib
+  const test = geolib.isPointWithinRadius(
+    { latitude: lats, longitude: longs },
+    { latitude: userLat, longitude: userLong },
+    100000
+  );
+  console.log("tes");
+  console.log(test);
   //deklarasi state detail trip
   const [detailTrip, setDetailTrip] = useState([]);
 
@@ -17,18 +39,19 @@ function DetailVisit(props) {
   // deklarasi state modal
   const [showModal, setShowModal] = useState(false);
 
-  const [idApotik, setIdApotik] = useState("");
-
-  // deklarasi sweetalert
-  const MySwal = withReactContent(Swal);
+  const dataMaps = {
+    lat: -5.4,
+    lng: 105.26667,
+    radius: idApotik[4],
+  };
+  console.log("dataMaps.radius");
+  console.log(dataMaps.radius);
 
   //parsing id memalui params
   const { id } = props.match.params;
   const { apotik_id } = props.match.params;
 
   const sales_id = localStorage.sales_id;
-  console.log("sales_id");
-  console.log(sales_id);
 
   //function untuk get data detail trip melalui api
   const getDetailTrip = () => {
@@ -41,11 +64,13 @@ function DetailVisit(props) {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         apotik.push(res.data.data.id);
         apotik.push(res.data.data.name);
         apotik.push(res.data.data.address);
         apotik.push(res.data.data.image);
+        apotik.push(res.data.data.lat);
+        apotik.push(res.data.data.long);
         setIdApotik(apotik);
       })
       .catch((err) => {
@@ -84,7 +109,6 @@ function DetailVisit(props) {
 
   function handleDone() {
     const { id } = props.match.params;
-    const { apotik_id } = props.match.params;
     const token = localStorage.token;
     let formData = new FormData();
     formData.append("image", image);
@@ -99,19 +123,9 @@ function DetailVisit(props) {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
     }).then((result) => {
-      if (result.value) {
+      if (test == true) {
         axios
           .post(`/sales/checkout/${id}`, formData, {
-            // if (image === "") {
-            //   alert("jangan kosong");
-            // } else {
-            //   image;
-            // }
-            // if (notes === "") {
-            //   alert("jangan kosong");
-            // } else {
-            //   notes;
-            // }
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -124,7 +138,7 @@ function DetailVisit(props) {
           .catch((err) => {
             console.log(err);
           });
-      }
+      } else alert("woooooy diluar");
     });
   }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navigation from "components/Navigation";
 import { Redirect } from "react-router-dom";
 import axios from "configs";
+import moment from "moment";
 const token = localStorage.token;
 
 function Detail(props) {
@@ -10,12 +11,14 @@ function Detail(props) {
   //detail order sales state
   const [idOrder, setIdOrder] = useState("");
   const [apotikName, setApotikName] = useState([]);
-  console.log("apotikName");
-  console.log(apotikName);
-
   const [address, setAddress] = useState("");
   const [sales, setSales] = useState("");
   const [total, setTotal] = useState("");
+  const [date, setDate] = useState("");
+  const [note, setNote] = useState("");
+  const [image, setImage] = useState("");
+
+  const dateFormat = moment(date).format("LLLL");
 
   const { id } = props.match.params;
   const getDetail = () => {
@@ -28,7 +31,7 @@ function Detail(props) {
       })
       .then(function (response) {
         console.log("response");
-        console.log(response.data.checkout.sale);
+        console.log(response);
         let ttl = [...total];
         ttl.push(response.data.data[0].checkout.total_harga);
         let id = [...idOrder];
@@ -38,6 +41,9 @@ function Detail(props) {
         setApotikName(response.data.checkout.apotik.name);
         setAddress(response.data.checkout.apotik.address);
         setSales(response.data.checkout.sale.fullname);
+        setDate(response.data.checkout.updatedAt);
+        setNote(response.data.checkout.notes);
+        setImage(response.data.checkout.image);
 
         //list product set
         setDetail(response.data.data);
@@ -62,11 +68,20 @@ function Detail(props) {
           <p className="font-bold pb-5">Detail Order</p>
           <div className="w-full grid grid-cols-2 gap-3 pb-5">
             <p className="text-sm">id_order : {idOrder}</p>
-            <p className="text-sm">Apotik : {apotikName}</p>
-            <p className="text-sm">Alamat : {address}</p>
             <p className="text-sm">Sales : {sales}</p>
+            <p className="text-sm">Apotik : {apotikName}</p>
+            <p className="text-sm">Date Order : {dateFormat}</p>
+            <p className="text-sm">Alamat : {address}</p>
+            <div>
+              <p className="text-sm">Note : {note}</p>
+              <img
+                className="self-center h-16 w-16 mt-5"
+                src={`${process.env.REACT_APP_HOST_HEROKU}${image}`}
+                alt="img"
+              />
+            </div>
           </div>
-          <div style={{ height: "25rem" }} className="overflow-scroll">
+          <div style={{ height: "16rem" }} className="overflow-scroll">
             <table className="table-fixed w-full">
               <thead>
                 <tr style={{ backgroundColor: "#D5D5D5" }}>
