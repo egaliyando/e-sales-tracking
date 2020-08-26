@@ -3,8 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import { LOADING, LOADING_FINISH, SET_TOKEN } from "store/types";
 import axios from "configs";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 function Auth(props) {
+  const MySwal = withReactContent(Swal);
+
   //this hook gives us redux store state
   const loading = useSelector((state) => state.loading.loading);
   const token = useSelector((state) => state.users.token);
@@ -30,14 +34,15 @@ function Auth(props) {
           localStorage.setItem("token", res.data.data.token);
           dispatch({ type: SET_TOKEN, token: res.data.data });
           dispatch({ type: LOADING_FINISH });
+          MySwal.fire("Login Success, welcome!");
           props.history.push("/admin/dashboard");
         } else if (res.data.code === 404) {
           dispatch({ type: LOADING_FINISH });
           console.error(res.data);
-          alert(res.data.message);
+          MySwal.fire("Username or Password is wrong");
         } else if (res.data.code === 403) {
           dispatch({ type: LOADING_FINISH });
-          alert(res.data.message);
+          MySwal.fire("Username or Password is wrong");
         }
       })
       .catch((err) => {

@@ -64,7 +64,7 @@ function Users(props) {
         {/* MODAL */}
         <Table
           data={users.user}
-          thead={["No", "Fullname", "Address", "TTL", "NIK", "Role", "Action"]}
+          thead={["ID", "Fullname", "Address", "Birth Date", "NIK", "Role", "Action"]}
           tbody={["id", "fullname", "address", "ttl", "nik", "role"]}
           editUrl={"/admin/users/edit"}
           deleteAction={(id) => {

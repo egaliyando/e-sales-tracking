@@ -1,14 +1,77 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navigation from "components/Navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 // import Maps from "components/MapComponent/Maps";
 import MapsHook from "components/MapComponent/MapsHook";
+import axios from "configs";
 
 function Dashboard() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.users.token);
 
+  const [product, setProduct] = useState("");
+  const [sales, setSales] = useState("");
+  const [stock, setStock] = useState([]);
+  const [sold, setSold] = useState();
+
+  // console.log("stok");
+  // console.log(stock);
+
+  const [trip, setTrip] = useState();
+
+  const getDashboard = () => {
+    const token = localStorage.token;
+    axios
+      .get(`/dashboard`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        // const newArray = res.data.data.user.findIndex((x) => x.role === "sales");
+        // console.log("newArray");
+        // console.log(newArray);
+        console.log("dash");
+        setTrip(res.data.totalTrip);
+        setSold(res.data.totalProductBuy);
+        setSales(res.data.totalSales);
+
+        // for (let i = 0; i < res.data.data.user; i++) {
+        // }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getProduct = () => {
+    const token = localStorage.token;
+    axios
+      .get(`/product`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data.data);
+        setProduct(res.data.data.data.length);
+        let ArrayStock = [...stock];
+        for (let i = 0; i < res.data.data.data.length; i++) {
+          ArrayStock.push(res.data.data.data[i].stock);
+        }
+        setStock(ArrayStock);
+
+        // console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getDashboard();
+    getProduct();
+  }, []);
   if (token === "") {
     return <Redirect to="/" />;
   }
@@ -19,31 +82,31 @@ function Dashboard() {
         <p className="my-3 font-bold">Dashboard</p>
         <div className="grid grid-cols-4 gap-3">
           <div className="bg-white rounded-lg p-3 flex">
-            <img className="w-1/4" src={require(`assets/icons/ic_bag.svg`)} alt="ic" />
+            <img className="w-1/5" src={require(`assets/icons/ic_bag.svg`)} alt="ic" />
             <div className="self-center ml-3">
-              <p className="font-bold fonts-gray">Semua Produk</p>
-              <p className="font-bold fonts-gray">120</p>
+              <p className="font-bold fonts-gray">Total Product</p>
+              <p className="font-bold fonts-gray">{product}</p>
             </div>
           </div>
           <div className="bg-white rounded-lg p-3 flex">
-            <img className="w-10" src={require(`assets/icons/ic_bag4.svg`)} alt="ic" />
+            <img className="w-12" src={require(`assets/icons/ic_bag4.svg`)} alt="ic" />
             <div className="self-center ml-3">
-              <p className="font-bold fonts-gray">Terjual</p>
-              <p className="font-bold fonts-gray">120</p>
+              <p className="font-bold fonts-gray">Product Sold</p>
+              <p className="font-bold fonts-gray">{sold}</p>
             </div>
           </div>
           <div className="bg-white rounded-lg p-3 flex">
-            <img className="w-1/4" src={require(`assets/icons/ic_bag2.svg`)} alt="ic" />
+            <img className="w-1/5" src={require(`assets/icons/ic_bag2.svg`)} alt="ic" />
             <div className="self-center ml-3">
-              <p className="font-bold fonts-gray">Kadarluasa</p>
-              <p className="font-bold fonts-gray">120</p>
+              <p className="font-bold fonts-gray">Total Trip</p>
+              <p className="font-bold fonts-gray">{trip}</p>
             </div>
           </div>
           <div className="bg-white rounded-lg p-3 flex">
             <img className="w-12" src={require(`assets/icons/ic_bag3.svg`)} alt="ic" />
             <div className="self-center ml-3">
-              <p className="font-bold fonts-gray">Sales</p>
-              <p className="font-bold fonts-gray">120</p>
+              <p className="font-bold fonts-gray">Total Sales</p>
+              <p className="font-bold fonts-gray">{sales}</p>
             </div>
           </div>
         </div>
