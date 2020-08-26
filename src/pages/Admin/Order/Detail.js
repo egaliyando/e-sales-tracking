@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createRef } from "react";
 import Navigation from "components/Navigation";
 import { Redirect } from "react-router-dom";
 import axios from "configs";
 import moment from "moment";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import ReactToPdf from "react-to-pdf";
+
 const token = localStorage.token;
 
 function Detail(props) {
   const [detail, setDetail] = useState([]);
+
+  const ref = createRef();
 
   //detail order sales state
   const [idOrder, setIdOrder] = useState("");
@@ -64,7 +69,7 @@ function Detail(props) {
     <div className="flex">
       <Navigation />
       <div className="w-11/12">
-        <div className="mx-5 p-5 mt-5 bg-white rounded-lg h-auto shadow-md">
+        <div ref={ref} className="mx-5 p-5 mt-5 bg-white rounded-lg h-auto shadow-md">
           <p className="font-bold pb-5">Detail Order</p>
           <div className="w-full grid grid-cols-2 gap-3 pb-5">
             <p className="text-sm">id_order : {idOrder}</p>
@@ -82,7 +87,7 @@ function Detail(props) {
             </div>
           </div>
           <div style={{ height: "16rem" }} className="overflow-scroll">
-            <table className="table-fixed w-full">
+            <table id="table-to-xls" className="table-fixed w-full">
               <thead>
                 <tr style={{ backgroundColor: "#D5D5D5" }}>
                   <th className="text-left text-sm pl-2 py-2">ID</th>
@@ -117,9 +122,24 @@ function Detail(props) {
           </div>
           <p className="font-bold mt-5">Total : {total}</p>
         </div>
-        <button className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">
-          <img className="w-12 rounded-full shadow-lg" src={require(`assets/icons/ic_print.svg`)} alt="add" />
-        </button>
+
+        <div className="absolute bottom-0 focus:outline-none right-0 mb-12 mr-32">
+          <ReactHTMLTableToExcel
+            id="test-table-xls-button"
+            className="download-table-xls-button"
+            table="table-to-xls"
+            filename="tablexls"
+            sheet="tablexls"
+            buttonText="Download as Excel"
+          ></ReactHTMLTableToExcel>
+        </div>
+        <ReactToPdf targetRef={ref} filename="laporan-order.pdf">
+          {({ toPdf }) => (
+            <button onClick={toPdf} className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">
+              <img className="w-12 rounded-full shadow-lg" src={require(`assets/icons/ic_print.svg`)} alt="add" />
+            </button>
+          )}
+        </ReactToPdf>
       </div>
     </div>
   );

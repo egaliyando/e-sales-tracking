@@ -13,9 +13,8 @@ export default function Product(props) {
   const [product, setProduct] = useState([]);
   // `${moment("tgl_ex").format("YYYY-MM-DD")}`
 
-  const [date, setDate] = useState([]);
-  console.log("data");
-  console.log(product);
+  // console.log("data");
+  // console.log(product);
 
   const MySwal = withReactContent(Swal);
 
@@ -28,7 +27,7 @@ export default function Product(props) {
         },
       })
       .then((res) => {
-        console.log(res.data.data.data);
+        console.log(res.data.data.data.length);
         setProduct(res.data.data.data);
       })
       .catch((err) => {
