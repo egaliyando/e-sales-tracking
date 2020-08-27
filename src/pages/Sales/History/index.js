@@ -4,7 +4,7 @@ import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
 import axios from "configs";
-import moment from "moment"
+import moment from "moment";
 
 //maps
 import { Map, TileLayer, Marker, Popup, Circle } from "react-leaflet";
@@ -29,9 +29,13 @@ function History(props) {
 
   //deklarasi state list history
   const [listHistory, setListHistory] = useState([]);
+  console.log("listHistory");
+  console.log(listHistory);
 
   //deklarasi id sales dari local storage
   const sales_id = localStorage.sales_id;
+
+  const { id } = props.match.params;
 
   //get all apotik or trip
   const getData = () => {
@@ -50,6 +54,8 @@ function History(props) {
             parseFloat(res.data.data[i].trip.apotik.long),
             res.data.data[i].trip.apotik.name,
             res.data.data[i].trip.apotik.address,
+            res.data.data[i].trip.apotik.image,
+            res.data.tracking[i].updatedAt,
           ]);
         }
 
@@ -70,15 +76,24 @@ function History(props) {
         },
       })
       .then((res) => {
+        console.log("res kuyyy");
+        console.log(res);
         let Arrays = [...listHistory];
         let TagMap = [...arrayTag];
         for (let i = 0; i < res.data.tracking.length; i++) {
-          Arrays.push(res.data.tracking[i].apotik);
+          Arrays.push([
+            res.data.tracking[i].apotik.name,
+            res.data.tracking[i].apotik.address,
+            res.data.tracking[i].id,
+            res.data.tracking[i].apotik.image,
+          ]);
           TagMap.push([
             parseFloat(res.data.tracking[i].apotik.lat),
             parseFloat(res.data.tracking[i].apotik.long),
             res.data.tracking[i].apotik.name,
             res.data.tracking[i].apotik.address,
+            res.data.tracking[i].apotik.image,
+            res.data.tracking[i].updatedAt,
           ]);
         }
         //list history
@@ -112,6 +127,11 @@ function History(props) {
               return (
                 <Marker position={[data[0], data[1]]} icon={iconApotik} key={i}>
                   <Popup>
+                    <img
+                      className="h-12 w-12 mb-3"
+                      src={`${process.env.REACT_APP_HOST_HEROKU}${[data[4]]}`}
+                      alt="img"
+                    />
                     <span className="text-xl">{data[2]}</span> <br /> {data[3]}
                     <br /> <p className="text-md">Status : Belum Dikunjungi</p>
                   </Popup>
@@ -123,32 +143,17 @@ function History(props) {
               return (
                 <Marker position={[data[0], data[1]]} icon={iconSales} key={i}>
                   <Popup>
-                    <div style={{ width: 200, height: 200 }} className="overflow-y-scroll">
-                      <div className="grid grid-cols-2 gap-2">
-                        <div>
-                          <span className="text-xs text-gray-500">NIK</span> <br />
-                          <span className="text-sm">124343</span>
-                          <br />
-                          <span className="text-xs text-gray-500">Nama Sales</span>
-                          <br />
-                          <span className="text-sm">Budi Sales</span>
-                          <br />
-                          <span className="text-xs text-gray-500">No HP</span>
-                          <br />
-                          <span className="text-sm">0988788878</span>
-                        </div>
-                        <div className="w-16 h-16 pb-5 ml-5">
-                          <img className="m-auto" src={require(`assets/image/sales.png`)} alt="sales" />
-                        </div>
-                      </div>
+                    <div style={{ width: 200, height: 160 }} className="overflow-y-scroll">
+                      <img
+                        className="h-12 w-12 mb-3"
+                        src={`${process.env.REACT_APP_HOST_HEROKU}${[data[4]]}`}
+                        alt="img"
+                      />
+                      <span className="text-sm">{data[2]}</span> <br /> {data[3]}
                       <br />
                       <br />
-                      <div>
-                        <span className="text-sm">{data[2]}</span> <br /> {data[3]}
-                      </div>
-                      <br />
-                      <span>Dikunjungi : 12/12/20</span>
-                      <br /> <p className="text-md text-green-500">Status : Telah Dikunjungi</p>
+                      <span>Visited at : {moment([data[5]]).format("LLLL")}</span>
+                      <br /> <span className="text-md text-green-500">Status : Telah Dikunjungi</span>
                     </div>
                   </Popup>
                   <Circle center={[data[0], data[1]]} fillColor="blue" radius={dataMaps.radius} />
@@ -159,13 +164,13 @@ function History(props) {
         </div>
         <div className="overflow-y-auto h-64 pb-12">
           {listHistory.map((item, i) => (
-            <Link to={`/sales/history/detail/${sales_id}`} key={i}>
+            <Link to={`/sales/history/detail/${id}/${item[2]}`} key={i}>
               <div className="mt-2">
                 <div className="w-full p-2 rounded-lg bg-white h-auto flex">
-                  <img src={require(`assets/image/apotek.png`)} alt="img" />
+                  <img className="h-16 w-16 mb-3" src={`${process.env.REACT_APP_HOST_HEROKU}${item[3]}`} alt="img" />
                   <div className="ml-3">
-                    <p className="font-bold text-gray-600">{item.name}</p>
-                    <p className="text-xs text-gray-600">{item.address}</p>
+                    <p className="font-bold text-gray-600">{item[0]}</p>
+                    <p className="text-xs text-gray-600">{item[1]}</p>
                   </div>
                 </div>
               </div>

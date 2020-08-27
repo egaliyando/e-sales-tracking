@@ -3,6 +3,7 @@ import Popover from "components/Popover";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import axios from "configs";
+import { useHistory } from "react-router-dom";
 
 function Toggle() {
   const MySwal = withReactContent(Swal);
@@ -109,6 +110,7 @@ function Header(props) {
   const hSalesWithToggle = props.hSalesWithToggle;
   const hSalesNormal = props.hSalesNormal;
   const hSupervisor = props.hSupervisor;
+  const history = useHistory();
   if (hSalesWithToggle) {
     return (
       <div
@@ -129,7 +131,7 @@ function Header(props) {
         style={{ width: "-webkit-fill-available" }}
         className="fixed top-0 z-50 max-w-md h-16 flex justify-between px-3 bg-white"
       >
-        <button className="focus:outline-none ml-2">
+        <button onClick={() => history.goBack()} className="focus:outline-none ml-2">
           <img src={require(`assets/icons/header/ic_back.svg`)} alt="img" />
         </button>
         <img style={{ marginLeft: "0.93rem" }} src={require(`assets/icons/header/icon_sales.svg`)} alt="img" />
@@ -146,7 +148,7 @@ function Header(props) {
         className="fixed top-0 z-50 max-w-md h-16 flex justify-center px-3 bg-white justify-between"
       >
         <div className="self-center ml-3 mt-2">
-          <button className="focus:outline-none">
+          <button onClick={() => history.goBack()} className="focus:outline-none">
             <img src={require(`assets/icons/header/ic_back.svg`)} alt="img" />
           </button>
         </div>

@@ -68,6 +68,8 @@ function DetailTrack(props) {
         },
       })
       .then((res) => {
+        console.log("res TRACK");
+        console.log(res);
         let ArrayTrip = [...tagTrip];
         for (let i = 0; i < res.data.tracking.length; i++) {
           ArrayTrip.push([
@@ -75,6 +77,7 @@ function DetailTrack(props) {
             parseFloat(res.data.tracking[i].apotik.long),
             res.data.tracking[i].apotik.name,
             res.data.tracking[i].apotik.address,
+            res.data.tracking[i].id,
           ]);
         }
         setTagTrip(ArrayTrip);
@@ -166,11 +169,15 @@ function DetailTrack(props) {
       content: (
         <div style={{ height: "28rem" }} className="overflow-y-auto pb-10">
           {listHistory.map((item) => (
-            <Link to={`/supervisor/sales-track/detail/detail-history/${id}/${item.apotik.id}`}>
+            <Link to={`/supervisor/sales-track/detail/detail-history/${id}/${item.id}`}>
               <div className="mt-2" key={item.id}>
                 <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                   <div className="flex">
-                    <img src={require(`assets/image/apotek.png`)} alt="img" />
+                    <img
+                      className="h-16 w-16"
+                      src={`${process.env.REACT_APP_HOST_HEROKU}${item.apotik.image}`}
+                      alt="img"
+                    />
                     <div className="ml-3">
                       <p className="font-bold text-gray-600">{item.apotik.name}</p>
                       <p className="text-xs text-gray-600">{item.apotik.address}</p>

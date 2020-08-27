@@ -7,6 +7,53 @@ import axios from "configs";
 
 function Dashboard(props) {
   const [listTrip, setListTrip] = useState([]);
+
+  const [product, setProduct] = useState();
+  const [totalProductSold, setTotalProductSold] = useState();
+  const [totalTrip, setTotalTrip] = useState();
+  const [tripSuccess, setTripSuccess] = useState();
+
+  // const chatSupervisor = () => {
+  //   let url = 'https://api.whatsapp.com/send?phone=085382925115'
+  //   + number
+  //   "&text="
+  // }
+
+  const getDashboard = () => {
+    const token = localStorage.token;
+    const sales_id = localStorage.sales_id;
+
+    axios
+      .get(`/dashboard/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log("dashboard");
+        console.log(res);
+        setProduct(res.data.totalProduct);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(`/sales/dashboard/${sales_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log("dashboardssss");
+        console.log(res);
+        setTotalTrip(res.data.total_trip);
+        setTotalProductSold(res.data.total_product);
+        setTripSuccess(res.data.trip_success);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const getTrip = () => {
     const token = localStorage.token;
     const sales_id = localStorage.sales_id;
@@ -29,6 +76,7 @@ function Dashboard(props) {
 
   useEffect(() => {
     getTrip();
+    getDashboard();
   }, []);
   return (
     <Container>
@@ -38,23 +86,23 @@ function Dashboard(props) {
         <div className="grid grid-cols-2 gap-3 px-3 pt-2">
           <div className="bg-white w-full h-auto rounded-lg p-3">
             <img className="ml-auto" src={require(`assets/icons/dashboard/ic_map_mark.svg`)} alt="map" />
-            <p className="text-xs mt-2 text-gray-600">Total Visited</p>
-            <p className="text-lg font-bold text-gray-600">22</p>
+            <p className="text-xs mt-2 text-gray-600">Total Trip</p>
+            <p className="text-lg font-bold text-gray-600">{totalTrip}</p>
           </div>
           <div className="bg-white w-full h-auto rounded-lg p-3">
             <img className="ml-auto" src={require(`assets/icons/dashboard/ic_dollar.svg`)} alt="map" />
-            <p className="text-xs mt-2 text-gray-600">Product Sold</p>
-            <p className="text-lg font-bold text-gray-600">19</p>
+            <p className="text-xs mt-2 text-gray-600">Trip Success</p>
+            <p className="text-lg font-bold text-gray-600">{tripSuccess}</p>
           </div>
           <div className="bg-white w-full h-auto rounded-lg p-3">
             <img className="ml-auto" src={require(`assets/icons/dashboard/ic_skull.svg`)} alt="map" />
-            <p className="text-xs mt-2 text-gray-600">Product Expired</p>
-            <p className="text-lg font-bold text-gray-600">21</p>
+            <p className="text-xs mt-2 text-gray-600">All Product</p>
+            <p className="text-lg font-bold text-gray-600">{product}</p>
           </div>
           <div className="bg-white w-full h-auto rounded-lg p-3">
             <img className="ml-auto" src={require(`assets/icons/dashboard/ic_speed.svg`)} alt="map" />
-            <p className="text-xs mt-2 text-gray-600">Trip Success</p>
-            <p className="text-lg font-bold text-gray-600">22</p>
+            <p className="text-xs mt-2 text-gray-600">Product Sold</p>
+            <p className="text-lg font-bold text-gray-600">{totalProductSold}</p>
           </div>
         </div>
         <p className="ml-3 mt-3 text-gray-600">Visit List</p>
@@ -81,9 +129,12 @@ function Dashboard(props) {
         })}
       </div>
 
-      <Link to="/sales/chat" className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none">
+      <button
+        onClick={() => (window.location.href = "https://wa.me/6285382925115?text=%7B0%7D+Hello+Supervisor")}
+        className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none"
+      >
         <img src={require(`assets/icons/dashboard/ic_chat.svg`)} alt="chat" />
-      </Link>
+      </button>
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
         <MobileNav isSales={true} {...props} />
       </div>

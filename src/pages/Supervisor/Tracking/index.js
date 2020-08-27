@@ -18,6 +18,7 @@ function Tracking(props) {
         },
       })
       .then((res) => {
+        console.log(res);
         setListSales(res.data.data);
       })
       .catch((err) => {
@@ -45,7 +46,8 @@ function Tracking(props) {
               <Link to={`/supervisor/sales-track/detail/${item.id}`}>
                 <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                   <div className="flex">
-                    <img src={require(`assets/image/sales_list.png`)} alt="img" />
+                    <img className="h-16 w-16" src={`${process.env.REACT_APP_HOST_HEROKU}${item.image}`} alt="img" />
+
                     <div className="ml-3">
                       <p className="font-bold text-gray-600">{item.fullname}</p>
                       <p className="text-xs text-green-600">{item.status}</p>

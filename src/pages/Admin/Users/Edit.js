@@ -16,14 +16,13 @@ function Edit(props) {
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [userId, setUserId] = useState("");
-
-  // console.log("userId");
-  // console.log(userId);
+  const [image, setImage] = useState("");
+  console.log("userId");
+  console.log(userId);
 
   const getData = () => {
     const { id } = props.match.params;
     const token = localStorage.token;
-
     axios
       .get(`/users/${id}`, {
         headers: {
@@ -40,6 +39,7 @@ function Edit(props) {
         setRole(res.data.data.user.role);
         setPassword(res.data.data.user.password);
         setUserId(res.data.data.user_id);
+        setImage(res.data.data.image);
       })
       .catch((error) => {
         console.log(error);
@@ -49,6 +49,16 @@ function Edit(props) {
   const handleUpdate = () => {
     const { id } = props.match.params;
     const token = localStorage.token;
+    let formData = new FormData();
+    formData.append("username", userName);
+    formData.append("fullname", fullName);
+    formData.append("ttl", birthDay);
+    formData.append("image", image);
+    formData.append("password", password);
+    formData.append("address", address);
+    formData.append("role", role);
+    formData.append("nik", nik);
+    formData.append("user_id", userId);
 
     MySwal.fire({
       title: "Edit User?",
@@ -58,31 +68,21 @@ function Edit(props) {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
     }).then((res) => {
-      MySwal.fire("Edit Success", "", "success", "Canceled");
+      MySwal.fire("Edit Success", ":)", "warning", "Canceled");
       if (res) {
         axios
-          .put(
-            `/users/${id}`,
-            {
-              nik: nik,
-              password: password,
-              role: role,
-              address: address,
-              ttl: birthDay,
-              fullname: fullName,
-              username: userName,
-              user_id: userId,
+          .put(`/users/${id}`, formData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
             },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
+          })
           .then(function (res) {
             console.log("res");
             console.log(res);
             props.history.push("/admin/users");
+          })
+          .catch(function (error) {
+            console.log(error);
           });
       }
     });
@@ -98,24 +98,35 @@ function Edit(props) {
         <p className="my-3 font-bold">Edit Users</p>
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="grid grid-cols-2 gap-5">
-            <div>
-              <label className="text-xs">Full Name</label>
-              <input
-                className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
-                type="text"
-                name="fullname"
-                value={fullName}
-                onChange={(e) => setFullname(e.target.value)}
-              />
+            <div className="flex">
+              <div>
+                <label className="text-xs">Full Name</label>
+                <input
+                  value={fullName}
+                  onChange={(e) => setFullname(e.target.value)}
+                  className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+                  type="text"
+                  name="fullname"
+                />
+              </div>
+              <div className="ml-3">
+                <label className="text-xs">NIK</label>
+                <input
+                  onChange={(e) => setNik(e.target.value)}
+                  className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+                  type="number"
+                  name="nik"
+                  value={nik}
+                />
+              </div>
             </div>
             <div>
-              <label className="text-xs">NIK</label>
+              <label className="text-xs">Image</label>
               <input
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
-                type="number"
-                name="nik"
-                value={nik}
-                onChange={(e) => setNik(e.target.value)}
+                type="file"
+                name="img"
+                onChange={(e) => setImage(e.target.files[0])}
               />
             </div>
             <div className="flex">
@@ -155,6 +166,7 @@ function Edit(props) {
               <select
                 onChange={(e) => setRole(e.target.value)}
                 value={role}
+                name="role"
                 className="bg-gray-200 w-full text-xs text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
               >
                 <option value="supervisor">Supervisor</option>
@@ -164,6 +176,7 @@ function Edit(props) {
             <div>
               <label className="text-xs">Password</label>
               <input
+                disabled
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="text"
                 name="password"

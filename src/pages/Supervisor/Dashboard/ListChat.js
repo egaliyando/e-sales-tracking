@@ -1,48 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "configs";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
-import { Link } from "react-router-dom";
-
-const listchat = [
-  {
-    id: 1,
-    name: "Budi",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Arif",
-    status: "Close",
-  },
-  {
-    id: 3,
-    name: "Melati",
-    status: "Active",
-  },
-  {
-    id: 4,
-    name: "Budi",
-    status: "Active",
-  },
-  {
-    id: 5,
-    name: "Arif",
-    status: "Close",
-  },
-  {
-    id: 6,
-    name: "Melati",
-    status: "Active",
-  },
-  {
-    id: 7,
-    name: "Melati",
-    status: "Active",
-  },
-];
+// import { Link } from "react-router-dom";
 
 function ListChat(props) {
+  //deklarasi state sales open
+  const [listSales, setListSales] = useState([]);
+
+  const getSales = () => {
+    const token = localStorage.token;
+    axios
+      .get(`/supervisor/sales-open`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setListSales(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getSales();
+  }, []);
+
   return (
     <Container>
       <Header hSupervisor={true} />
@@ -53,18 +40,16 @@ function ListChat(props) {
           <img src={require(`assets/icons/visit/ic_search.svg`)} alt="search" />
         </div>
         <div style={{ height: "33rem" }} className="overflow-y-auto pb-20">
-          {listchat.map((item) => (
-            <Link to="/supervisor/chat/detail">
-              <div className="mt-2" key={item.id}>
-                <div className="w-full p-2 rounded-lg bg-white h-auto flex">
-                  <img src={require(`assets/image/sales_list.png`)} alt="img" />
-                  <div className="ml-3">
-                    <p className="font-bold text-gray-600">{item.name}</p>
-                    <p className="text-xs text-gray-600">Status : {item.status}</p>
-                  </div>
+          {listSales.map((item) => (
+            <div className="mt-2" key={item.id}>
+              <div className="w-full p-2 rounded-lg bg-white h-auto flex">
+                <img className="h-16 w-16" src={`${process.env.REACT_APP_HOST_HEROKU}${item.image}`} alt="img" />
+                <div className="ml-3">
+                  <p className="font-bold text-gray-600">{item.fullname}</p>
+                  <p className="text-xs text-gray-600">Status : {item.status}</p>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>

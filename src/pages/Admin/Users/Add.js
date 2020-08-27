@@ -15,9 +15,19 @@ function Add(props) {
   const [Ttl, setTtl] = useState("");
   const [FullName, setFullname] = useState("");
   const [Username, setUsername] = useState("");
+  const [Image, setImage] = useState("");
   const token = localStorage.token;
 
   const handleSubmit = () => {
+    let formData = new FormData();
+    formData.append("username", Username);
+    formData.append("fullname", FullName);
+    formData.append("ttl", Ttl);
+    formData.append("image", Image);
+    formData.append("password", Password);
+    formData.append("address", Address);
+    formData.append("role", Role);
+    formData.append("nik", Nik);
     MySwal.fire({
       title: "Add User?",
       icon: "info",
@@ -28,23 +38,11 @@ function Add(props) {
     }).then((result) => {
       if (result.value) {
         axios
-          .post(
-            "/users",
-            {
-              nik: Nik,
-              password: Password,
-              role: Role,
-              address: Address,
-              ttl: Ttl,
-              fullname: FullName,
-              username: Username,
+          .post("/users", formData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
             },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
+          })
           .then(function (response) {
             console.log(response);
             MySwal.fire("Add Success!", ":)", "warning", "Canceled");
@@ -69,20 +67,30 @@ function Add(props) {
         <p className="my-3 font-bold">Add Users</p>
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="grid grid-cols-2 gap-5">
-            <div>
-              <label className="text-xs">Full Name</label>
-              <input
-                onChange={(e) => setFullname(e.target.value)}
-                className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
-                type="text"
-              />
+            <div className="flex">
+              <div>
+                <label className="text-xs">Full Name</label>
+                <input
+                  onChange={(e) => setFullname(e.target.value)}
+                  className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+                  type="text"
+                />
+              </div>
+              <div className="ml-3">
+                <label className="text-xs">NIK</label>
+                <input
+                  onChange={(e) => setNik(e.target.value)}
+                  className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+                  type="number"
+                />
+              </div>
             </div>
             <div>
-              <label className="text-xs">NIK</label>
+              <label className="text-xs">Image</label>
               <input
-                onChange={(e) => setNik(e.target.value)}
-                className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
-                type="number"
+                onChange={(e) => setImage(e.target.files[0])}
+                className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+                type="file"
               />
             </div>
             <div className="flex">

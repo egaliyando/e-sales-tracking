@@ -37,6 +37,7 @@ function AuthClient(props) {
           dispatch({ type: LOADING_FINISH });
           props.history.push("/sales/dashboard");
         } else if (res.data.data.checkUser.role === "supervisor") {
+          localStorage.setItem("spv_id", res.data.data.checkUser.sales[0].id);
           localStorage.setItem("token", res.data.data.token);
           dispatch({ type: SET_TOKEN, token: res.data.data });
           dispatch({ type: LOADING_FINISH });

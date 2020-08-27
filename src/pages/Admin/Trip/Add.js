@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "configs";
-import moment from "moment"
-import DatePicker from "react-datepicker"
+import moment from "moment";
+import DatePicker from "react-datepicker";
 
 import Navigation from "components/Navigation";
 import { Link, Redirect } from "react-router-dom";
@@ -18,16 +18,16 @@ export default function Add(props) {
   const [apotik, setApotik] = useState([]);
   const [apotik_id, setApotikId] = useState();
 
-  const today = new Date()
-  console.log("today")
-  console.log(today)
+  const today = new Date();
+  console.log("today");
+  console.log(today);
   console.log("apotik");
   console.log(apotik_id);
   console.log("day");
   console.log(day);
 
   //CHANGE DAY
-  const handleDay = date => {
+  const handleDay = (date) => {
     setDay(date);
   };
   //CHANGE OPTION APOTIK
@@ -47,17 +47,17 @@ export default function Add(props) {
     }).then((result) => {
       if (result.value) {
         axios
-        .post(
-          "/trip",
-          {
-            apotik_id: apotik_id,
-            day: day,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+          .post(
+            "/trip",
+            {
+              apotik_id: apotik_id,
+              day: day,
             },
-          }
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           )
           .then(function (response) {
             console.log(response);
@@ -72,7 +72,7 @@ export default function Add(props) {
             }
             MySwal.fire("Pastikan Data Terisi");
           });
-      } 
+      }
     });
   };
 
@@ -128,14 +128,14 @@ export default function Add(props) {
               </select>
             </div>
             <div>
-              <label className="text-xs">Day</label> <br/>
+              <label className="text-xs">Day</label> <br />
               <DatePicker
-  className="bg-gray-200 w-full self-center p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
-  onChange={handleDay}
-  minDate={moment().toDate()}
-  placeholderText="Select a day"
-/>
-             
+                selected={day}
+                className="bg-gray-200 w-full self-center p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+                onChange={handleDay}
+                minDate={moment().toDate()}
+                placeholderText="Select a day"
+              />
             </div>
           </div>
           <div className="flex mt-5 justify-end">
