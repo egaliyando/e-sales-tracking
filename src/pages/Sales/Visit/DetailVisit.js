@@ -7,28 +7,36 @@ import axios from "configs";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import useGeolocation from "react-hook-geolocation";
+
+//ini library yang digunakan untuk metode lock gps nya
 import * as geolib from "geolib";
 
 function DetailVisit(props) {
   // deklarasi sweetalert
   const MySwal = withReactContent(Swal);
-  //deklarasi geolocation
+
+
+  //deklarasi geolocation (ini deklarasi untuk get lokasi kita)
   const geolocation = useGeolocation();
   //state trip & apotik
   const [idApotik, setIdApotik] = useState("");
 
+  //ini untuk nge set/ nyimpen lat long kita
   const userLat = parseFloat(geolocation.latitude);
   const userLong = parseFloat(geolocation.longitude);
+  //ini untuk nge set lokasi/ latlong apotik/trip/rs
   const lats = parseFloat(idApotik[4]);
   const longs = parseFloat(idApotik[5]);
 
   //geolib
-  //ini function untuk lock GPS nya
+  //ini poin penting nya
+  //ini function untuk lock GPS nya...function ini untuk membandingkan
   const test = geolib.isPointWithinRadius(
-    { latitude: lats, longitude: longs },
-    { latitude: userLat, longitude: userLong },
-    1000000000
-  );
+    { latitude: lats, longitude: longs },//(apotik/trip latlong banding) //apakah latlong apotik
+    { latitude: userLat, longitude: userLong }, //(user lat long banding) //sudah berada di sekitar/ radius 
+    100 //(satuanya meter) //ini untuk nge set radius nya
+  ); //kalau dia diluar 100 meter/radius maka bernilai false, artinya dia gabisa order //kalau dia didalam radius maka bernilai true, maka dia bisa order
+  
   console.log("tes");
   console.log(test);
   //deklarasi state detail trip

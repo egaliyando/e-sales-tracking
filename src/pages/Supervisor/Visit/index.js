@@ -248,7 +248,11 @@ function VisitSV(props) {
                     <div className="mt-3 px-3" key={item.id}>
                       <div style={{ width: "20rem" }} className="p-2 rounded-lg justify-between bg-white h-auto flex">
                         <div className="flex">
-                          <img src={require(`assets/image/sales_list.png`)} alt="img" />
+                        <img
+            className="self-center h-12 w-12"
+            src={`${process.env.REACT_APP_HOST_HEROKU}${item.sale.image}`}
+            alt="img"
+          />
                           <div className="ml-3">
                             <p className="font-bold text-gray-600">{item.sale.fullname}</p>
                             <p className="text-xs text-gray-600">Status : {item.sale.status}</p>
@@ -270,7 +274,11 @@ function VisitSV(props) {
                     <div className="mt-3 px-3" key={item.id}>
                       <div style={{ width: "20rem" }} className="p-2 rounded-lg justify-between bg-white h-auto flex">
                         <div className="flex">
-                          <img src={require(`assets/image/sales_list.png`)} alt="img" />
+                        <img
+            className="self-center h-12 w-12"
+            src={`${process.env.REACT_APP_HOST_HEROKU}${item.image}`}
+            alt="img"
+          />
                           <div className="ml-3">
                             <p className="font-bold text-gray-600">{item.fullname}</p>
                             <p className="text-xs text-gray-600">Status : {item.status}</p>

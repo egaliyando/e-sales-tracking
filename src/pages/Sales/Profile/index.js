@@ -13,7 +13,7 @@ function Profile(props) {
   const [role, setRole] = useState("");
   const [image, setImage] = useState("");
 
-  const formatBirthday = moment(birthDay).format("MM-DD-YYYY");
+  const formatBirthday = moment(birthDay).format("DD-MM-YYYY");
 
   const getProfile = () => {
     const token = localStorage.token;

@@ -2,16 +2,20 @@ import React, { useState, useEffect } from "react";
 import axios from "configs";
 import Navigation from "components/Navigation";
 import { Link, Redirect } from "react-router-dom";
+import moment from "moment"
 import Swal from "sweetalert2";
+import DatePicker from "react-datepicker";
+
 import withReactContent from "sweetalert2-react-content";
 
 export default function Edit(props) {
   const MySwal = withReactContent(Swal);
   const token = localStorage.token;
-
   const [day, setDay] = useState();
   const [apotik_id, setApotikId] = useState([]);
   const [apotikName, setApotikName] = useState([]);
+
+  const today = new Date();
 
   console.log("apotik id");
   console.log(apotik_id);
@@ -21,8 +25,8 @@ export default function Edit(props) {
   // console.log(apotikName);
 
   //CHANGE DAY
-  const handleDay = (e) => {
-    setDay(e.target.value);
+  const handleDay = (date) => {
+    setDay(date);
   };
   //CHANGE OPTION APOTIK
   const handleChange = (e) => {
@@ -142,11 +146,13 @@ export default function Edit(props) {
               </select>
             </div>
             <div>
-              <label className="text-xs">Day</label>
-              <input
+                <label className="text-xs">Day</label> <br />
+              <DatePicker
+              
+                className="bg-gray-200 w-full self-center p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 onChange={handleDay}
-                className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
-                type="date"
+                minDate={moment().toDate()}
+                placeholderText="Select a day"
               />
             </div>
           </div>
