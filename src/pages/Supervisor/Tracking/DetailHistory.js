@@ -60,6 +60,7 @@ function DetailHistorySV(props) {
         </div>
         <hr className="mt-3" />
         <div className="overflow-y-auto h-64 pb-10">
+          <p className="text-xs text-gray-500">Order</p>
           {listProduct.map((item) => (
             <div className="mt-2" key={item.id}>
               {/* <Link to="/sales/visit/order"> */}

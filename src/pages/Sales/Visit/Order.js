@@ -168,9 +168,6 @@ function Order(props) {
                           <p className="text-xs text-gray-600">{idProduct.stock}</p>
                         </div>
                       </div>
-                      <p className="font-bold justify-end" onClick={() => setShowModal(false)}>
-                        X
-                      </p>
                     </div>
                   </div>
                   {/*footer*/}
@@ -190,9 +187,19 @@ function Order(props) {
                     >
                       +
                     </button>
+                  </div>
+                  <div className="flex justify-around">
+                    <button
+                      onClick={() => setShowModal(false)}
+                      className="bg-orange-400 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                      type="button"
+                      style={{ transition: "all .15s ease" }}
+                    >
+                      Cancel
+                    </button>
                     <button
                       onClick={handleAddProduct}
-                      className="bg-orange-400 ml-10 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                      className="bg-green-400 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                       type="button"
                       style={{ transition: "all .15s ease" }}
                     >

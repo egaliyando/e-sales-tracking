@@ -41,7 +41,13 @@ function ListChat(props) {
         </div>
         <div style={{ height: "33rem" }} className="overflow-y-auto pb-20">
           {listSales.map((item) => (
-            <div className="mt-2" key={item.id}>
+            <div
+              onClick={() =>
+                (window.location.href = `https://wa.me/${item.user.username}?text=%7B0%7D+Hello+Supervisor`)
+              }
+              className="mt-2"
+              key={item.id}
+            >
               <div className="w-full p-2 rounded-lg bg-white h-auto flex">
                 <img className="h-16 w-16" src={`${process.env.REACT_APP_HOST_HEROKU}${item.image}`} alt="img" />
                 <div className="ml-3">

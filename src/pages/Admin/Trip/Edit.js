@@ -2,31 +2,30 @@ import React, { useState, useEffect } from "react";
 import axios from "configs";
 import Navigation from "components/Navigation";
 import { Link, Redirect } from "react-router-dom";
-import moment from "moment"
+import moment from "moment";
 import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 
 import withReactContent from "sweetalert2-react-content";
 
 export default function Edit(props) {
+  const today = new Date();
   const MySwal = withReactContent(Swal);
   const token = localStorage.token;
-  const [day, setDay] = useState();
+  const [day, setDay] = useState(new Date());
   const [apotik_id, setApotikId] = useState([]);
   const [apotikName, setApotikName] = useState([]);
 
-  const today = new Date();
-
   console.log("apotik id");
   console.log(apotik_id);
-  // console.log("day");
-  // console.log(day);
+  console.log("day");
+  console.log(day);
   // console.log("name");
   // console.log(apotikName);
 
   //CHANGE DAY
   const handleDay = (date) => {
-    setDay(date);
+    setDay(moment(date).format("DD-MM-YYYY"));
   };
   //CHANGE OPTION APOTIK
   const handleChange = (e) => {
@@ -62,7 +61,9 @@ export default function Edit(props) {
       .then((res) => {
         console.log(res);
         setApotikId(res.data.data.apotik_id);
-        setDay(res.data.data.day);
+        setDay(moment(res.data.data.day).format("DD-MM-YYYY"));
+        console.log("res.data.data.day");
+        console.log(res.data.data.day);
       })
       .catch((error) => {
         console.log(error);
@@ -146,12 +147,11 @@ export default function Edit(props) {
               </select>
             </div>
             <div>
-                <label className="text-xs">Day</label> <br />
+              <label className="text-xs">Day</label> <br />
               <DatePicker
-              
                 className="bg-gray-200 w-full self-center p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 onChange={handleDay}
-                minDate={moment().toDate()}
+                minDate={today}
                 placeholderText="Select a day"
               />
             </div>

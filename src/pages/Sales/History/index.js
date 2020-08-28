@@ -14,6 +14,8 @@ function History(props) {
   //maps component
   //deklarasi state tagging sales history
   const [arrayTag, setArrayTag] = useState([]);
+  console.log("arrayTag");
+  console.log(arrayTag);
   //deklarasi data tagging all trip/apotik
   const [dataApotik, setDataApotik] = useState([]);
 
@@ -93,7 +95,7 @@ function History(props) {
             res.data.tracking[i].apotik.name,
             res.data.tracking[i].apotik.address,
             res.data.tracking[i].apotik.image,
-            res.data.tracking[i].updatedAt,
+            res.data.tracking[i].createdAt,
           ]);
         }
         //list history
@@ -152,7 +154,7 @@ function History(props) {
                       <span className="text-sm">{data[2]}</span> <br /> {data[3]}
                       <br />
                       <br />
-                      <span>Visited at : {moment([data[5]]).format("LLLL")}</span>
+                      <span>Visited at : {[moment(data[5]).format("LLLL")]}</span>
                       <br /> <span className="text-md text-green-500">Status : Telah Dikunjungi</span>
                     </div>
                   </Popup>

@@ -4,13 +4,15 @@ import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import axios from "configs";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 function Visit(props) {
-  const [listRute, setListRute] = useState([]);
-  // console.log("listRute");
-  // console.log(listRute);
-  const [lat, setLat] = useState([]);
-  const [long, setLong] = useState([]);
+  //untuk cek today
+  const date = new Date();
+  //ubah format tanggalnya
+  const dateFormat = moment(date).format("DD-MM-YYYY");
+  //bikin state untuk mapping
+  const [dayTrip, setDayTrip] = useState([]);
 
   const getRute = () => {
     const token = localStorage.token;
@@ -23,15 +25,18 @@ function Visit(props) {
         },
       })
       .then((res) => {
-        let arrayTemp1 = [...lat];
-        let arrayTemp2 = [...long];
-        setListRute(res.data.data);
+        let arrayTemp = [...dayTrip];
         for (let i = 0; i < res.data.data.length; i++) {
-          arrayTemp1.push(res.data.data[i].trip.apotik.lat);
-          arrayTemp2.push(res.data.data[i].trip.apotik.long);
+          arrayTemp.push([
+            res.data.data[i].trip.apotik.id,
+            //ini poin pentinf dalam filter nya
+            moment(res.data.data[i].trip.day).format("DD-MM-YYYY"),
+            res.data.data[i].trip.apotik.name,
+            res.data.data[i].trip.apotik.address,
+            res.data.data[i].trip.apotik.image,
+          ]);
         }
-        setLat(arrayTemp1);
-        setLong(arrayTemp2);
+        setDayTrip(arrayTemp);
       })
       .catch((err) => {
         console.log(err);
@@ -47,31 +52,34 @@ function Visit(props) {
       <Header hSalesNormal={true} />
       <div style={{ paddingTop: "4.7rem" }} className="px-3">
         <div style={{ height: "28rem" }} className="overflow-y-auto pb-10">
-          {listRute.length > 0
-            ? listRute.map((item, i) => {
-                return (
-                  <div className="mt-2" key={i}>
-                    <Link to={`/sales/visit/detail-visit/${item.id}/${item.trip.apotik.id}`}>
-                      <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
-                        <div className="flex">
-                          <img
-                            className="self-center h-16 w-16"
-                            src={`${process.env.REACT_APP_HOST_HEROKU}${item.trip.apotik.image}`}
-                            alt="img"
-                          />
-                          <div className="ml-3">
-                            <p className="font-bold text-gray-600">{item.trip.apotik.name}</p>
-                            <p className="text-xs text-gray-600">{item.trip.apotik.address}</p>
+          {dayTrip.length > 0
+            ? //sebelum di mapping di filter dulu kek gini
+              dayTrip
+                .filter((days) => days.includes(dateFormat))
+                .map((item, i) => {
+                  return (
+                    <div className="mt-2" key={i}>
+                      <Link to={`/sales/visit/detail-visit/${item.id}/${item[0]}`}>
+                        <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
+                          <div className="flex">
+                            <img
+                              className="self-center h-16 w-16"
+                              src={`${process.env.REACT_APP_HOST_HEROKU}${item[4]}`}
+                              alt="img"
+                            />
+                            <div className="ml-3">
+                              <p className="font-bold text-gray-600">{item[2]}</p>
+                              <p className="text-xs text-gray-600">{item[3]}</p>
+                            </div>
                           </div>
+                          <button className="mr-3 focus:outline-none">
+                            <img src={require(`assets/icons/card/ic_arrow.svg`)} alt="img" />
+                          </button>
                         </div>
-                        <button className="mr-3 focus:outline-none">
-                          <img src={require(`assets/icons/card/ic_arrow.svg`)} alt="img" />
-                        </button>
-                      </div>
-                    </Link>
-                  </div>
-                );
-              })
+                      </Link>
+                    </div>
+                  );
+                })
             : ""}
         </div>
       </div>

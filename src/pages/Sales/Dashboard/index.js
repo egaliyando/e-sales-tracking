@@ -2,22 +2,33 @@ import React, { useState, useEffect } from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
-import { Link } from "react-router-dom";
 import axios from "configs";
 
 function Dashboard(props) {
-  const [listTrip, setListTrip] = useState([]);
+  const [listTrip, setListTrip] = useState([]); 
 
   const [product, setProduct] = useState();
   const [totalProductSold, setTotalProductSold] = useState();
   const [totalTrip, setTotalTrip] = useState();
   const [tripSuccess, setTripSuccess] = useState();
 
-  // const chatSupervisor = () => {
-  //   let url = 'https://api.whatsapp.com/send?phone=085382925115'
-  //   + number
-  //   "&text="
-  // }
+  const [phoneSpv, setPhoneSpv] = useState("");
+
+  const getSpv = () => {
+    const token = localStorage.token;
+    axios
+      .get(`/users/1`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setPhoneSpv(res.data.data.user.username);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getDashboard = () => {
     const token = localStorage.token;
@@ -30,8 +41,6 @@ function Dashboard(props) {
         },
       })
       .then((res) => {
-        console.log("dashboard");
-        console.log(res);
         setProduct(res.data.totalProduct);
       })
       .catch((err) => {
@@ -44,8 +53,6 @@ function Dashboard(props) {
         },
       })
       .then((res) => {
-        console.log("dashboardssss");
-        console.log(res);
         setTotalTrip(res.data.total_trip);
         setTotalProductSold(res.data.total_product);
         setTripSuccess(res.data.trip_success);
@@ -54,6 +61,7 @@ function Dashboard(props) {
         console.log(err);
       });
   };
+
   const getTrip = () => {
     const token = localStorage.token;
     const sales_id = localStorage.sales_id;
@@ -66,8 +74,6 @@ function Dashboard(props) {
       })
       .then((res) => {
         setListTrip(res.data.data);
-        console.log("sales rute");
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -77,6 +83,7 @@ function Dashboard(props) {
   useEffect(() => {
     getTrip();
     getDashboard();
+    getSpv();
   }, []);
   return (
     <Container>
@@ -112,7 +119,13 @@ function Dashboard(props) {
       <div className="overflow-y-auto h-64 pb-12">
         {listTrip.map((data, i) => {
           return (
-            <div className="mt-2 px-3" key={i}>
+            <div
+              className="mt-2 px-3"
+              key={i}
+              onClick={() =>
+                (window.location.href = `https://www.google.com/maps/@-${data.trip.apotik.lat},${data.trip.apotik.long},4z`)
+              }
+            >
               <div className="w-full p-2 rounded-lg bg-white h-auto flex">
                 <img
                   className="self-center h-16 w-16"
@@ -130,7 +143,7 @@ function Dashboard(props) {
       </div>
 
       <button
-        onClick={() => (window.location.href = "https://wa.me/6285382925115?text=%7B0%7D+Hello+Supervisor")}
+        onClick={() => (window.location.href = `https://wa.me/${phoneSpv}?text=%7B0%7D+Hello+Supervisor`)}
         className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none"
       >
         <img src={require(`assets/icons/dashboard/ic_chat.svg`)} alt="chat" />

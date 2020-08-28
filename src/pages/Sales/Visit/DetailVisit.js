@@ -15,7 +15,6 @@ function DetailVisit(props) {
   // deklarasi sweetalert
   const MySwal = withReactContent(Swal);
 
-
   //deklarasi geolocation (ini deklarasi untuk get lokasi kita)
   const geolocation = useGeolocation();
   //state trip & apotik
@@ -32,11 +31,11 @@ function DetailVisit(props) {
   //ini poin penting nya
   //ini function untuk lock GPS nya...function ini untuk membandingkan
   const test = geolib.isPointWithinRadius(
-    { latitude: lats, longitude: longs },//(apotik/trip latlong banding) //apakah latlong apotik
-    { latitude: userLat, longitude: userLong }, //(user lat long banding) //sudah berada di sekitar/ radius 
+    { latitude: lats, longitude: longs }, //(apotik/trip latlong banding) //apakah latlong apotik
+    { latitude: userLat, longitude: userLong }, //(user lat long banding) //sudah berada di sekitar/ radius
     100 //(satuanya meter) //ini untuk nge set radius nya
   ); //kalau dia diluar 100 meter/radius maka bernilai false, artinya dia gabisa order //kalau dia didalam radius maka bernilai true, maka dia bisa order
-  
+
   console.log("tes");
   console.log(test);
   //deklarasi state detail trip
@@ -243,7 +242,15 @@ function DetailVisit(props) {
                 {/*footer*/}
                 <div className="flex items-center justify-end p-3 border-t border-solid border-gray-300 rounded-b">
                   <button
-                    className="focus:outline-none bg-orange-400 ml-10 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                    className="focus:outline-none bg-red-400 ml-10 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                    type="button"
+                    style={{ transition: "all .15s ease" }}
+                    onClick={() => setShowModal(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="focus:outline-none bg-green-400 ml-10 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"
                     style={{ transition: "all .15s ease" }}
                     onClick={() => setShowModal(false)}

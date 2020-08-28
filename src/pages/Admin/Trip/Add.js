@@ -140,7 +140,7 @@ export default function Add(props) {
           </div>
           <div className="flex mt-5 justify-end">
             <Link
-              to="/admin/apotik"
+              to="/admin/trip"
               className="text-white bg-red-500 px-3 shadow-lg p-2 rounded-lg background-transparent font-bold text-sm outline-none focus:outline-none"
               type="button"
               style={{ transition: "all .15s ease" }}
