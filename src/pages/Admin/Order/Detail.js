@@ -12,6 +12,9 @@ function Detail(props) {
   const [detail, setDetail] = useState([]);
 
   const ref = createRef();
+  const options = {
+    orientation: "landscape",
+  };
 
   //detail order sales state
   const [idOrder, setIdOrder] = useState("");
@@ -133,7 +136,7 @@ function Detail(props) {
             buttonText="Download as Excel"
           ></ReactHTMLTableToExcel>
         </div>
-        <ReactToPdf targetRef={ref} filename="laporan-order.pdf">
+        <ReactToPdf targetRef={ref} options={options} filename="laporan-order.pdf">
           {({ toPdf }) => (
             <button onClick={toPdf} className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">
               <img className="w-12 rounded-full shadow-lg" src={require(`assets/icons/ic_print.svg`)} alt="add" />

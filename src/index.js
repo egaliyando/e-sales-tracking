@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./assets/style/main.css";
 import "assets/style/font.css";
-import "react-datepicker/dist/react-datepicker.css"
+import "react-datepicker/dist/react-datepicker.css";
 import "assets/style/neumorphism.css";
 // import App from "./App";n
 
@@ -23,4 +23,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.register();

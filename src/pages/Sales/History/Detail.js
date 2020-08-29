@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from "configs";
+import { useSelector } from "react-redux";
 
 function DetailHistory(props) {
   const sales_id = localStorage.sales_id;
 
   const [listProduct, setListProduct] = useState([]);
+  const token = useSelector((state) => state.users.token);
 
   const getCheckout = () => {
     const token = localStorage.token;
@@ -33,7 +35,9 @@ function DetailHistory(props) {
   useEffect(() => {
     getCheckout();
   }, []);
-
+  if (token === "") {
+    return <Redirect to="/" />;
+  }
   return (
     <Container>
       <Header hSalesNormal={true} />

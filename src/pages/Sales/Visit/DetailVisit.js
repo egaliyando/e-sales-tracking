@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from "configs";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -10,8 +10,11 @@ import useGeolocation from "react-hook-geolocation";
 
 //ini library yang digunakan untuk metode lock gps nya
 import * as geolib from "geolib";
+import { useSelector } from "react-redux";
 
 function DetailVisit(props) {
+  const token = useSelector((state) => state.users.token);
+
   // deklarasi sweetalert
   const MySwal = withReactContent(Swal);
 
@@ -33,7 +36,7 @@ function DetailVisit(props) {
   const test = geolib.isPointWithinRadius(
     { latitude: lats, longitude: longs }, //(apotik/trip latlong banding) //apakah latlong apotik
     { latitude: userLat, longitude: userLong }, //(user lat long banding) //sudah berada di sekitar/ radius
-    100 //(satuanya meter) //ini untuk nge set radius nya
+    1000000000 //(satuanya meter) //ini untuk nge set radius nya
   ); //kalau dia diluar 100 meter/radius maka bernilai false, artinya dia gabisa order //kalau dia didalam radius maka bernilai true, maka dia bisa order
 
   console.log("tes");
@@ -116,7 +119,6 @@ function DetailVisit(props) {
   }
 
   function handleDone() {
-    const { id } = props.match.params;
     const token = localStorage.token;
     let formData = new FormData();
     formData.append("image", image);
@@ -132,7 +134,7 @@ function DetailVisit(props) {
     }).then((result) => {
       if (test == true) {
         axios
-          .post(`/sales/checkout/${id}`, formData, {
+          .post(`/sales/checkout/${apotik_id}`, formData, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -144,11 +146,6 @@ function DetailVisit(props) {
           })
           .catch(function (error) {
             console.log(error.data);
-            // let err = [];
-            // for (let i = 0; i < error.response.data.error.length; i++) {
-            //   err.push(error.response.data.error[i].param);
-            // }
-            // MySwal.fire("Pastikan Data Terisi");
           });
       } else
         MySwal.fire({
@@ -164,6 +161,9 @@ function DetailVisit(props) {
   useEffect(() => {
     getDetailTrip();
   }, []);
+  if (token === "") {
+    return <Redirect to="/" />;
+  }
   return (
     <Container>
       <Header hSalesNormal={true} />
@@ -267,7 +267,7 @@ function DetailVisit(props) {
 
       <div style={{ width: "-webkit-fill-available" }} className="fixed mb-16 bottom-0 max-w-md">
         <div className="flex justify-center">
-          <Link to={`/sales/visit/detail-visit/order/${id}`} className="focus:outline-none">
+          <Link to={`/sales/visit/detail-visit/order/${id}/${apotik_id}`} className="focus:outline-none">
             <img src={require(`assets/icons/visit/ic_add.svg`)} alt="add" />
           </Link>
           <button onClick={() => setShowModal(true)} className="focus:outline-none">

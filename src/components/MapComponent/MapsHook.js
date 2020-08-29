@@ -7,12 +7,9 @@ import moment from "moment";
 export default function MapsHook(props) {
   const today = new Date();
   const todayFormat = moment(today).format("L");
-  console.log("todayFormat");
-  console.log(todayFormat);
   const [arrayTest, setArrayTest] = useState([]);
   const [tripDone, setTripDone] = useState([]);
-  console.log("tripDone");
-  console.log(tripDone);
+
   const dataMaps = {
     dataApotik: [],
     lat: -5.45,
@@ -31,7 +28,6 @@ export default function MapsHook(props) {
         },
       })
       .then((res) => {
-        console.log(res);
         let arrayTemp = [...arrayTest];
         for (let i = 0; i < res.data.data.data.length; i++) {
           arrayTemp.push([

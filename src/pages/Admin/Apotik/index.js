@@ -64,7 +64,7 @@ function Apotik(props) {
   }, []); //berikan array kosong agar data tidak looping terus
   //session token ketika user login gagal/belum login
   if (token === "") {
-    return <Redirect to="/" />;
+    return <Redirect to="/admin/auth" />;
   }
   return (
     <div className="flex">

@@ -3,6 +3,8 @@ import Container from "components/Container";
 import MobileNav from "components/Navigation/MobileNav";
 import Header from "components/Header";
 import axios from "configs";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 function ProductSV(props) {
   //deklarasi state untuk search
@@ -43,6 +45,11 @@ function ProductSV(props) {
   useEffect(() => {
     getProduct();
   }, []);
+
+  const token = useSelector((state) => state.users.token);
+  if (token === "") {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Container>

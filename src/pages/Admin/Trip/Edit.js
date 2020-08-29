@@ -25,7 +25,7 @@ export default function Edit(props) {
 
   //CHANGE DAY
   const handleDay = (date) => {
-    setDay(moment(date).format("DD-MM-YYYY"));
+    setDay(date);
   };
   //CHANGE OPTION APOTIK
   const handleChange = (e) => {
@@ -151,7 +151,7 @@ export default function Edit(props) {
               <DatePicker
                 className="bg-gray-200 w-full self-center p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 onChange={handleDay}
-                minDate={today}
+                minDate={moment().toDate()}
                 placeholderText="Select a day"
               />
             </div>

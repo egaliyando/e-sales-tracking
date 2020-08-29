@@ -4,8 +4,12 @@ import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import axios from "configs";
 import moment from "moment";
+import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Profile(props) {
+  const token = useSelector((state) => state.users.token);
+
   const [name, setName] = useState("");
   const [nik, setNik] = useState("");
   const [address, setAddress] = useState("");
@@ -41,6 +45,9 @@ function Profile(props) {
   useEffect(() => {
     getProfile();
   });
+  if (token === "") {
+    return <Redirect to="/" />;
+  }
   return (
     <Container>
       <Header hSalesNormal={true} />

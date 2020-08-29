@@ -3,9 +3,11 @@ import Navigation from "components/Navigation";
 import Table from "components/Table";
 import { Redirect } from "react-router-dom";
 import axios from "configs";
-const token = localStorage.token;
+import { useDispatch, useSelector } from "react-redux";
 
 function Order() {
+  const token = useSelector((state) => state.users.token);
+
   const [order, setOrder] = useState([]);
   const getOrder = () => {
     const token = localStorage.token;
@@ -30,7 +32,7 @@ function Order() {
   }, []);
 
   if (token === "") {
-    return <Redirect to="/" />;
+    return <Redirect to="/admin/auth" />;
   }
   return (
     <div className="flex">

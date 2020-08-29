@@ -5,16 +5,12 @@ import { Link, Redirect } from "react-router-dom";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import axios from "configs";
-import moment from "moment";
+import { useSelector } from "react-redux";
 
 export default function Product(props) {
-  const token = localStorage.token;
+  const token = useSelector((state) => state.users.token);
 
   const [product, setProduct] = useState([]);
-  // `${moment("tgl_ex").format("YYYY-MM-DD")}`
-
-  // console.log("data");
-  // console.log(product);
 
   const MySwal = withReactContent(Swal);
 
@@ -69,7 +65,7 @@ export default function Product(props) {
   }, []);
 
   if (token === "") {
-    return <Redirect to="/" />;
+    return <Redirect to="/admin/auth" />;
   }
   return (
     <div className="flex">

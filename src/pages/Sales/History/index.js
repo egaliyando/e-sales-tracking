@@ -2,15 +2,17 @@ import React, { useState, useEffect } from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
-import { Link } from "react-router-dom";
 import axios from "configs";
 import moment from "moment";
+import { Link, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 //maps
 import { Map, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { iconSales, iconApotik } from "components/MapComponent/IconMarker";
 
 function History(props) {
+  const token = useSelector((state) => state.users.token);
   //maps component
   //deklarasi state tagging sales history
   const [arrayTag, setArrayTag] = useState([]);
@@ -112,6 +114,9 @@ function History(props) {
     getData();
     getHistory();
   }, []);
+  if (token === "") {
+    return <Redirect to="/" />;
+  }
   return (
     <Container>
       <Header hSalesNormal={true} />

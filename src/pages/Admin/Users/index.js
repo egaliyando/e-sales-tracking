@@ -54,7 +54,7 @@ function Users(props) {
   }, []);
 
   if (token === "") {
-    return <Redirect to="/" />;
+    return <Redirect to="/admin/auth" />;
   }
   return (
     <div className="flex">

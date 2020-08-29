@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, Redirect } from "react-router-dom";
 import axios from "configs";
 
 function Tracking(props) {
@@ -29,6 +30,12 @@ function Tracking(props) {
   useEffect(() => {
     getSales();
   }, []);
+
+  const token = useSelector((state) => state.users.token);
+
+  if (token === "") {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Container>

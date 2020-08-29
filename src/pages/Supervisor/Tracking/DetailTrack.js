@@ -127,10 +127,10 @@ function DetailTrack(props) {
                 <p className="text-sm text-green-400 ml-3 self-center">{sales.status}</p>
               </div>
             </div>
-            <div>
+            {/* <div>
               <p className="font-bold text-gray-600">Detail Address :</p>
               <p className="text-gray-600 tex-sm">{sales.address} </p>
-            </div>
+            </div> */}
           </div>
           <div style={{ height: "21rem" }} className="rounded-lg w-full bg-gray-500 mt-2">
             <Map style={{ width: "100%", height: "100%" }} center={position} zoom={dataMaps.zoom}>

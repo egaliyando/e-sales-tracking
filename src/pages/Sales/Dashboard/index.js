@@ -3,9 +3,12 @@ import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import axios from "configs";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 function Dashboard(props) {
-  const [listTrip, setListTrip] = useState([]); 
+  const token = useSelector((state) => state.users.token);
+  const [listTrip, setListTrip] = useState([]);
 
   const [product, setProduct] = useState();
   const [totalProductSold, setTotalProductSold] = useState();
@@ -85,6 +88,9 @@ function Dashboard(props) {
     getDashboard();
     getSpv();
   }, []);
+  if (token === "") {
+    return <Redirect to="/" />;
+  }
   return (
     <Container>
       <Header hSalesWithToggle={true} />

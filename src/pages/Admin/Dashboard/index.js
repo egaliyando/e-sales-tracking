@@ -2,22 +2,16 @@ import React, { useState, useEffect } from "react";
 import Navigation from "components/Navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-// import Maps from "components/MapComponent/Maps";
 import MapsHook from "components/MapComponent/MapsHook";
 import axios from "configs";
 
 function Dashboard() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.users.token);
-
   const [product, setProduct] = useState("");
   const [sales, setSales] = useState("");
   const [stock, setStock] = useState([]);
   const [sold, setSold] = useState();
-
-  // console.log("stok");
-  // console.log(stock);
-
   const [trip, setTrip] = useState();
 
   const getDashboard = () => {
@@ -29,16 +23,9 @@ function Dashboard() {
         },
       })
       .then((res) => {
-        // const newArray = res.data.data.user.findIndex((x) => x.role === "sales");
-        // console.log("newArray");
-        // console.log(newArray);
-        console.log("dash");
         setTrip(res.data.totalTrip);
         setSold(res.data.totalProductBuy);
         setSales(res.data.totalSales);
-
-        // for (let i = 0; i < res.data.data.user; i++) {
-        // }
       })
       .catch((err) => {
         console.log(err);
@@ -54,15 +41,12 @@ function Dashboard() {
         },
       })
       .then((res) => {
-        console.log(res.data.data.data);
         setProduct(res.data.data.data.length);
         let ArrayStock = [...stock];
         for (let i = 0; i < res.data.data.data.length; i++) {
           ArrayStock.push(res.data.data.data[i].stock);
         }
         setStock(ArrayStock);
-
-        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -73,7 +57,7 @@ function Dashboard() {
     getProduct();
   }, []);
   if (token === "") {
-    return <Redirect to="/" />;
+    return <Redirect to="/admin/auth" />;
   }
   return (
     <div className="flex">

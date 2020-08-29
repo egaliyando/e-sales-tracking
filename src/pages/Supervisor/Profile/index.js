@@ -4,6 +4,8 @@ import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import axios from "configs";
 import moment from "moment";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 function ProfileSV(props) {
   const [name, setName] = useState("");
@@ -41,6 +43,11 @@ function ProfileSV(props) {
   useEffect(() => {
     getProfile();
   });
+  const token = useSelector((state) => state.users.token);
+
+  if (token === "") {
+    return <Redirect to="/" />;
+  }
   return (
     <Container>
       <Header hSupervisor={true} />

@@ -3,16 +3,22 @@ import Container from "components/Container";
 import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import axios from "configs";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import moment from "moment";
-
+import { useSelector } from "react-redux";
 function Visit(props) {
+  const token = useSelector((state) => state.users.token);
+
   //untuk cek today
   const date = new Date();
   //ubah format tanggalnya
   const dateFormat = moment(date).format("DD-MM-YYYY");
   //bikin state untuk mapping
   const [dayTrip, setDayTrip] = useState([]);
+  console.log("dayTrip");
+  console.log(dayTrip);
+
+  const sales_id = localStorage.sales_id;
 
   const getRute = () => {
     const token = localStorage.token;
@@ -46,7 +52,9 @@ function Visit(props) {
   useEffect(() => {
     getRute();
   }, []);
-
+  if (token === "") {
+    return <Redirect to="/" />;
+  }
   return (
     <Container>
       <Header hSalesNormal={true} />
@@ -59,7 +67,7 @@ function Visit(props) {
                 .map((item, i) => {
                   return (
                     <div className="mt-2" key={i}>
-                      <Link to={`/sales/visit/detail-visit/${item.id}/${item[0]}`}>
+                      <Link to={`/sales/visit/detail-visit/${sales_id}/${item[0]}`}>
                         <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                           <div className="flex">
                             <img

@@ -53,7 +53,7 @@ export default function Trip(props) {
   }, []);
 
   if (token === "") {
-    return <Redirect to="/" />;
+    return <Redirect to="/admin/auth" />;
   }
   return (
     <>
@@ -73,8 +73,8 @@ export default function Trip(props) {
           />
         </div>
         <Link to="/admin/trip/add" className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">
-        <img className="w-12 rounded-full shadow-lg " src={require(`assets/icons/ic_add.svg`)} alt="add" />
-      </Link>
+          <img className="w-12 rounded-full shadow-lg " src={require(`assets/icons/ic_add.svg`)} alt="add" />
+        </Link>
       </div>
     </>
   );

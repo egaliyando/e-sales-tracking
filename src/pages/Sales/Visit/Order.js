@@ -8,8 +8,8 @@ import axios from "configs";
 function Order(props) {
   //parsing id trip
   const { id } = props.match.params;
-  console.log("id trip");
-  console.log(id);
+  const { apotik_id } = props.match.params;
+  const sales_id = localStorage.sales_id;
 
   //deklarasi state id product
   const [idProduct, setIdProduct] = useState([]);
@@ -90,7 +90,6 @@ function Order(props) {
 
   //handle tambah product
   const handleAddProduct = () => {
-    const { id } = props.match.params;
     const token = localStorage.token;
     axios
       .post(
@@ -107,7 +106,7 @@ function Order(props) {
       )
       .then((res) => {
         console.log(res);
-        props.history.push(`/sales/visit/detail-visit/${id}/${idTrip}`);
+        props.history.push(`/sales/visit/detail-visit/${id}/${apotik_id}`);
       })
       .catch((err) => {
         console.log(err);
@@ -214,7 +213,7 @@ function Order(props) {
         ) : null}
       </div>
       <Link
-        to={`/sales/visit/detail-visit/${id}/${idTrip}`}
+        to={`/sales/visit/detail-visit/${sales_id}/${id}`}
         className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none"
       >
         <img src={require(`assets/icons/visit/ic_close.svg`)} alt="add" />
