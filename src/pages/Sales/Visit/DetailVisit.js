@@ -36,11 +36,9 @@ function DetailVisit(props) {
   const test = geolib.isPointWithinRadius(
     { latitude: lats, longitude: longs }, //(apotik/trip latlong banding) //apakah latlong apotik
     { latitude: userLat, longitude: userLong }, //(user lat long banding) //sudah berada di sekitar/ radius
-    1000000000 //(satuanya meter) //ini untuk nge set radius nya
+    100 //(satuanya meter) //ini untuk nge set radius nya
   ); //kalau dia diluar 100 meter/radius maka bernilai false, artinya dia gabisa order //kalau dia didalam radius maka bernilai true, maka dia bisa order
 
-  console.log("tes");
-  console.log(test);
   //deklarasi state detail trip
   const [detailTrip, setDetailTrip] = useState([]);
 
@@ -55,12 +53,10 @@ function DetailVisit(props) {
     lng: 105.26667,
     radius: idApotik[4],
   };
-  console.log("dataMaps.radius");
-  console.log(dataMaps.radius);
-
   //parsing id memalui params
   const { id } = props.match.params;
   const { apotik_id } = props.match.params;
+  const { checkout_id } = props.match.params;
 
   const sales_id = localStorage.sales_id;
 
@@ -134,7 +130,7 @@ function DetailVisit(props) {
     }).then((result) => {
       if (test == true) {
         axios
-          .post(`/sales/checkout/${apotik_id}`, formData, {
+          .post(`/sales/checkout/${checkout_id}`, formData, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -267,7 +263,7 @@ function DetailVisit(props) {
 
       <div style={{ width: "-webkit-fill-available" }} className="fixed mb-16 bottom-0 max-w-md">
         <div className="flex justify-center">
-          <Link to={`/sales/visit/detail-visit/order/${id}/${apotik_id}`} className="focus:outline-none">
+          <Link to={`/sales/visit/detail-visit/order/${id}/${checkout_id}/${apotik_id}`} className="focus:outline-none">
             <img src={require(`assets/icons/visit/ic_add.svg`)} alt="add" />
           </Link>
           <button onClick={() => setShowModal(true)} className="focus:outline-none">

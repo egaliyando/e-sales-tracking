@@ -102,8 +102,8 @@ export default function AppRoute() {
         <Route exact path="/sales/visit/" component={Visit} />
         <Route exact path="/sales/history/:id" component={History} />
         <Route exact path="/sales/history/detail/:id/:checkout_id" component={DetailHistory} />
-        <Route exact path="/sales/visit/detail-visit/order/:id/:apotik_id" component={SalesOrder} />
-        <Route exact path="/sales/visit/detail-visit/:id/:apotik_id" component={DetailVisit} />
+        <Route exact path="/sales/visit/detail-visit/order/:id/:checkout_id/:apotik_id" component={SalesOrder} />
+        <Route exact path="/sales/visit/detail-visit/:id/:checkout_id/:apotik_id" component={DetailVisit} />
         <Route exact path="/sales/chat" component={ChatSales} />
         <Route exact path="/client/logout" component={LogoutClient} />
       </Switch>

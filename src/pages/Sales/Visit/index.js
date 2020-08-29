@@ -34,12 +34,13 @@ function Visit(props) {
         let arrayTemp = [...dayTrip];
         for (let i = 0; i < res.data.data.length; i++) {
           arrayTemp.push([
-            res.data.data[i].trip.apotik.id,
+            res.data.data[i].id,
             //ini poin pentinf dalam filter nya
             moment(res.data.data[i].trip.day).format("DD-MM-YYYY"),
             res.data.data[i].trip.apotik.name,
             res.data.data[i].trip.apotik.address,
             res.data.data[i].trip.apotik.image,
+            res.data.data[i].trip.apotik.id,
           ]);
         }
         setDayTrip(arrayTemp);
@@ -67,7 +68,7 @@ function Visit(props) {
                 .map((item, i) => {
                   return (
                     <div className="mt-2" key={i}>
-                      <Link to={`/sales/visit/detail-visit/${sales_id}/${item[0]}`}>
+                      <Link to={`/sales/visit/detail-visit/${sales_id}/${item[0]}/${item[5]}`}>
                         <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                           <div className="flex">
                             <img
