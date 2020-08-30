@@ -5,6 +5,7 @@ import MobileNav from "components/Navigation/MobileNav";
 import axios from "configs";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
+import moment from "moment";
 
 function Dashboard(props) {
   const token = useSelector((state) => state.users.token);
@@ -16,6 +17,11 @@ function Dashboard(props) {
   const [tripSuccess, setTripSuccess] = useState();
 
   const [phoneSpv, setPhoneSpv] = useState("");
+
+  //untuk cek today
+  const date = new Date();
+  //ubah format tanggalnya
+  const dateFormat = moment(date).format("DD-MM-YYYY");
 
   const getSpv = () => {
     const token = localStorage.token;
@@ -76,7 +82,21 @@ function Dashboard(props) {
         },
       })
       .then((res) => {
-        setListTrip(res.data.data);
+        let arrayTemp = [...listTrip];
+        for (let i = 0; i < res.data.data.length; i++) {
+          arrayTemp.push([
+            res.data.data[i].id,
+            //ini poin pentinf dalam filter nya
+            moment(res.data.data[i].trip.day).format("DD-MM-YYYY"),
+            res.data.data[i].trip.apotik.name,
+            res.data.data[i].trip.apotik.address,
+            res.data.data[i].trip.apotik.image,
+            res.data.data[i].trip.apotik.id,
+            parseFloat(res.data.data[i].trip.apotik.lat),
+            parseFloat(res.data.data[i].trip.apotik.long),
+          ]);
+        }
+        setListTrip(arrayTemp);
       })
       .catch((err) => {
         console.log(err);
@@ -123,29 +143,29 @@ function Dashboard(props) {
 
       {/* CARD LIST KUNJUNGAN */}
       <div className="overflow-y-auto h-64 pb-12">
-        {listTrip.map((data, i) => {
-          return (
-            <div
-              className="mt-2 px-3"
-              key={i}
-              onClick={() =>
-                (window.location.href = `https://www.google.com/maps/@-${data.trip.apotik.lat},${data.trip.apotik.long},4z`)
-              }
-            >
-              <div className="w-full p-2 rounded-lg bg-white h-auto flex">
-                <img
-                  className="self-center h-16 w-16"
-                  src={`${process.env.REACT_APP_HOST_HEROKU}${data.trip.apotik.image}`}
-                  alt="img"
-                />
-                <div className="ml-3">
-                  <p className="font-bold text-gray-600">{data.trip.apotik.name}</p>
-                  <p className="text-xs text-gray-600">{data.trip.apotik.address}</p>
+        {listTrip
+          .filter((days) => days.includes(dateFormat))
+          .map((data, i) => {
+            return (
+              <div
+                className="mt-2 px-3"
+                key={i}
+                onClick={() => (window.location.href = `https://www.google.com/maps/@-${data[6]},${data[7]},4z`)}
+              >
+                <div className="w-full p-2 rounded-lg bg-white h-auto flex">
+                  <img
+                    className="self-center h-16 w-16"
+                    src={`${process.env.REACT_APP_HOST_HEROKU}${data[4]}`}
+                    alt="img"
+                  />
+                  <div className="ml-3">
+                    <p className="font-bold text-gray-600">{data[2]}</p>
+                    <p className="text-xs text-gray-600">{data[3]}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
 
       <button

@@ -6,12 +6,18 @@ import axios from "configs";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useSelector } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import moment from "moment";
 
 function VisitSV(props) {
   const [listSales, setListSales] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [enable, setEnable] = useState(false);
+
+  //untuk cek today
+  const date = new Date();
+  //ubah format tanggalnya
+  const dateFormat = moment(date).format("DD-MM-YYYY");
 
   const MySwal = withReactContent(Swal);
 
@@ -68,7 +74,19 @@ function VisitSV(props) {
         },
       })
       .then((res) => {
-        setSearchResults(res.data.data);
+        let arrayDay = [...searchResults];
+        for (let i = 0; i < res.data.data.length; i++) {
+          arrayDay.push([
+            res.data.data[i].id,
+            res.data.data[i].name_apotik,
+            moment(res.data.data[i].day).format("DD-MM-YYYY"),
+            res.data.data[i].address_apotik,
+            res.data.data[i].image,
+            res.data.data[i].sales_id,
+          ]);
+        }
+        console.log(res);
+        setSearchResults(arrayDay);
       })
       .catch((err) => {
         console.log(err);
@@ -98,7 +116,6 @@ function VisitSV(props) {
 
   const handleAddTrip = (salesid) => {
     const token = localStorage.token;
-    console.log("sales pance o2" + sales_id);
     if (detailTrip.length > 0) {
       // console.log(sales_id);
       MySwal.fire({
@@ -205,35 +222,37 @@ function VisitSV(props) {
         </div>
 
         <div style={{ height: "33rem" }} className="overflow-y-auto pb-20">
-          {searchResults.map((list, i) => {
-            return (
-              <div className="mt-2" key={i}>
-                <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
-                  <div className="flex">
-                    <img
-                      className="self-center h-16 w-16"
-                      src={`${process.env.REACT_APP_HOST_HEROKU}${list.image}`}
-                      alt="img"
-                    />
-                    <div className="ml-3">
-                      <p className="font-bold text-gray-600">{list.name_apotik}</p>
+          {searchResults
+            .filter((days) => days.includes(dateFormat))
+            .map((list, i) => {
+              return (
+                <div className="mt-2" key={i}>
+                  <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
+                    <div className="flex">
+                      <img
+                        className="self-center h-16 w-16"
+                        src={`${process.env.REACT_APP_HOST_HEROKU}${list[4]}`}
+                        alt="img"
+                      />
+                      <div className="ml-3">
+                        <p className="font-bold text-gray-600">{list[1]}</p>
 
-                      <p className="text-xs text-gray-600">{list.address_apotik}</p>
+                        <p className="text-xs text-gray-600">{list[3]}</p>
+                      </div>
                     </div>
+                    <button
+                      className="mr-3 focus:outline-none"
+                      onClick={() => {
+                        setShowModal(true);
+                        handleGetIdTrip(list[0], list[5]);
+                      }}
+                    >
+                      <img src={require(`assets/icons/ic_add_visit.svg`)} alt="img" />
+                    </button>
                   </div>
-                  <button
-                    className="mr-3 focus:outline-none"
-                    onClick={() => {
-                      setShowModal(true);
-                      handleGetIdTrip(list.id, list.sales_id);
-                    }}
-                  >
-                    <img src={require(`assets/icons/ic_add_visit.svg`)} alt="img" />
-                  </button>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
 

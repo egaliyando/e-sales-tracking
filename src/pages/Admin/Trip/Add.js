@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 
 import Navigation from "components/Navigation";
 import { Link, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -19,12 +19,12 @@ export default function Add(props) {
   const [apotik_id, setApotikId] = useState();
 
   const today = new Date();
-  console.log("today");
-  console.log(today);
-  console.log("apotik");
-  console.log(apotik_id);
-  console.log("day");
-  console.log(day);
+  // console.log("today");
+  // console.log(today);
+  // console.log("apotik");
+  // console.log(apotik_id);
+  // console.log("day");
+  // console.log(day);
 
   //CHANGE DAY
   const handleDay = (date) => {
@@ -60,17 +60,17 @@ export default function Add(props) {
             }
           )
           .then(function (response) {
-            console.log(response);
+            // console.log(response);
             MySwal.fire("Add Success!", ":)", "warning", "Canceled");
             props.history.push("/admin/trip");
           })
           .catch(function (error) {
             console.log(error.response);
             let err = [];
-            for (let i = 0; i < error.response.data.error.length; i++) {
-              err.push(error.response.data.error[i].param);
-            }
-            MySwal.fire("Pastikan Data Terisi");
+            // for (let i = 0; i < error.response.data.error.length; i++) {
+            //   err.push(error.response.data.error[i].param);
+            // }
+            // MySwal.fire("Pastikan Data Terisi");
           });
       }
     });
