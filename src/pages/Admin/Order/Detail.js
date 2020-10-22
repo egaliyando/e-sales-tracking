@@ -126,7 +126,7 @@ function Detail(props) {
           <p className="font-bold mt-5">Total : {total}</p>
         </div>
 
-        <div className="absolute bottom-0 focus:outline-none right-0 mb-12 mr-32">
+        {/* <div className="absolute bottom-0 focus:outline-none right-0 mb-12 mr-32">
           <ReactHTMLTableToExcel
             id="test-table-xls-button"
             className="download-table-xls-button"
@@ -135,7 +135,7 @@ function Detail(props) {
             sheet="tablexls"
             buttonText="Download as Excel"
           ></ReactHTMLTableToExcel>
-        </div>
+        </div> */}
         <ReactToPdf targetRef={ref} options={options} filename="laporan-order.pdf">
           {({ toPdf }) => (
             <button onClick={toPdf} className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">

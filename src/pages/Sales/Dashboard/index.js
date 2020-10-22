@@ -4,7 +4,7 @@ import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import axios from "configs";
 import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import moment from "moment";
 
 function Dashboard(props) {
@@ -168,12 +168,13 @@ function Dashboard(props) {
           })}
       </div>
 
-      <button
-        onClick={() => (window.location.href = `https://wa.me/${phoneSpv}?text=%7B0%7D+Hello+Supervisor`)}
+      <Link
+        to="/sales/chat"
+        // onClick={() => (window.location.href = `https://wa.me/${phoneSpv}?text=%7B0%7D+Hello+Supervisor`)}
         className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none"
       >
         <img src={require(`assets/icons/dashboard/ic_chat.svg`)} alt="chat" />
-      </button>
+      </Link>
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
         <MobileNav isSales={true} {...props} />
       </div>

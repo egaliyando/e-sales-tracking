@@ -43,7 +43,7 @@ function DetailHistory(props) {
       <Header hSalesNormal={true} />
 
       {/* Apotik Name Detail */}
-      <div style={{ paddingTop: "4.6rem" }} className="p-3">
+      <div className="px-3 pt-16">
         <div className="mt-2">
           <p className="text-gray-600 text-xs mb-1">Detail History</p>
 

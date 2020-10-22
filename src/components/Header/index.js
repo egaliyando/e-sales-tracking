@@ -93,7 +93,7 @@ function Toggle() {
   }, []);
   return (
     <div className="self-center mt-2">
-      {enable == "Close" ? (
+      {enable === "Close" ? (
         <button className="focus:outline-none" onClick={handleOpen}>
           <img src={require(`assets/icons/header/ic_close.svg`)} alt="btn" />
         </button>

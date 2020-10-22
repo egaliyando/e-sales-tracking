@@ -14,7 +14,7 @@ function ProductSV(props) {
 
   //handle change search
   const handleChange = (e) => {
-    if (e.target.value == "") {
+    if (e.target.value === "") {
       getProduct();
       setSearchTerm(e.target.value);
     } else {

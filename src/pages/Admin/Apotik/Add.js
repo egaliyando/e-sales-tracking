@@ -59,11 +59,11 @@ function Add(props) {
     <div className="flex">
       <Navigation />
       <div className="w-11/12 p-3">
-        <p className="my-3 font-bold">Add Apotik</p>
+        <p className="my-3 font-bold">Add Apotek</p>
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="grid grid-cols-2 gap-5">
             <div>
-              <label className="text-xs">Apotik Name</label>
+              <label className="text-xs">Apotek Name</label>
               <input
                 onChange={(e) => setName(e.target.value)}
                 className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"

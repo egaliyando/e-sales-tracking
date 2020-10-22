@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 //maps
 import { Map, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { iconSales, iconApotik } from "components/MapComponent/IconMarker";
+import DatePicker from "react-datepicker";
 
 function History(props) {
   const token = useSelector((state) => state.users.token);
@@ -90,6 +91,7 @@ function History(props) {
             res.data.tracking[i].apotik.address,
             res.data.tracking[i].id,
             res.data.tracking[i].apotik.image,
+            moment(res.data.tracking[i].createdAt).format("DD-MM-YYYY"),
           ]);
           TagMap.push([
             parseFloat(res.data.tracking[i].apotik.lat),
@@ -97,7 +99,7 @@ function History(props) {
             res.data.tracking[i].apotik.name,
             res.data.tracking[i].apotik.address,
             res.data.tracking[i].apotik.image,
-            res.data.tracking[i].createdAt,
+            moment(res.data.tracking[i].createdAt).format("DD-MM-YYYY"),
           ]);
         }
         //list history
@@ -108,6 +110,16 @@ function History(props) {
       .catch((err) => {
         console.log(err);
       });
+  };
+  const [day, setDay] = useState(new Date());
+  //untuk cek today
+  const dates = new Date();
+  //ubah format tanggalnya
+  const dateFormat = moment(day).format("DD-MM-YYYY");
+
+  //CHANGE DAY
+  const handleDay = (date) => {
+    setDay(date);
   };
 
   useEffect(() => {
@@ -121,7 +133,7 @@ function History(props) {
     <Container>
       <Header hSalesNormal={true} />
 
-      <div style={{ paddingTop: "4.6rem" }} className="p-3">
+      <div className="px-3 pt-10">
         <p className="text-gray-600 font-bold">History kunjungan</p>
         {/* MAPS History */}
         <div className="w-full h-64 bg-gray-400 mt-3 rounded-md">
@@ -170,19 +182,35 @@ function History(props) {
           </Map>
         </div>
         <div className="overflow-y-auto h-64 pb-12">
-          {listHistory.map((item, i) => (
-            <Link to={`/sales/history/detail/${id}/${item[2]}`} key={i}>
-              <div className="mt-2">
-                <div className="w-full p-2 rounded-lg bg-white h-auto flex">
-                  <img className="h-16 w-16 mb-3" src={`${process.env.REACT_APP_HOST_HEROKU}${item[3]}`} alt="img" />
-                  <div className="ml-3">
-                    <p className="font-bold text-gray-600">{item[0]}</p>
-                    <p className="text-xs text-gray-600">{item[1]}</p>
+          <DatePicker
+            className="bg-white mt-2 w-full self-center p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+            onChange={handleDay}
+            placeholderText="Select a day"
+          />
+          {listHistory
+            .filter((days) => days.includes(dateFormat))
+            .map((item, i) => {
+              return (
+                <Link to={`/sales/history/detail/${id}/${item[2]}`} key={i}>
+                  <div className="mt-2">
+                    <div className="w-full p-2 rounded-lg bg-white h-auto flex">
+                      <img
+                        className="h-16 w-16 mb-3"
+                        src={`${process.env.REACT_APP_HOST_HEROKU}${item[3]}`}
+                        alt="img"
+                      />
+                      <div className="ml-3">
+                        <p className="font-bold text-gray-600">{item[0]}</p>
+                        <p className="text-xs text-gray-600">{item[1]}</p>
+                        <p className="text-xs text-gray-600">Visited at : {moment(item[4]).format("LLLL")}</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </Link>
-          ))}
+                </Link>
+              );
+            })}
+          {/* {listHistory.map((item, i) => (
+          ))} */}
         </div>
       </div>
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">

@@ -4,8 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import ClipLoader from "react-spinners/ClipLoader";
 import { LOADING, LOADING_FINISH, SET_TOKEN } from "store/types";
 import axios from "configs";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 function AuthClient(props) {
+  const MySwal = withReactContent(Swal);
   //this hook gives us redux store state
   const loading = useSelector((state) => state.loading.loading);
   const token = useSelector((state) => state.users.token);
@@ -23,39 +26,32 @@ function AuthClient(props) {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSingin = () => {
-    dispatch({ type: LOADING });
-    axios
-      .post("/sales/signin", data)
-      .then((res) => {
-        // console.log(res);
-
-        if (res.data.data.checkUser.role === "sales") {
-          localStorage.setItem("token", res.data.data.token);
-          localStorage.setItem("sales_id", res.data.data.checkUser.sales[0].id);
-          dispatch({ type: SET_TOKEN, token: res.data.data });
-          dispatch({ type: LOADING_FINISH });
-          props.history.push("/sales/dashboard");
-        } else if (res.data.data.checkUser.role === "supervisor") {
-          localStorage.setItem("spv_id", res.data.data.checkUser.sales[0].id);
-          localStorage.setItem("token", res.data.data.token);
-          dispatch({ type: SET_TOKEN, token: res.data.data });
-          dispatch({ type: LOADING_FINISH });
-          props.history.push("/supervisor/home");
-        } else if (res.data.code === 404) {
-          dispatch({ type: LOADING_FINISH });
-          console.error(res.data);
-          alert(res.data.message);
-        } else if (res.data.code === 403) {
-          dispatch({ type: LOADING_FINISH });
-          alert(res.data.message);
-        }
-      })
-      .catch((err) => {
+  const handleSingin = async () => {
+    try {
+      dispatch({ type: LOADING });
+      const auth = await axios.post("/sales/signin", data);
+      if (auth.data.code === 404) {
         dispatch({ type: LOADING_FINISH });
-        console.log(err.response);
-        // alert("error catch");
-      });
+        MySwal.fire("Username or Password is wrong");
+      } else if (auth.data.code === 403) {
+        dispatch({ type: LOADING_FINISH });
+        MySwal.fire("Password is wrong");
+      } else if (auth.data.data.checkUser.role === "sales") {
+        localStorage.setItem("token", auth.data.data.token);
+        localStorage.setItem("sales_id", auth.data.data.checkUser.sales[0].id);
+        dispatch({ type: SET_TOKEN, token: auth.data.data });
+        dispatch({ type: LOADING_FINISH });
+        props.history.push("/sales/dashboard");
+      } else if (auth.data.data.checkUser.role === "supervisor") {
+        localStorage.setItem("token", auth.data.data.token);
+        localStorage.setItem("spv_id", auth.data.data.checkUser.sales[0].id);
+        dispatch({ type: SET_TOKEN, token: auth.data.data });
+        dispatch({ type: LOADING_FINISH });
+        props.history.push("/supervisor/home");
+      }
+    } catch (error) {
+      console.log(error.response);
+    }
   };
   return (
     <Container>

@@ -12,7 +12,7 @@ export default function Edit(props) {
   const today = new Date();
   const MySwal = withReactContent(Swal);
   const token = localStorage.token;
-  const [day, setDay] = useState(new Date());
+  const [day, setDay] = useState("");
   const [apotik_id, setApotikId] = useState([]);
   const [apotikName, setApotikName] = useState([]);
 
@@ -25,7 +25,7 @@ export default function Edit(props) {
 
   //CHANGE DAY
   const handleDay = (date) => {
-    setDay(date);
+    setDay(moment(date).format("LLLL"));
   };
   //CHANGE OPTION APOTIK
   const handleChange = (e) => {
@@ -48,6 +48,7 @@ export default function Edit(props) {
       });
   };
 
+  //SINGLE TRIP
   const getTrip = () => {
     const { id } = props.match.params;
     const token = localStorage.token;
@@ -61,9 +62,9 @@ export default function Edit(props) {
       .then((res) => {
         console.log(res);
         setApotikId(res.data.data.apotik_id);
-        setDay(moment(res.data.data.day).format("DD-MM-YYYY"));
+        // setDay(moment(res.data.data.day));
         console.log("res.data.data.day");
-        console.log(res.data.data.day);
+        setDay(moment(res.data.data.day).format("LLLL"));
       })
       .catch((error) => {
         console.log(error);
@@ -129,7 +130,7 @@ export default function Edit(props) {
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="grid grid-cols-2 gap-5">
             <div>
-              <label className="text-xs">Apotik</label>
+              <label className="text-xs">Apotek</label>
               <select
                 name="apotik_id"
                 value={apotik_id}
@@ -147,8 +148,9 @@ export default function Edit(props) {
               </select>
             </div>
             <div>
-              <label className="text-xs">Day</label> <br />
+              <label className="text-xs">Day : {day}</label> <br />
               <DatePicker
+                // selected={day}
                 className="bg-gray-200 w-full self-center p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 onChange={handleDay}
                 minDate={moment().toDate()}

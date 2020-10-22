@@ -18,14 +18,6 @@ export default function Add(props) {
   const [apotik, setApotik] = useState([]);
   const [apotik_id, setApotikId] = useState();
 
-  const today = new Date();
-  // console.log("today");
-  // console.log(today);
-  // console.log("apotik");
-  // console.log(apotik_id);
-  // console.log("day");
-  // console.log(day);
-
   //CHANGE DAY
   const handleDay = (date) => {
     setDay(date);
@@ -108,7 +100,7 @@ export default function Add(props) {
           <div className="grid grid-cols-2 gap-5">
             <div>
               <label htmlFor="apotik" className="text-xs">
-                Apotik
+                Apotek
               </label>
               <select
                 name="apotik_id"
@@ -117,7 +109,7 @@ export default function Add(props) {
                 defaultValue="Pilih Apotik"
                 className="bg-gray-200 w-full p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
               >
-                {/* <option selected>Pilih Apotik</option> */}
+                <option selected>Pilih Apotek</option>
                 {apotik.map((data, i) => {
                   return (
                     <option key={i} value={data.id}>
@@ -128,7 +120,13 @@ export default function Add(props) {
               </select>
             </div>
             <div>
-              <label className="text-xs">Day</label> <br />
+              <label className="text-xs">Day </label> <br />
+              {/* <input
+                className="bg-gray-200 w-full self-center p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
+                onChange={handleDay}
+                placeholderText="Select a day"
+                type="date"
+              /> */}
               <DatePicker
                 selected={day}
                 className="bg-gray-200 w-full self-center p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"

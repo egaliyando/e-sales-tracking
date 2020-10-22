@@ -70,10 +70,10 @@ function Apotik(props) {
     <div className="flex">
       <Navigation />
       <div style={{ backgroundColor: "#F7F7F7" }} className="w-11/12 p-3 relative">
-        <p className="my-3 font-bold">Apotik / Rumah Sakit</p>
+        <p className="my-3 font-bold">Apotek / Rumah Sakit</p>
         <Table
           data={apotik.data}
-          thead={["ID", "Apotik/RS Name", "Address", "Lat", "Long", "Image", "Action"]}
+          thead={["ID", "Apotek/RS Name", "Address", "Lat", "Long", "Image", "Action"]}
           tbody={["id", "name", "address", "image", "lat", "long"]}
           editUrl={"/admin/apotik/edit"}
           deleteAction={(id) => {

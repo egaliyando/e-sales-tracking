@@ -34,7 +34,7 @@ import DetailVisit from "pages/Sales/Visit/DetailVisit";
 import DetailHistory from "pages/Sales/History/Detail";
 import Profile from "pages/Sales/Profile";
 import ChatSales from "pages/Sales/Chat";
-import ChatSupervisor from "pages/Supervisor/Dashboard/Chat";
+import ComponentWithGeolocation from "pages/Supervisor/Dashboard/Chat";
 import ListChat from "pages/Supervisor/Dashboard/ListChat";
 import ProductSV from "pages/Supervisor/Product";
 import VisitSV from "pages/Supervisor/Visit";
@@ -44,6 +44,7 @@ import DetailTrack from "pages/Supervisor/Tracking/DetailTrack";
 import DetailHistorySV from "pages/Supervisor/Tracking/DetailHistory";
 import ProductDetail from "pages/Admin/Product/ProductDetail";
 import DetailTrip from "pages/Admin/Trip/DetailTrip";
+import Radius from "pages/Admin/Radius";
 
 export default function AppRoute() {
   return (
@@ -78,13 +79,14 @@ export default function AppRoute() {
         <Route exact path="/admin/order" component={Order} />
         <Route exact path="/admin/order/detail/:id" component={Detail} />
         <Route exact path="/admin/logout" component={Logout} />
+        <Route exact path="/admin/radius" component={Radius} />
 
         {/* AUTH */}
         <Route exact path="/" component={AuthClient} />
         {/* Router Supervisor */}
         <Route exact path="/supervisor/home" component={DashboardSupervisor} />
         <Route exact path="/supervisor/chat" component={ListChat} />
-        <Route exact path="/supervisor/chat/detail" component={ChatSupervisor} />
+        <Route exact path="/supervisor/chat/detail" component={ComponentWithGeolocation} />
         <Route exact path="/supervisor/product-sv" component={ProductSV} />
         <Route exact path="/supervisor/visit-sv" component={VisitSV} />
         <Route exact path="/supervisor/sales-track" component={Tracking} />

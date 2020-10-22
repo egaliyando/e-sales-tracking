@@ -4,10 +4,14 @@ import Header from "components/Header";
 import MobileNav from "components/Navigation/MobileNav";
 import { Link } from "react-router-dom";
 import axios from "configs";
+import moment from "moment";
 //maps
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import { iconSales, iconApotik } from "components/MapComponent/IconMarker";
+import useGeolocation from "react-hook-geolocation";
 
+//ini library yang digunakan untuk metode lock gps nya
+import * as geolib from "geolib";
 function DetailTrack(props) {
   //id params
   const { id } = props.match.params;
@@ -23,10 +27,26 @@ function DetailTrack(props) {
 
   //deklarasi state sales
   const [sales, setSales] = useState("");
+  console.log("sales", sales);
 
   //list history trip
   const [listHistory, setListHistory] = useState([]);
+  const [listLast, setlistLast] = useState("");
+  const [idSingle, setidSingle] = useState("");
+  console.log("listHistory", idSingle);
+  //my loc
+  const geolocation = useGeolocation();
+  const userLat = parseFloat(geolocation.latitude);
+  const userLong = parseFloat(geolocation.longitude);
+  //lat long apotek
+  const lats = parseFloat(idSingle.lat);
+  const longs = parseFloat(idSingle.long);
 
+  //get distance user to apotek/rs
+  const dist = geolib.getPathLength([
+    { latitude: userLat, longitude: userLong },
+    { latitude: lats, longitude: longs },
+  ]);
   //state all trip
   const [allTrip, setAllTrip] = useState([]);
   //get all apotik or trip
@@ -39,6 +59,7 @@ function DetailTrack(props) {
         },
       })
       .then((res) => {
+        console.log("rev", res);
         let arrayTripAll = [...allTrip];
         for (let i = 0; i < res.data.data.length; i++) {
           arrayTripAll.push([
@@ -56,21 +77,21 @@ function DetailTrack(props) {
   };
   //state map tag trip
   const [tagTrip, setTagTrip] = useState([]);
+  console.log("tag", tagTrip);
   //function get data history
-  const getHistory = () => {
+  const getHistory = async () => {
     const token = localStorage.token;
     const { id } = props.match.params;
-
-    axios
+    await axios
       .get(`/supervisor/tracking-sales/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-        console.log("res TRACK");
-        console.log(res);
         let ArrayTrip = [...tagTrip];
+        let LastArr = res.data.tracking[res.data.tracking.length - 1];
+
         for (let i = 0; i < res.data.tracking.length; i++) {
           ArrayTrip.push([
             parseFloat(res.data.tracking[i].apotik.lat),
@@ -80,6 +101,8 @@ function DetailTrack(props) {
             res.data.tracking[i].id,
           ]);
         }
+        setidSingle(LastArr.apotik);
+        setlistLast(LastArr);
         setTagTrip(ArrayTrip);
         setListHistory(res.data.tracking);
       })
@@ -120,19 +143,40 @@ function DetailTrack(props) {
       content: (
         <>
           <div className="bg-white rounded-lg grid grid-cols-2 gap-5 justify-between mt-2 p-3">
-            <div>
+            <div className="border-r-2">
+              <img className="h-16 w-16 mb-3" src={`${process.env.REACT_APP_HOST_HEROKU}${sales.image}`} alt="img" />
               <p className="font-bold text-lg text-gray-600">{sales.fullname}</p>
               <div className="flex">
                 <p className="text-gray-600 tex-sm">Status :</p>
                 <p className="text-sm text-green-400 ml-3 self-center">{sales.status}</p>
               </div>
+
+              <p className="text-gray-600 mt-3 font-bold text-md">Address :</p>
+              <p className="text-sm text-green-400 self-center">{sales.address}</p>
             </div>
+            <div>
+              <div className="mb-3">
+                <p className="font-bold text-md text-gray-600">Apotek/RS last visited</p>
+                <p className="text-gray-600 tex-sm">{idSingle.name}</p>
+              </div>
+              <div className="mb-3">
+                <p className="font-bold text-md text-gray-600">Lat - long</p>
+                <p className="text-gray-600 tex-sm">
+                  {listLast.lat} / {listLast.long}
+                </p>
+              </div>
+              <div className="mb-3">
+                <p className="font-bold text-lg text-gray-600">Distance user to apotek/rs :</p>
+                <p className="text-gray-600 tex-sm">{dist} meter</p>
+              </div>
+            </div>
+
             {/* <div>
               <p className="font-bold text-gray-600">Detail Address :</p>
               <p className="text-gray-600 tex-sm">{sales.address} </p>
             </div> */}
           </div>
-          <div style={{ height: "21rem" }} className="rounded-lg w-full bg-gray-500 mt-2">
+          <div style={{ height: "10rem" }} className="rounded-lg w-full bg-gray-500 mt-2">
             <Map style={{ width: "100%", height: "100%" }} center={position} zoom={dataMaps.zoom}>
               <TileLayer
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -181,6 +225,7 @@ function DetailTrack(props) {
                     <div className="ml-3">
                       <p className="font-bold text-gray-600">{item.apotik.name}</p>
                       <p className="text-xs text-gray-600">{item.apotik.address}</p>
+                      <p className="text-xs text-gray-600">Visited at : {moment(item.updatedAt).format("LLLL")}</p>
                     </div>
                   </div>
                   <button className="mr-3 focus:outline-none">

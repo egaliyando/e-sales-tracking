@@ -22,6 +22,20 @@ function DetailVisit(props) {
   const geolocation = useGeolocation();
   //state trip & apotik
   const [idApotik, setIdApotik] = useState("");
+  const [radiusCount, setRadiusCount] = useState();
+  const getRadius = async () => {
+    const token = localStorage.token;
+    try {
+      const rad = await axios.get("/radius", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setRadiusCount(parseInt(rad.data.data[0].name));
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
   //ini untuk nge set/ nyimpen lat long kita
   const userLat = parseFloat(geolocation.latitude);
@@ -29,14 +43,15 @@ function DetailVisit(props) {
   //ini untuk nge set lokasi/ latlong apotik/trip/rs
   const lats = parseFloat(idApotik[4]);
   const longs = parseFloat(idApotik[5]);
-
+  const radius = localStorage.getItem("radius");
+  console.log(radius);
   //geolib
   //ini poin penting nya
   //ini function untuk lock GPS nya...function ini untuk membandingkan
   const test = geolib.isPointWithinRadius(
     { latitude: lats, longitude: longs }, //(apotik/trip latlong banding) //apakah latlong apotik
     { latitude: userLat, longitude: userLong }, //(user lat long banding) //sudah berada di sekitar/ radius
-    100 //(satuanya meter) //ini untuk nge set radius nya
+    radiusCount //(satuanya meter) //ini untuk nge set radius nya
   ); //kalau dia diluar 100 meter/radius maka bernilai false, artinya dia gabisa order //kalau dia didalam radius maka bernilai true, maka dia bisa order
 
   //deklarasi state detail trip
@@ -156,6 +171,7 @@ function DetailVisit(props) {
 
   useEffect(() => {
     getDetailTrip();
+    getRadius();
   }, []);
   if (token === "") {
     return <Redirect to="/" />;

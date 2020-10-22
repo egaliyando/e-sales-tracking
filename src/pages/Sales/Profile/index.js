@@ -52,7 +52,7 @@ function Profile(props) {
     <Container>
       <Header hSalesNormal={true} />
 
-      <div style={{ paddingTop: "4.6rem" }} className="p-3">
+      <div className="px-3 pt-20">
         <div className="h-64 w-full rounded-lg flex flex-col justify-center bg-white">
           <img
             className="self-center h-24 w-25 rounded-full"

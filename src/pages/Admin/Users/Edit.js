@@ -169,6 +169,7 @@ function Edit(props) {
                 name="role"
                 className="bg-gray-200 w-full text-xs text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
               >
+                <option>Pilih Satu</option>
                 <option value="supervisor">Supervisor</option>
                 <option value="sales">Sales</option>
               </select>
@@ -176,7 +177,6 @@ function Edit(props) {
             <div>
               <label className="text-xs">Password</label>
               <input
-                disabled
                 className="bg-gray-200 w-full text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
                 type="text"
                 name="password"

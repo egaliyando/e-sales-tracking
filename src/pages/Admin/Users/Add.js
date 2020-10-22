@@ -17,6 +17,7 @@ function Add(props) {
   const [Username, setUsername] = useState("");
   const [Image, setImage] = useState("");
   const token = localStorage.token;
+  console.log(Role);
 
   const handleSubmit = () => {
     let formData = new FormData();
@@ -44,17 +45,19 @@ function Add(props) {
             },
           })
           .then(function (response) {
-            console.log(response);
-            MySwal.fire("Add Success!", ":)", "warning", "Canceled");
-            props.history.push("/admin/users");
+            console.log(response.data.code);
+            if (response.data.code === 404) {
+              MySwal.fire("Pastikan Data Terisi");
+            } else {
+              MySwal.fire("Add Success!", ":)", "warning", "Canceled");
+              props.history.push("/admin/users");
+            }
           })
           .catch(function (error) {
-            console.log(error.response);
             let err = [];
             for (let i = 0; i < error.response.data.error.length; i++) {
               err.push(error.response.data.error[i].param);
             }
-            MySwal.fire("Pastikan Data Terisi");
           });
       }
     });
@@ -125,6 +128,7 @@ function Add(props) {
                 onChange={(e) => setRole(e.target.value)}
                 className="bg-gray-200 w-full text-xs text-xs p-2 rounded-lg border border-1 border-gray-300 focus:outline-none"
               >
+                <option>Pilih Satu</option>
                 <option value="supervisor">Supervisor</option>
                 <option value="sales">Sales</option>
               </select>

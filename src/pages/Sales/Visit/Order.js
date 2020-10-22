@@ -122,7 +122,7 @@ function Order(props) {
     <Container>
       <Header hSalesNormal={true} />
 
-      <div style={{ paddingTop: "4.6rem" }} className="p-3">
+      <div style={{ paddingTop: "6rem" }} className="p-3">
         <div className="bg-white flex justify-between rounded-lg text-sm p-2 text-gray-500">
           <input className="focus:outline-none ml-1" placeholder="Search product.." type="text" />
           <img src={require(`assets/icons/visit/ic_search.svg`)} alt="search" />
@@ -130,7 +130,7 @@ function Order(props) {
 
         <div style={{ height: "28rem" }} className="overflow-y-auto pb-10">
           {data.map((item, i) => (
-            <div className="mt-2" key={i} onClick={() => handleModal(item.id)}>
+            <div className="mt-4" key={i} onClick={() => handleModal(item.id)}>
               {/* <Link to="/sales/visit/order"> */}
               <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                 <div className="flex">

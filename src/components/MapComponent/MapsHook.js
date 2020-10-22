@@ -6,9 +6,12 @@ import moment from "moment";
 
 export default function MapsHook(props) {
   const today = new Date();
-  const todayFormat = moment(today).format("L");
+  const todayFormat = moment(today).format("DD-MM-YYYY");
+  console.log("todayFormat", todayFormat);
   const [arrayTest, setArrayTest] = useState([]);
   const [tripDone, setTripDone] = useState([]);
+
+  const [trip, settrip] = useState([]);
 
   const dataMaps = {
     dataApotik: [],
@@ -18,6 +21,35 @@ export default function MapsHook(props) {
     radius: 50,
   };
   const position = [dataMaps.lat, dataMaps.lng];
+
+  const getTrip = () => {
+    const token = localStorage.token;
+    axios
+      .get(`/supervisor`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log("trip", res.data.data);
+        let arr = [...trip];
+        console.log("arr", arr);
+        for (let i = 0; i < res.data.data.length; i++) {
+          arr.push([
+            res.data.data[i].id,
+            res.data.data[i].name_apotik,
+            moment(res.data.data[i].day).format("LLLL"),
+            res.data.data[i].address_apotik,
+            res.data.data[i].image,
+            res.data.data[i].sales_id,
+          ]);
+        }
+        settrip(arr);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getData = () => {
     const token = localStorage.token;
@@ -55,9 +87,9 @@ export default function MapsHook(props) {
         },
       })
       .then((res) => {
-        console.log(res);
         // setTripDone(res.data.trip_to_sales_done);
         let arrayTrip = [...tripDone];
+        console.log(arrayTrip);
         for (let i = 0; i < res.data.trip_to_sales_done.length; i++) {
           arrayTrip.push([
             res.data.trip_to_sales_done[i].sale.user.nik,
@@ -68,9 +100,9 @@ export default function MapsHook(props) {
             res.data.trip_to_sales_done[i].apotik.address,
             parseFloat(res.data.trip_to_sales_done[i].apotik.lat),
             parseFloat(res.data.trip_to_sales_done[i].apotik.long),
-            moment(res.data.trip_to_sales_done[i].updatedAt).format("LLLL"),
+            moment(res.data.trip_to_sales_done[i].updatedAt).format("DD-MM-YYYY"),
             res.data.trip_to_sales_done[i].apotik.image,
-            moment(res.data.trip_to_sales_done[i].createdAt).format("L"),
+            moment(res.data.trip_to_sales_done[i].createdAt).format("DD-MM-YYYY"),
           ]);
         }
         setTripDone(arrayTrip);
@@ -83,6 +115,7 @@ export default function MapsHook(props) {
   useEffect(() => {
     getData();
     getDashboard();
+    getTrip();
   }, []);
 
   return (

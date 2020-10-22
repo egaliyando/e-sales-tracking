@@ -84,7 +84,7 @@ function DetailHistorySV(props) {
         </div>
       </div>
 
-      <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
+      <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 z-50 max-w-md">
         <MobileNav isSupervisor={true} {...props} />
       </div>
     </Container>
