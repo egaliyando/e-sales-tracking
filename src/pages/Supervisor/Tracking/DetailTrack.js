@@ -13,6 +13,8 @@ import useGeolocation from "react-hook-geolocation";
 //ini library yang digunakan untuk metode lock gps nya
 import * as geolib from "geolib";
 function DetailTrack(props) {
+  const today = new Date();
+  const todayFormat = moment(today).format("DD-MM-YYYY");
   //id params
   const { id } = props.match.params;
   //maps component
@@ -27,13 +29,12 @@ function DetailTrack(props) {
 
   //deklarasi state sales
   const [sales, setSales] = useState("");
-  console.log("sales", sales);
+  // console.log("sales", sales);
 
   //list history trip
   const [listHistory, setListHistory] = useState([]);
   const [listLast, setlistLast] = useState("");
   const [idSingle, setidSingle] = useState("");
-  console.log("listHistory", idSingle);
   //my loc
   const geolocation = useGeolocation();
   const userLat = parseFloat(geolocation.latitude);
@@ -59,7 +60,6 @@ function DetailTrack(props) {
         },
       })
       .then((res) => {
-        console.log("rev", res);
         let arrayTripAll = [...allTrip];
         for (let i = 0; i < res.data.data.length; i++) {
           arrayTripAll.push([
@@ -67,6 +67,7 @@ function DetailTrack(props) {
             parseFloat(res.data.data[i].trip.apotik.long),
             res.data.data[i].trip.apotik.name,
             res.data.data[i].trip.apotik.address,
+            moment(res.data.data[i].trip.updatedAt).format("DD-MM-YYYY"),
           ]);
         }
         setAllTrip(arrayTripAll);
@@ -89,9 +90,10 @@ function DetailTrack(props) {
         },
       })
       .then((res) => {
+        console.log("ressssss", res);
         let ArrayTrip = [...tagTrip];
         let LastArr = res.data.tracking[res.data.tracking.length - 1];
-
+        console.log("LastArr", ArrayTrip);
         for (let i = 0; i < res.data.tracking.length; i++) {
           ArrayTrip.push([
             parseFloat(res.data.tracking[i].apotik.lat),
@@ -99,6 +101,10 @@ function DetailTrack(props) {
             res.data.tracking[i].apotik.name,
             res.data.tracking[i].apotik.address,
             res.data.tracking[i].id,
+            parseFloat(res.data.tracking[i].lat),
+            parseFloat(res.data.tracking[i].long),
+            moment(res.data.tracking[i].updatedAt).format("DD-MM-YYYY"),
+            moment(res.data.tracking[i].updatedAt).format("LLLL"),
           ]);
         }
         setidSingle(LastArr.apotik);
@@ -151,8 +157,12 @@ function DetailTrack(props) {
                 <p className="text-sm text-green-400 ml-3 self-center">{sales.status}</p>
               </div>
 
-              <p className="text-gray-600 mt-3 font-bold text-md">Address :</p>
-              <p className="text-sm text-green-400 self-center">{sales.address}</p>
+              <p className="text-gray-600 mt-3 font-bold text-md">Lat - long sales :</p>
+              <p className="text-sm text-green-400 self-center">
+                {listLast.lat} / {listLast.long}
+              </p>
+              <p className="text-gray-600 mt-3 font-bold text-md">Distance user to apotek/rs :</p>
+              <p className="text-sm text-green-400 self-center">{dist} meter</p>
             </div>
             <div>
               <div className="mb-3">
@@ -160,14 +170,12 @@ function DetailTrack(props) {
                 <p className="text-gray-600 tex-sm">{idSingle.name}</p>
               </div>
               <div className="mb-3">
-                <p className="font-bold text-md text-gray-600">Lat - long</p>
-                <p className="text-gray-600 tex-sm">
-                  {listLast.lat} / {listLast.long}
-                </p>
+                <p className="font-bold text-md text-gray-600">Apotek/RS address</p>
+                <p className="text-gray-600 tex-sm">{idSingle.address}</p>
               </div>
               <div className="mb-3">
-                <p className="font-bold text-lg text-gray-600">Distance user to apotek/rs :</p>
-                <p className="text-gray-600 tex-sm">{dist} meter</p>
+                <p className="font-bold text-lg text-gray-600">Visited at:</p>
+                <p className="text-gray-600 tex-sm">{moment(listLast.updatedAt).format("LLLL")}</p>
               </div>
             </div>
 
@@ -182,26 +190,31 @@ function DetailTrack(props) {
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              {allTrip.map((data, i) => {
-                return (
-                  <Marker position={[data[0], data[1]]} icon={iconApotik} key={i}>
-                    <Popup>
-                      <span className="text-xl">{data[2]}</span> <br /> {data[3]}
-                      <br /> <p className="text-md">Status : Belum Dikunjungi</p>
-                    </Popup>
-                  </Marker>
-                );
-              })}
-              {tagTrip.map((data, i) => {
-                return (
-                  <Marker position={[data[0], data[1]]} icon={iconSales} key={i}>
-                    <Popup>
-                      <span className="text-xl">{data[2]}</span> <br /> {data[3]}
-                      <br /> <p className="text-md">Status : Telah Dikunjungi</p>
-                    </Popup>
-                  </Marker>
-                );
-              })}
+              {allTrip
+                .filter((days) => days.includes(todayFormat))
+                .map((data, i) => {
+                  return (
+                    <Marker position={[data[0], data[1]]} icon={iconApotik} key={i}>
+                      <Popup>
+                        <span className="text-xl">{data[2]}</span> <br /> {data[3]}
+                        <br /> <p className="text-md">Status : Belum Dikunjungi</p>
+                      </Popup>
+                    </Marker>
+                  );
+                })}
+              {tagTrip
+                .filter((days) => days.includes(todayFormat))
+                .map((data, i) => {
+                  return (
+                    <Marker position={[data[0], data[1]]} icon={iconSales} key={i}>
+                      <Popup>
+                        <span className="text-xl">{data[2]}</span> <br /> {data[3]}
+                        <p className="text-md mb-0">Status : Telah Dikunjungi</p>
+                        <p className="text-md mt-0">Visited at : {data[8]}</p>
+                      </Popup>
+                    </Marker>
+                  );
+                })}
             </Map>
           </div>
         </>

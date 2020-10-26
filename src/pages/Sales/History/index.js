@@ -92,6 +92,7 @@ function History(props) {
             res.data.tracking[i].id,
             res.data.tracking[i].apotik.image,
             moment(res.data.tracking[i].createdAt).format("DD-MM-YYYY"),
+            moment(res.data.tracking[i].createdAt).format("LLLL"),
           ]);
           TagMap.push([
             parseFloat(res.data.tracking[i].apotik.lat),
@@ -100,6 +101,7 @@ function History(props) {
             res.data.tracking[i].apotik.address,
             res.data.tracking[i].apotik.image,
             moment(res.data.tracking[i].createdAt).format("DD-MM-YYYY"),
+            moment(res.data.tracking[i].createdAt).format("LLLL"),
           ]);
         }
         //list history
@@ -171,7 +173,7 @@ function History(props) {
                       <span className="text-sm">{data[2]}</span> <br /> {data[3]}
                       <br />
                       <br />
-                      <span>Visited at : {[moment(data[5]).format("LLLL")]}</span>
+                      <span>Visited at : {data[6]}</span>
                       <br /> <span className="text-md text-green-500">Status : Telah Dikunjungi</span>
                     </div>
                   </Popup>
@@ -202,7 +204,7 @@ function History(props) {
                       <div className="ml-3">
                         <p className="font-bold text-gray-600">{item[0]}</p>
                         <p className="text-xs text-gray-600">{item[1]}</p>
-                        <p className="text-xs text-gray-600">Visited at : {moment(item[4]).format("LLLL")}</p>
+                        <p className="text-xs text-gray-600">Visited at : {item[5]}</p>
                       </div>
                     </div>
                   </div>

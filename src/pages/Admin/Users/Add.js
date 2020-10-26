@@ -46,7 +46,7 @@ function Add(props) {
           })
           .then(function (response) {
             console.log(response.data.code);
-            if (response.data.code === 404) {
+            if (response.data.code === 404 || response.data.code === 402) {
               MySwal.fire("Pastikan Data Terisi");
             } else {
               MySwal.fire("Add Success!", ":)", "warning", "Canceled");
@@ -55,6 +55,7 @@ function Add(props) {
           })
           .catch(function (error) {
             let err = [];
+            MySwal.fire("Pastikan Data Terisi");
             for (let i = 0; i < error.response.data.error.length; i++) {
               err.push(error.response.data.error[i].param);
             }

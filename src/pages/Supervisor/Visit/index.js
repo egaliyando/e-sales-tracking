@@ -190,7 +190,7 @@ function VisitSV(props) {
   };
 
   useEffect(() => {
-    const results = searchResults.filter((data) => data.name_apotik.toLowerCase().includes(searchTerm));
+    const results = searchResults.filter((data) => data[1].toLowerCase().includes(searchTerm));
     setSearchResults(results);
   }, [searchTerm]);
 

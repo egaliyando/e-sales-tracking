@@ -13,7 +13,7 @@ function Detail(props) {
 
   const ref = createRef();
   const options = {
-    orientation: "landscape",
+    orientation: "potrait",
   };
 
   //detail order sales state
@@ -93,7 +93,7 @@ function Detail(props) {
             <table id="table-to-xls" className="table-fixed w-full">
               <thead>
                 <tr style={{ backgroundColor: "#D5D5D5" }}>
-                  <th className="text-left text-sm pl-2 py-2">ID</th>
+                  <th className="text-left text-sm pl-2 py-2">NO</th>
                   <th className="text-left text-sm pl-2 py-2">Name</th>
                   <th className="text-left text-sm pl-2 py-2">Qty</th>
                   <th className="text-left text-sm pl-2 py-2">Price</th>

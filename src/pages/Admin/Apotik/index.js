@@ -70,7 +70,7 @@ function Apotik(props) {
     <div className="flex">
       <Navigation />
       <div style={{ backgroundColor: "#F7F7F7" }} className="w-11/12 p-3 relative">
-        <p className="my-3 font-bold">Apotek / Rumah Sakit</p>
+        <p className="my-3 font-bold">Apotek / RS</p>
         <Table
           data={apotik.data}
           thead={["ID", "Apotek/RS Name", "Address", "Lat", "Long", "Image", "Action"]}

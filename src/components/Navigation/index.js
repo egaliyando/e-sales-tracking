@@ -19,7 +19,7 @@ function Navigation() {
         </Link>
         <Link to="/admin/apotik" className="mb-5 focus:outline-none">
           <img className="m-auto" src={require(`assets/icons/ic_apotik.svg`)} alt="ic" />
-          <p className="text-gray-700 text-center text-xs mt-2">Apotik</p>
+          <p className="text-gray-700 text-center text-xs mt-2">Apotek/RS</p>
         </Link>
         <Link to="/admin/trip" className="mb-5 focus:outline-none">
           <img className="m-auto" src={require(`assets/icons/ic_visit.svg`)} alt="ic" />

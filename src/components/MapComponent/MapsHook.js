@@ -8,11 +8,10 @@ export default function MapsHook(props) {
   const today = new Date();
   const todayFormat = moment(today).format("DD-MM-YYYY");
   console.log("todayFormat", todayFormat);
-  const [arrayTest, setArrayTest] = useState([]);
   const [tripDone, setTripDone] = useState([]);
-
+  console.log("tripDone", tripDone);
   const [trip, settrip] = useState([]);
-
+  console.log("trip", trip);
   const dataMaps = {
     dataApotik: [],
     lat: -5.45,
@@ -31,17 +30,17 @@ export default function MapsHook(props) {
         },
       })
       .then((res) => {
-        console.log("trip", res.data.data);
         let arr = [...trip];
-        console.log("arr", arr);
         for (let i = 0; i < res.data.data.length; i++) {
           arr.push([
             res.data.data[i].id,
             res.data.data[i].name_apotik,
-            moment(res.data.data[i].day).format("LLLL"),
+            moment(res.data.data[i].day).format("DD-MM-YYYY"),
             res.data.data[i].address_apotik,
             res.data.data[i].image,
             res.data.data[i].sales_id,
+            parseFloat(res.data.data[i].lat_apotik),
+            parseFloat(res.data.data[i].long_apotik),
           ]);
         }
         settrip(arr);
@@ -51,33 +50,6 @@ export default function MapsHook(props) {
       });
   };
 
-  const getData = () => {
-    const token = localStorage.token;
-    axios
-      .get(`/apotik`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        let arrayTemp = [...arrayTest];
-        for (let i = 0; i < res.data.data.data.length; i++) {
-          arrayTemp.push([
-            parseFloat(res.data.data.data[i].lat),
-            parseFloat(res.data.data.data[i].long),
-            res.data.data.data[i].name,
-            res.data.data.data[i].address,
-            moment(res.data.data.data[i].updatedAt).format("LLLL"),
-            res.data.data.data[i].image,
-          ]);
-        }
-
-        setArrayTest(arrayTemp);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   const getDashboard = () => {
     const token = localStorage.token;
     axios
@@ -87,9 +59,7 @@ export default function MapsHook(props) {
         },
       })
       .then((res) => {
-        // setTripDone(res.data.trip_to_sales_done);
         let arrayTrip = [...tripDone];
-        console.log(arrayTrip);
         for (let i = 0; i < res.data.trip_to_sales_done.length; i++) {
           arrayTrip.push([
             res.data.trip_to_sales_done[i].sale.user.nik,
@@ -100,7 +70,7 @@ export default function MapsHook(props) {
             res.data.trip_to_sales_done[i].apotik.address,
             parseFloat(res.data.trip_to_sales_done[i].apotik.lat),
             parseFloat(res.data.trip_to_sales_done[i].apotik.long),
-            moment(res.data.trip_to_sales_done[i].updatedAt).format("DD-MM-YYYY"),
+            moment(res.data.trip_to_sales_done[i].updatedAt).format("LLLL"),
             res.data.trip_to_sales_done[i].apotik.image,
             moment(res.data.trip_to_sales_done[i].createdAt).format("DD-MM-YYYY"),
           ]);
@@ -113,7 +83,6 @@ export default function MapsHook(props) {
   };
 
   useEffect(() => {
-    getData();
     getDashboard();
     getTrip();
   }, []);
@@ -159,7 +128,7 @@ export default function MapsHook(props) {
                       <span className="text-sm"> {data[4]}</span> <br /> Address : {data[5]}
                     </div>
                     <br />
-                    <span className="text-md text-green-500">Status : Visited</span> <br />
+                    <span className="text-md text-green-500">Status : Telah dikunjungi</span> <br />
                     <span>Visited at : {data[8]}</span>
                   </div>
                 </div>
@@ -167,22 +136,23 @@ export default function MapsHook(props) {
             </Marker>
           );
         })}
-      {arrayTest.map((data, i) => {
-        return (
-          <Marker position={[data[0], data[1]]} icon={iconApotik} key={i}>
-            <Popup>
-              <div style={{ width: 200, height: 160 }} className="overflow-y-scroll">
-                <div className="w-12 h-12 bg-blue-200 mb-3">
-                  <img className="h-12 w-12" src={`${process.env.REACT_APP_HOST_HEROKU}${[data[5]]}`} alt="img" />
+      {trip
+        .filter((days) => days.includes(todayFormat))
+        .map((data, i) => {
+          return (
+            <Marker position={[data[6], data[7]]} icon={iconApotik} key={i}>
+              <Popup>
+                <div style={{ width: 200, height: 160 }} className="overflow-y-scroll">
+                  <div className="w-12 h-12 bg-blue-200 mb-3">
+                    <img className="h-12 w-12" src={`${process.env.REACT_APP_HOST_HEROKU}${[data[4]]}`} alt="img" />
+                  </div>
+                  <span className="text-xs"> {data[1]}</span> <br /> Address : {data[3]} <br />
+                  <span className="text-md text-red-500">Status : Not Visited</span> <br />
                 </div>
-                <span className="text-xs"> {data[2]}</span> <br /> Address : {data[3]} <br />
-                <span className="text-md text-red-500">Status : Not Visited</span> <br />
-              </div>
-            </Popup>
-            <Circle center={[data[0], data[1]]} fillColor="blue" radius={dataMaps.radius} />
-          </Marker>
-        );
-      })}
+              </Popup>
+            </Marker>
+          );
+        })}
     </Map>
   );
 }

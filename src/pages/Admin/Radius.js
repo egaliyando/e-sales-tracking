@@ -51,7 +51,7 @@ export default function Radius() {
       <Navigation />
       <div style={{ backgroundColor: "#F7F7F7" }} className="w-11/12 p-4 relative">
         <p className="my-2 font-bold">Set Radius Trip</p>
-        <p className="text-sm my-2">Radius now is : {radiusCount}</p>
+        <p className="text-sm my-2">Radius now is : {radiusCount} M</p>
         <div className="w-full">
           <input
             onChange={(e) => setradius(e.target.value)}
@@ -63,7 +63,7 @@ export default function Radius() {
           />
         </div>
         <button onClick={createRadius} className="bg-red-500 text-white p-2 mt-3 rounded-md">
-          Simpan
+          Save
         </button>
       </div>
     </div>

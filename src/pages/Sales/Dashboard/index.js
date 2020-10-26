@@ -150,7 +150,7 @@ function Dashboard(props) {
               <div
                 className="mt-2 px-3"
                 key={i}
-                onClick={() => (window.location.href = `https://www.google.com/maps/@-${data[6]},${data[7]},4z`)}
+                // onClick={() => (window.location.href = `https://www.google.com/maps/@-${data[6]},${data[7]},4z`)}
               >
                 <div className="w-full p-2 rounded-lg bg-white h-auto flex">
                   <img

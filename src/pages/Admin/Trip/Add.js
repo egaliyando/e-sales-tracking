@@ -36,10 +36,10 @@ export default function Add(props) {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.value) {
-        axios
-          .post(
+        try {
+          const trip = await axios.post(
             "/trip",
             {
               apotik_id: apotik_id,
@@ -50,20 +50,13 @@ export default function Add(props) {
                 Authorization: `Bearer ${token}`,
               },
             }
-          )
-          .then(function (response) {
-            // console.log(response);
-            MySwal.fire("Add Success!", ":)", "warning", "Canceled");
-            props.history.push("/admin/trip");
-          })
-          .catch(function (error) {
-            console.log(error.response);
-            let err = [];
-            // for (let i = 0; i < error.response.data.error.length; i++) {
-            //   err.push(error.response.data.error[i].param);
-            // }
-            // MySwal.fire("Pastikan Data Terisi");
-          });
+          );
+          MySwal.fire("Add Success!", ":)", "warning", "Canceled");
+          props.history.push("/admin/trip");
+          console.log("trip", trip);
+        } catch (error) {
+          console.log(error.response);
+        }
       }
     });
   };

@@ -135,6 +135,8 @@ function DetailVisit(props) {
     formData.append("image", image);
     formData.append("sales_id", sales_id);
     formData.append("notes", notes);
+    formData.append("lat", userLat);
+    formData.append("long", userLong);
     return MySwal.fire({
       title: "Done visited?",
       icon: "warning",
@@ -142,7 +144,7 @@ function DetailVisit(props) {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
-    }).then((result) => {
+    }).then(() => {
       if (test == true) {
         axios
           .post(`/sales/checkout/${checkout_id}`, formData, {

@@ -55,7 +55,7 @@ function Profile(props) {
       <div className="px-3 pt-20">
         <div className="h-64 w-full rounded-lg flex flex-col justify-center bg-white">
           <img
-            className="self-center h-24 w-25 rounded-full"
+            className="self-center mt-5 h-24 w-25 rounded-full"
             src={`${process.env.REACT_APP_HOST_HEROKU}${image}`}
             alt="img"
           />
