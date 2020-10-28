@@ -17,11 +17,29 @@ function Dashboard(props) {
   const [tripSuccess, setTripSuccess] = useState();
 
   const [phoneSpv, setPhoneSpv] = useState("");
+  const [status, setstatus] = useState();
 
   //untuk cek today
   const date = new Date();
   //ubah format tanggalnya
   const dateFormat = moment(date).format("DD-MM-YYYY");
+  const getUser = () => {
+    const token = localStorage.token;
+    const sales_id = localStorage.sales_id;
+    axios
+      .get(`/users/${sales_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setstatus(res.data.data.status);
+        console.log(res.data.data.status);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getSpv = () => {
     const token = localStorage.token;
@@ -104,6 +122,7 @@ function Dashboard(props) {
   };
 
   useEffect(() => {
+    getUser();
     getTrip();
     getDashboard();
     getSpv();
@@ -143,29 +162,33 @@ function Dashboard(props) {
 
       {/* CARD LIST KUNJUNGAN */}
       <div className="overflow-y-auto h-64 pb-12">
-        {listTrip
-          .filter((days) => days.includes(dateFormat))
-          .map((data, i) => {
-            return (
-              <div
-                className="mt-2 px-3"
-                key={i}
-                // onClick={() => (window.location.href = `https://www.google.com/maps/@-${data[6]},${data[7]},4z`)}
-              >
-                <div className="w-full p-2 rounded-lg bg-white h-auto flex">
-                  <img
-                    className="self-center h-16 w-16"
-                    src={`${process.env.REACT_APP_HOST_HEROKU}${data[4]}`}
-                    alt="img"
-                  />
-                  <div className="ml-3">
-                    <p className="font-bold text-gray-600">{data[2]}</p>
-                    <p className="text-xs text-gray-600">{data[3]}</p>
+        {status === "Open" ? (
+          listTrip
+            .filter((days) => days.includes(dateFormat))
+            .map((data, i) => {
+              return (
+                <div
+                  className="mt-2 px-3"
+                  key={i}
+                  // onClick={() => (window.location.href = `https://www.google.com/maps/@-${data[6]},${data[7]},4z`)}
+                >
+                  <div className="w-full p-2 rounded-lg bg-white h-auto flex">
+                    <img
+                      className="self-center h-16 w-16"
+                      src={`${process.env.REACT_APP_HOST_HEROKU}${data[4]}`}
+                      alt="img"
+                    />
+                    <div className="ml-3">
+                      <p className="font-bold text-gray-600">{data[2]}</p>
+                      <p className="text-xs text-gray-600">{data[3]}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+        ) : (
+          <p className="ml-3 text-red-500 font-bold">Open Day First!</p>
+        )}
       </div>
 
       <Link

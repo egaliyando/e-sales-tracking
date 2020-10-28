@@ -4,6 +4,8 @@ import { LOADING, LOADING_FINISH, SET_PRODUCT } from "store/types";
 export const loading = { type: LOADING };
 export const loadingFinish = { type: LOADING_FINISH };
 
+// source ini digunakan untuk management / CRUD Data Apotik
+
 export const fetchProduct = () => {
   return async (dispatch) => {
     const token = localStorage.token;

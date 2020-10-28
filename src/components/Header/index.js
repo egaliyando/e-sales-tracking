@@ -36,6 +36,7 @@ function Toggle() {
           });
         MySwal.fire("Open Day!", "Welcome!", "Canceled");
         setEnable(!enable);
+        window.location.reload(true);
       }
     });
   }

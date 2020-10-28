@@ -13,7 +13,7 @@ function Detail(props) {
 
   const ref = createRef();
   const options = {
-    orientation: "potrait",
+    orientation: "landscape",
   };
 
   //detail order sales state
@@ -72,70 +72,62 @@ function Detail(props) {
     <div className="flex">
       <Navigation />
       <div className="w-11/12">
-        <div ref={ref} className="mx-5 p-5 mt-5 bg-white rounded-lg h-auto shadow-md">
-          <p className="font-bold pb-5">Detail Order</p>
-          <div className="w-full grid grid-cols-2 gap-3 pb-5">
-            <p className="text-sm">id_order : {idOrder}</p>
-            <p className="text-sm">Sales : {sales}</p>
-            <p className="text-sm">Trip : {apotikName}</p>
-            <p className="text-sm">Date Order : {dateFormat}</p>
-            <p className="text-sm">Address : {address}</p>
-            <div>
-              <p className="text-sm">Note : {note}</p>
-              <img
-                className="self-center h-16 w-16 mt-5"
-                src={`${process.env.REACT_APP_HOST_HEROKU}${image}`}
-                alt="img"
-              />
+        <div className="mx-5 p-5 mt-5 bg-white rounded-lg h-auto shadow-md">
+          <div ref={ref} className="p-2">
+            <p className="font-bold pb-5">Detail Order</p>
+            <div className="w-full grid grid-cols-2 gap-3 pb-5">
+              <p className="text-sm">id_order : {idOrder}</p>
+              <p className="text-sm">Sales : {sales}</p>
+              <p className="text-sm">Trip : {apotikName}</p>
+              <p className="text-sm">Date Order : {dateFormat}</p>
+              <p className="text-sm">Address : {address}</p>
+              <div>
+                <p className="text-sm">Note : {note}</p>
+                <img
+                  className="self-center h-16 w-16 mt-5"
+                  src={`${process.env.REACT_APP_HOST_HEROKU}${image}`}
+                  alt="img"
+                />
+              </div>
             </div>
+            <div style={{ height: "16rem" }} className="overflow-scroll">
+              <table id="table-to-xls" className="table-fixed w-full">
+                <thead>
+                  <tr style={{ backgroundColor: "#D5D5D5" }}>
+                    <th className="text-left text-sm pl-2 py-2">NO</th>
+                    <th className="text-left text-sm pl-2 py-2">Name</th>
+                    <th className="text-left text-sm pl-2 py-2">Qty</th>
+                    <th className="text-left text-sm pl-2 py-2">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {detail.map((data, i) => {
+                    return (
+                      <tr className="border" key={i}>
+                        <td className="text-left text-sm pl-2 py-2">
+                          <p>{i + 1}</p>
+                        </td>
+                        <td className="text-left text-sm pl-2 py-2">
+                          {" "}
+                          <p>{data.product.name}</p>
+                        </td>
+                        <td className="text-left text-sm pl-2 py-2">
+                          {" "}
+                          <p>{data.qty}</p>
+                        </td>
+                        <td className="text-left text-sm pl-2 py-2">
+                          <p>{data.price}</p>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <p className="font-bold mt-5">Total : {total}</p>
           </div>
-          <div style={{ height: "16rem" }} className="overflow-scroll">
-            <table id="table-to-xls" className="table-fixed w-full">
-              <thead>
-                <tr style={{ backgroundColor: "#D5D5D5" }}>
-                  <th className="text-left text-sm pl-2 py-2">NO</th>
-                  <th className="text-left text-sm pl-2 py-2">Name</th>
-                  <th className="text-left text-sm pl-2 py-2">Qty</th>
-                  <th className="text-left text-sm pl-2 py-2">Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {detail.map((data, i) => {
-                  return (
-                    <tr className="border" key={i}>
-                      <td className="text-left text-sm pl-2 py-2">
-                        <p>{i + 1}</p>
-                      </td>
-                      <td className="text-left text-sm pl-2 py-2">
-                        {" "}
-                        <p>{data.product.name}</p>
-                      </td>
-                      <td className="text-left text-sm pl-2 py-2">
-                        {" "}
-                        <p>{data.qty}</p>
-                      </td>
-                      <td className="text-left text-sm pl-2 py-2">
-                        <p>{data.price}</p>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-          <p className="font-bold mt-5">Total : {total}</p>
         </div>
 
-        {/* <div className="absolute bottom-0 focus:outline-none right-0 mb-12 mr-32">
-          <ReactHTMLTableToExcel
-            id="test-table-xls-button"
-            className="download-table-xls-button"
-            table="table-to-xls"
-            filename="tablexls"
-            sheet="tablexls"
-            buttonText="Download as Excel"
-          ></ReactHTMLTableToExcel>
-        </div> */}
         <ReactToPdf targetRef={ref} options={options} filename="laporan-order.pdf">
           {({ toPdf }) => (
             <button onClick={toPdf} className="absolute bottom-0 focus:outline-none right-0 mb-10 mr-10">

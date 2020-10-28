@@ -144,43 +144,47 @@ function History(props) {
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {dataApotik.map((data, i) => {
-              return (
-                <Marker position={[data[0], data[1]]} icon={iconApotik} key={i}>
-                  <Popup>
-                    <img
-                      className="h-12 w-12 mb-3"
-                      src={`${process.env.REACT_APP_HOST_HEROKU}${[data[4]]}`}
-                      alt="img"
-                    />
-                    <span className="text-xl">{data[2]}</span> <br /> {data[3]}
-                    <br /> <p className="text-md">Status : Belum Dikunjungi</p>
-                  </Popup>
-                  <Circle center={[data[0], data[1]]} fillColor="blue" radius={dataMaps.radius} />
-                </Marker>
-              );
-            })}
-            {arrayTag.map((data, i) => {
-              return (
-                <Marker position={[data[0], data[1]]} icon={iconSales} key={i}>
-                  <Popup>
-                    <div style={{ width: 200, height: 160 }} className="overflow-y-scroll">
+            {dataApotik
+              .filter((days) => days.includes(dateFormat))
+              .map((data, i) => {
+                return (
+                  <Marker position={[data[0], data[1]]} icon={iconApotik} key={i}>
+                    <Popup>
                       <img
                         className="h-12 w-12 mb-3"
                         src={`${process.env.REACT_APP_HOST_HEROKU}${[data[4]]}`}
                         alt="img"
                       />
-                      <span className="text-sm">{data[2]}</span> <br /> {data[3]}
-                      <br />
-                      <br />
-                      <span>Visited at : {data[6]}</span>
-                      <br /> <span className="text-md text-green-500">Status : Telah Dikunjungi</span>
-                    </div>
-                  </Popup>
-                  <Circle center={[data[0], data[1]]} fillColor="blue" radius={dataMaps.radius} />
-                </Marker>
-              );
-            })}
+                      <span className="text-xl">{data[2]}</span> <br /> {data[3]}
+                      <br /> <p className="text-md">Status : Belum Dikunjungi</p>
+                    </Popup>
+                    <Circle center={[data[0], data[1]]} fillColor="blue" radius={dataMaps.radius} />
+                  </Marker>
+                );
+              })}
+            {arrayTag
+              .filter((days) => days.includes(dateFormat))
+              .map((data, i) => {
+                return (
+                  <Marker position={[data[0], data[1]]} icon={iconSales} key={i}>
+                    <Popup>
+                      <div style={{ width: 200, height: 160 }} className="overflow-y-scroll">
+                        <img
+                          className="h-12 w-12 mb-3"
+                          src={`${process.env.REACT_APP_HOST_HEROKU}${[data[4]]}`}
+                          alt="img"
+                        />
+                        <span className="text-sm">{data[2]}</span> <br /> {data[3]}
+                        <br />
+                        <br />
+                        <span>Visited at : {data[6]}</span>
+                        <br /> <span className="text-md text-green-500">Status : Telah Dikunjungi</span>
+                      </div>
+                    </Popup>
+                    <Circle center={[data[0], data[1]]} fillColor="blue" radius={dataMaps.radius} />
+                  </Marker>
+                );
+              })}
           </Map>
         </div>
         <div className="overflow-y-auto h-64 pb-12">

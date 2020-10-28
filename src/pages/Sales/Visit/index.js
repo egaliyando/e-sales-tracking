@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 function Visit(props) {
   const token = useSelector((state) => state.users.token);
 
+  const [status, setstatus] = useState();
+
   //untuk cek today
   const date = new Date();
   //ubah format tanggalnya
@@ -19,6 +21,24 @@ function Visit(props) {
   console.log(dayTrip);
 
   const sales_id = localStorage.sales_id;
+
+  const getUser = () => {
+    const token = localStorage.token;
+    const sales_id = localStorage.sales_id;
+    axios
+      .get(`/users/${sales_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setstatus(res.data.data.status);
+        console.log(res.data.data.status);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getRute = () => {
     const token = localStorage.token;
@@ -51,6 +71,7 @@ function Visit(props) {
   };
 
   useEffect(() => {
+    getUser();
     getRute();
   }, []);
   if (token === "") {
@@ -61,8 +82,9 @@ function Visit(props) {
       <Header hSalesNormal={true} />
       <div style={{ paddingTop: "4.7rem" }} className="px-3">
         <div style={{ height: "28rem" }} className="overflow-y-auto pb-10">
-          {dayTrip.length > 0
-            ? //sebelum di mapping di filter dulu kek gini
+          {status === "Open" ? (
+            dayTrip.length > 0 ? (
+              //sebelum di mapping di filter dulu kek gini
               dayTrip
                 .filter((days) => days.includes(dateFormat))
                 .map((item, i) => {
@@ -89,7 +111,12 @@ function Visit(props) {
                     </div>
                   );
                 })
-            : ""}
+            ) : (
+              ""
+            )
+          ) : (
+            <p className="ml-3 text-red-500 font-bold">Open Day First!</p>
+          )}
         </div>
       </div>
       <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
