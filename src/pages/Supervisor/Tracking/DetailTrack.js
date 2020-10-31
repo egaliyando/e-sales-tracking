@@ -36,9 +36,11 @@ function DetailTrack(props) {
   const [listLast, setlistLast] = useState("");
   const [idSingle, setidSingle] = useState("");
   //my loc
-  const geolocation = useGeolocation();
-  const userLat = parseFloat(geolocation.latitude);
-  const userLong = parseFloat(geolocation.longitude);
+  //state map tag trip
+  const [tagTrip, setTagTrip] = useState([]);
+  console.log("tag", listLast.lat);
+  const userLat = parseFloat(listLast.lat);
+  const userLong = parseFloat(listLast.long);
   //lat long apotek
   const lats = parseFloat(idSingle.lat);
   const longs = parseFloat(idSingle.long);
@@ -76,9 +78,7 @@ function DetailTrack(props) {
         console.log(err);
       });
   };
-  //state map tag trip
-  const [tagTrip, setTagTrip] = useState([]);
-  console.log("tag", tagTrip);
+
   //function get data history
   const getHistory = async () => {
     const token = localStorage.token;

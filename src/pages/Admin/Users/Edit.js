@@ -68,7 +68,6 @@ function Edit(props) {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
     }).then((res) => {
-      MySwal.fire("Edit Success", ":)", "warning", "Canceled");
       if (res) {
         axios
           .put(`/users/${id}`, formData, {
@@ -85,6 +84,7 @@ function Edit(props) {
             console.log(error);
           });
       }
+      MySwal.fire("Edit Success", ":)", "warning", "Canceled");
     });
   };
 
