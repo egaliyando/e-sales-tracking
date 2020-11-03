@@ -56,7 +56,6 @@ function Edit(props) {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.value) {
-        MySwal.fire("Edit Success!", ":)", "info", "Canceled");
         axios
           .put(
             `/apotik/${id}`,
@@ -74,6 +73,7 @@ function Edit(props) {
             }
           )
           .then(function () {
+            MySwal.fire("Edit Success!", ":)", "info", "Canceled");
             props.history.push("/admin/apotik");
           })
           .catch(function (error) {
@@ -95,7 +95,7 @@ function Edit(props) {
     <div className="flex">
       <Navigation />
       <div className="w-11/12 p-3">
-        <p className="my-3 font-bold">Edit Apotek</p>
+        <p className="my-3 font-bold">Edit Apotek/RS</p>
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="grid grid-cols-2 gap-5">
             <div>

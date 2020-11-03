@@ -59,7 +59,7 @@ function Add(props) {
     <div className="flex">
       <Navigation />
       <div className="w-11/12 p-3">
-        <p className="my-3 font-bold">Add Apotek</p>
+        <p className="my-3 font-bold">Add Apotek/RS</p>
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="grid grid-cols-2 gap-5">
             <div>
