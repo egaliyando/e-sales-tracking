@@ -63,8 +63,7 @@ function Edit(props) {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
     }).then((res) => {
-      if (res) {
-        MySwal.fire("Edit Success", "", "success", "Canceled");
+      if (res.value) {
         axios
           .put(`/product/${id}`, formData, {
             headers: {
@@ -73,6 +72,7 @@ function Edit(props) {
           })
           .then(function (res) {
             console.log(res);
+            MySwal.fire("Edit Success", "", "success", "Canceled");
             props.history.push("/admin/product");
           })
           .catch(function (error) {
