@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import Container from "components/Container";
-import Header from "components/Header";
-import MobileNav from "components/Navigation/MobileNav";
-import axios from "configs";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import moment from "moment";
+import React, { useState, useEffect } from 'react';
+import Container from 'components/Container';
+import Header from 'components/Header';
+import MobileNav from 'components/Navigation/MobileNav';
+import axios from 'configs';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 function VisitSV(props) {
   const [listSales, setListSales] = useState([]);
@@ -17,19 +17,22 @@ function VisitSV(props) {
   //untuk cek today
   const date = new Date();
   //ubah format tanggalnya
-  const dateFormat = moment(date).format("DD-MM-YYYY");
+  const dateFormat = moment(date).format('DD-MM-YYYY');
 
   const MySwal = withReactContent(Swal);
 
-  const [salesId, setSalesId] = useState("");
+  const [salesId, setSalesId] = useState('');
 
   //deklarasi state untuk search
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+
+  console.log('res');
+  console.log(searchResults);
 
   //handle change search
   const handleChange = (e) => {
-    if (e.target.value == "") {
+    if (e.target.value == '') {
       getTrip();
       setSearchTerm(e.target.value);
     } else {
@@ -38,8 +41,8 @@ function VisitSV(props) {
   };
 
   // id trip
-  const [trip_id, setId] = useState("");
-  const [sales_id, setSales_Id] = useState("");
+  const [trip_id, setId] = useState('');
+  const [sales_id, setSales_Id] = useState('');
   // set detail trip
   const [detailTrip, setDetailTrip] = useState([]);
 
@@ -79,13 +82,12 @@ function VisitSV(props) {
           arrayDay.push([
             res.data.data[i].id,
             res.data.data[i].name_apotik,
-            moment(res.data.data[i].day).format("DD-MM-YYYY"),
+            moment(res.data.data[i].day).format('DD-MM-YYYY'),
             res.data.data[i].address_apotik,
             res.data.data[i].image,
             res.data.data[i].sales_id,
           ]);
         }
-        console.log(res);
         setSearchResults(arrayDay);
       })
       .catch((err) => {
@@ -119,24 +121,24 @@ function VisitSV(props) {
     if (detailTrip.length > 0) {
       // console.log(sales_id);
       MySwal.fire({
-        position: "top",
-        icon: "error",
-        title: "Sales telah tersedia",
+        position: 'top',
+        icon: 'error',
+        title: 'Sales telah tersedia',
         showConfirmButton: false,
         timer: 1500,
       });
       getDetailTrip(trip_id);
     } else {
       MySwal.fire({
-        title: "Add Trip?",
-        icon: "warning",
+        title: 'Add Trip?',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
       }).then((result) => {
         if (result.value) {
-          MySwal.fire("Add Success!", "", "Canceled");
+          MySwal.fire('Add Success!', '', 'Canceled');
           axios
             .post(
               `/supervisor/add-sales-to-trip/${trip_id}`,
@@ -162,15 +164,15 @@ function VisitSV(props) {
   const handleDeleteSales = (id) => {
     const token = localStorage.token;
     MySwal.fire({
-      title: "Cancel Trip?",
-      icon: "info",
+      title: 'Cancel Trip?',
+      icon: 'info',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
     }).then((result) => {
       if (result.value) {
-        MySwal.fire("Canceled!", ":)", "warning", "Canceled");
+        MySwal.fire('Canceled!', ':)', 'warning', 'Canceled');
         axios
           .delete(
             `/supervisor/delete-sales-to-trip/${id}`,
@@ -201,7 +203,7 @@ function VisitSV(props) {
 
   const token = useSelector((state) => state.users.token);
 
-  if (token === "") {
+  if (token === '') {
     return <Redirect to="/" />;
   }
 
@@ -209,7 +211,7 @@ function VisitSV(props) {
     <Container>
       <Header hSupervisor={true} />
 
-      <div style={{ paddingTop: "4.5rem" }} className="px-3">
+      <div style={{ paddingTop: '4.5rem' }} className="px-3">
         <div className="bg-white flex justify-between rounded-lg text-sm p-2 text-gray-500">
           <input
             value={searchTerm}
@@ -221,19 +223,15 @@ function VisitSV(props) {
           <img src={require(`assets/icons/visit/ic_search.svg`)} alt="search" />
         </div>
 
-        <div style={{ height: "33rem" }} className="overflow-y-auto pb-20">
+        <div style={{ height: '33rem' }} className="overflow-y-auto pb-20">
           {searchResults
-            .filter((days) => days.includes(dateFormat))
+            // .filter((days) => days.includes(dateFormat))
             .map((list, i) => {
               return (
                 <div className="mt-2" key={i}>
                   <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                     <div className="flex">
-                      <img
-                        className="self-center h-16 w-16"
-                        src={`${process.env.REACT_APP_HOST_HEROKU}${list[4]}`}
-                        alt="img"
-                      />
+                      <img className="self-center h-16 w-16" src={`${process.env.REACT_APP_HOST_HEROKU}${list[4]}`} alt="img" />
                       <div className="ml-3">
                         <p className="font-bold text-gray-600">{list[1]}</p>
 
@@ -273,7 +271,7 @@ function VisitSV(props) {
                   {/* KASIH LOGIC DISINI */}
                   {detailTrip.map((item) => (
                     <div className="mt-3 px-3" key={item.id}>
-                      <div style={{ width: "20rem" }} className="p-2 rounded-lg justify-between bg-white h-auto flex">
+                      <div style={{ width: '20rem' }} className="p-2 rounded-lg justify-between bg-white h-auto flex">
                         <div className="flex">
                           <img
                             className="self-center h-12 w-12"
@@ -288,7 +286,7 @@ function VisitSV(props) {
 
                         <button
                           className={
-                            "bg-green-400 text-white h-10 px-2 font-bold uppercase text-sm rounded-md focus:outline-none"
+                            'bg-green-400 text-white h-10 px-2 font-bold uppercase text-sm rounded-md focus:outline-none'
                           }
                           onClick={() => handleDeleteSales(item.id)}
                         >
@@ -299,7 +297,7 @@ function VisitSV(props) {
                   ))}
                   {listSales.map((item) => (
                     <div className="mt-3 px-3" key={item.id}>
-                      <div style={{ width: "20rem" }} className="p-2 rounded-lg justify-between bg-white h-auto flex">
+                      <div style={{ width: '20rem' }} className="p-2 rounded-lg justify-between bg-white h-auto flex">
                         <div className="flex">
                           <img
                             className="self-center h-12 w-12"
@@ -314,7 +312,7 @@ function VisitSV(props) {
 
                         <button
                           className={
-                            "bg-orange-400 text-white h-10 px-2 font-bold uppercase text-sm rounded-md focus:outline-none"
+                            'bg-orange-400 text-white h-10 px-2 font-bold uppercase text-sm rounded-md focus:outline-none'
                           }
                           onClick={() => handleAddTrip(item.id)}
                         >
@@ -331,7 +329,7 @@ function VisitSV(props) {
         </>
       ) : null}
 
-      <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
+      <div style={{ width: '-webkit-fill-available' }} className="fixed bg-white bottom-0 max-w-md">
         <MobileNav isSupervisor={true} {...props} />
       </div>
     </Container>

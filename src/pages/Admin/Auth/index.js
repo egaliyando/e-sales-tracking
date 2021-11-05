@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import ClipLoader from "react-spinners/ClipLoader";
-import { LOADING, LOADING_FINISH, SET_TOKEN } from "store/types";
-import axios from "configs";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { LOADING, LOADING_FINISH, SET_TOKEN } from 'store/types';
+import axios from 'configs';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 function Auth(props) {
   const MySwal = withReactContent(Swal);
@@ -16,9 +16,9 @@ function Auth(props) {
   const dispatch = useDispatch();
 
   const [data, setData] = useState({
-    username: "",
-    password: "",
-    isError: { status: false, message: "" },
+    username: '',
+    password: '',
+    isError: { status: false, message: '' },
   });
 
   const handleChange = (e) => {
@@ -28,21 +28,22 @@ function Auth(props) {
   const handleSingin = () => {
     dispatch({ type: LOADING });
     axios
-      .post("/auth/signin", data)
+      .post('/auth/signin', data)
       .then((res) => {
+        console.log(res);
         if (res.data.code === 200) {
-          localStorage.setItem("token", res.data.data.token);
+          localStorage.setItem('token', res.data.data.token);
           dispatch({ type: SET_TOKEN, token: res.data.data });
           dispatch({ type: LOADING_FINISH });
-          MySwal.fire("Login Success, welcome!");
-          props.history.push("/admin/dashboard");
+          MySwal.fire('Login Success, welcome!');
+          props.history.push('/admin/dashboard');
         } else if (res.data.code === 404) {
           dispatch({ type: LOADING_FINISH });
           console.error(res.data);
-          MySwal.fire("Username or Password is wrong");
+          MySwal.fire('Username or Password is wrong');
         } else if (res.data.code === 403) {
           dispatch({ type: LOADING_FINISH });
-          MySwal.fire("Username or Password is wrong");
+          MySwal.fire('Username or Password is wrong');
         }
       })
       .catch((err) => {
@@ -83,7 +84,7 @@ function Auth(props) {
             <ClipLoader
               // css={override}
               size={30}
-              color={"#123abc"}
+              color={'#123abc'}
               loading={loading}
             />
           )}

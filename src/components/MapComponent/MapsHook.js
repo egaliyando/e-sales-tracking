@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Map, TileLayer, Marker, Popup, Circle } from "react-leaflet";
-import { iconSales, iconApotik } from "components/MapComponent/IconMarker";
-import axios from "configs";
-import moment from "moment";
+import React, { useEffect, useState } from 'react';
+import { Map, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import { iconSales, iconApotik } from 'components/MapComponent/IconMarker';
+import axios from 'configs';
+import moment from 'moment';
 
 export default function MapsHook(props) {
   const today = new Date();
-  const todayFormat = moment(today).format("DD-MM-YYYY");
-  console.log("todayFormat", todayFormat);
+  const todayFormat = moment(today).format('DD-MM-YYYY');
+  console.log('todayFormat', todayFormat);
   const [tripDone, setTripDone] = useState([]);
-  console.log("tripDone", tripDone);
+  console.log('tripDone', tripDone);
   const [trip, settrip] = useState([]);
-  console.log("trip", trip);
+  console.log('trip', trip);
   const dataMaps = {
     dataApotik: [],
     lat: -5.45,
@@ -35,7 +35,7 @@ export default function MapsHook(props) {
           arr.push([
             res.data.data[i].id,
             res.data.data[i].name_apotik,
-            moment(res.data.data[i].day).format("DD-MM-YYYY"),
+            moment(res.data.data[i].day).format('DD-MM-YYYY'),
             res.data.data[i].address_apotik,
             res.data.data[i].image,
             res.data.data[i].sales_id,
@@ -70,9 +70,9 @@ export default function MapsHook(props) {
             res.data.trip_to_sales_done[i].apotik.address,
             parseFloat(res.data.trip_to_sales_done[i].apotik.lat),
             parseFloat(res.data.trip_to_sales_done[i].apotik.long),
-            moment(res.data.trip_to_sales_done[i].updatedAt).format("LLLL"),
+            moment(res.data.trip_to_sales_done[i].updatedAt).format('LLLL'),
             res.data.trip_to_sales_done[i].apotik.image,
-            moment(res.data.trip_to_sales_done[i].createdAt).format("DD-MM-YYYY"),
+            moment(res.data.trip_to_sales_done[i].createdAt).format('DD-MM-YYYY'),
           ]);
         }
         setTripDone(arrayTrip);
@@ -88,13 +88,13 @@ export default function MapsHook(props) {
   }, []);
 
   return (
-    <Map style={{ width: "100%", height: "100%" }} center={position} zoom={dataMaps.zoom}>
+    <Map style={{ width: '100%', height: '100%' }} center={position} zoom={dataMaps.zoom}>
       <TileLayer
         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {tripDone
-        .filter((days) => days.includes(todayFormat))
+        // .filter((days) => days.includes(todayFormat))
         .map((data, i) => {
           return (
             <Marker position={[data[6], data[7]]} icon={iconSales} key={i}>
@@ -119,11 +119,7 @@ export default function MapsHook(props) {
                   </div>
                   <br />
                   <div className="p-2 rounded-lg">
-                    <img
-                      className="h-12 w-12 mb-3"
-                      src={`${process.env.REACT_APP_HOST_HEROKU}${[data[9]]}`}
-                      alt="img"
-                    />
+                    <img className="h-12 w-12 mb-3" src={`${process.env.REACT_APP_HOST_HEROKU}${[data[9]]}`} alt="img" />
                     <div>
                       <span className="text-sm"> {data[4]}</span> <br /> Address : {data[5]}
                     </div>
@@ -137,7 +133,7 @@ export default function MapsHook(props) {
           );
         })}
       {trip
-        .filter((days) => days.includes(todayFormat))
+        // .filter((days) => days.includes(todayFormat))
         .map((data, i) => {
           return (
             <Marker position={[data[6], data[7]]} icon={iconApotik} key={i}>

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import Container from "components/Container";
-import Header from "components/Header";
-import MobileNav from "components/Navigation/MobileNav";
-import axios from "configs";
-import { useSelector } from "react-redux";
-import { Redirect, Link } from "react-router-dom";
-import moment from "moment";
+import React, { useState, useEffect } from 'react';
+import Container from 'components/Container';
+import Header from 'components/Header';
+import MobileNav from 'components/Navigation/MobileNav';
+import axios from 'configs';
+import { useSelector } from 'react-redux';
+import { Redirect, Link } from 'react-router-dom';
+import moment from 'moment';
 
 function Dashboard(props) {
   const token = useSelector((state) => state.users.token);
@@ -16,13 +16,13 @@ function Dashboard(props) {
   const [totalTrip, setTotalTrip] = useState();
   const [tripSuccess, setTripSuccess] = useState();
 
-  const [phoneSpv, setPhoneSpv] = useState("");
+  const [phoneSpv, setPhoneSpv] = useState('');
   const [status, setstatus] = useState();
 
   //untuk cek today
   const date = new Date();
   //ubah format tanggalnya
-  const dateFormat = moment(date).format("DD-MM-YYYY");
+  const dateFormat = moment(date).format('DD-MM-YYYY');
   const getUser = () => {
     const token = localStorage.token;
     const sales_id = localStorage.sales_id;
@@ -105,7 +105,7 @@ function Dashboard(props) {
           arrayTemp.push([
             res.data.data[i].id,
             //ini poin pentinf dalam filter nya
-            moment(res.data.data[i].trip.day).format("DD-MM-YYYY"),
+            moment(res.data.data[i].trip.day).format('DD-MM-YYYY'),
             res.data.data[i].trip.apotik.name,
             res.data.data[i].trip.apotik.address,
             res.data.data[i].trip.apotik.image,
@@ -127,13 +127,13 @@ function Dashboard(props) {
     getDashboard();
     getSpv();
   }, []);
-  if (token === "") {
+  if (token === '') {
     return <Redirect to="/" />;
   }
   return (
     <Container>
       <Header hSalesWithToggle={true} />
-      <div style={{ paddingTop: "4rem" }}>
+      <div style={{ paddingTop: '4rem' }}>
         <p className="ml-3 mt-3 text-gray-600">Dashboard</p>
         <div className="grid grid-cols-2 gap-3 px-3 pt-2">
           <div className="bg-white w-full h-auto rounded-lg p-3">
@@ -162,7 +162,7 @@ function Dashboard(props) {
 
       {/* CARD LIST KUNJUNGAN */}
       <div className="overflow-y-auto h-64 pb-12">
-        {status === "Open" ? (
+        {status === 'Open' ? (
           listTrip
             .filter((days) => days.includes(dateFormat))
             .map((data, i) => {
@@ -173,11 +173,7 @@ function Dashboard(props) {
                   // onClick={() => (window.location.href = `https://www.google.com/maps/@-${data[6]},${data[7]},4z`)}
                 >
                   <div className="w-full p-2 rounded-lg bg-white h-auto flex">
-                    <img
-                      className="self-center h-16 w-16"
-                      src={`${process.env.REACT_APP_HOST_HEROKU}${data[4]}`}
-                      alt="img"
-                    />
+                    <img className="self-center h-16 w-16" src={`${process.env.REACT_APP_HOST_HEROKU}${data[4]}`} alt="img" />
                     <div className="ml-3">
                       <p className="font-bold text-gray-600">{data[2]}</p>
                       <p className="text-xs text-gray-600">{data[3]}</p>
@@ -191,14 +187,14 @@ function Dashboard(props) {
         )}
       </div>
 
-      <Link
+      {/* <Link
         to="/sales/chat"
         // onClick={() => (window.location.href = `https://wa.me/${phoneSpv}?text=%7B0%7D+Hello+Supervisor`)}
         className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none"
       >
         <img src={require(`assets/icons/dashboard/ic_chat.svg`)} alt="chat" />
-      </Link>
-      <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
+      </Link> */}
+      <div style={{ width: '-webkit-fill-available' }} className="fixed bg-white bottom-0 max-w-md">
         <MobileNav isSales={true} {...props} />
       </div>
     </Container>
