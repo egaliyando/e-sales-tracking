@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import Container from "components/Container";
-import Header from "components/Header";
-import MobileNav from "components/Navigation/MobileNav";
-import { Link } from "react-router-dom";
-import axios from "configs";
-import moment from "moment";
+import React, { useState, useEffect } from 'react';
+import Container from 'components/Container';
+import Header from 'components/Header';
+import MobileNav from 'components/Navigation/MobileNav';
+import { Link } from 'react-router-dom';
+import axios from 'configs';
+import moment from 'moment';
 //maps
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
-import { iconSales, iconApotik } from "components/MapComponent/IconMarker";
-import useGeolocation from "react-hook-geolocation";
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { iconSales, iconApotik } from 'components/MapComponent/IconMarker';
+import useGeolocation from 'react-hook-geolocation';
 
 //ini library yang digunakan untuk metode lock gps nya
-import * as geolib from "geolib";
+import * as geolib from 'geolib';
 function DetailTrack(props) {
   const today = new Date();
-  const todayFormat = moment(today).format("DD-MM-YYYY");
+  const todayFormat = moment(today).format('DD-MM-YYYY');
   //id params
   const { id } = props.match.params;
   //maps component
@@ -28,17 +28,17 @@ function DetailTrack(props) {
   //maps component
 
   //deklarasi state sales
-  const [sales, setSales] = useState("");
+  const [sales, setSales] = useState('');
   // console.log("sales", sales);
 
   //list history trip
   const [listHistory, setListHistory] = useState([]);
-  const [listLast, setlistLast] = useState("");
-  const [idSingle, setidSingle] = useState("");
+  const [listLast, setlistLast] = useState('');
+  const [idSingle, setidSingle] = useState('');
   //my loc
   //state map tag trip
   const [tagTrip, setTagTrip] = useState([]);
-  console.log("tag", listLast.lat);
+  console.log('tag', listLast.lat);
   const userLat = parseFloat(listLast.lat);
   const userLong = parseFloat(listLast.long);
   //lat long apotek
@@ -69,7 +69,7 @@ function DetailTrack(props) {
             parseFloat(res.data.data[i].trip.apotik.long),
             res.data.data[i].trip.apotik.name,
             res.data.data[i].trip.apotik.address,
-            moment(res.data.data[i].trip.updatedAt).format("DD-MM-YYYY"),
+            moment(res.data.data[i].trip.updatedAt).format('DD-MM-YYYY'),
           ]);
         }
         setAllTrip(arrayTripAll);
@@ -90,10 +90,10 @@ function DetailTrack(props) {
         },
       })
       .then((res) => {
-        console.log("ressssss", res);
+        console.log('ressssss', res);
         let ArrayTrip = [...tagTrip];
         let LastArr = res.data.tracking[res.data.tracking.length - 1];
-        console.log("LastArr", ArrayTrip);
+        console.log('LastArr', ArrayTrip);
         for (let i = 0; i < res.data.tracking.length; i++) {
           ArrayTrip.push([
             parseFloat(res.data.tracking[i].apotik.lat),
@@ -103,8 +103,8 @@ function DetailTrack(props) {
             res.data.tracking[i].id,
             parseFloat(res.data.tracking[i].lat),
             parseFloat(res.data.tracking[i].long),
-            moment(res.data.tracking[i].updatedAt).format("DD-MM-YYYY"),
-            moment(res.data.tracking[i].updatedAt).format("LLLL"),
+            moment(res.data.tracking[i].updatedAt).format('DD-MM-YYYY'),
+            moment(res.data.tracking[i].updatedAt).format('LLLL'),
           ]);
         }
         setidSingle(LastArr.apotik);
@@ -145,7 +145,7 @@ function DetailTrack(props) {
   const tabItems = [
     {
       id: 1,
-      title: "Tracking",
+      title: 'Tracking',
       content: (
         <>
           <div className="bg-white rounded-lg grid grid-cols-2 gap-5 justify-between mt-2 p-3">
@@ -175,7 +175,7 @@ function DetailTrack(props) {
               </div>
               <div className="mb-3">
                 <p className="font-bold text-lg text-gray-600">Visited at:</p>
-                <p className="text-gray-600 tex-sm">{moment(listLast.updatedAt).format("LLLL")}</p>
+                <p className="text-gray-600 tex-sm">{moment(listLast.updatedAt).format('LLLL')}</p>
               </div>
             </div>
 
@@ -184,14 +184,14 @@ function DetailTrack(props) {
               <p className="text-gray-600 tex-sm">{sales.address} </p>
             </div> */}
           </div>
-          <div style={{ height: "10rem" }} className="rounded-lg w-full bg-gray-500 mt-2">
-            <Map style={{ width: "100%", height: "100%" }} center={position} zoom={dataMaps.zoom}>
+          <div style={{ height: '10rem' }} className="rounded-lg w-full bg-gray-500 mt-2">
+            <Map style={{ width: '100%', height: '100%' }} center={position} zoom={dataMaps.zoom}>
               <TileLayer
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               {allTrip
-                .filter((days) => days.includes(todayFormat))
+                // .filter((days) => days.includes(todayFormat))
                 .map((data, i) => {
                   return (
                     <Marker position={[data[0], data[1]]} icon={iconApotik} key={i}>
@@ -203,7 +203,7 @@ function DetailTrack(props) {
                   );
                 })}
               {tagTrip
-                .filter((days) => days.includes(todayFormat))
+                // .filter((days) => days.includes(todayFormat))
                 .map((data, i) => {
                   return (
                     <Marker position={[data[0], data[1]]} icon={iconSales} key={i}>
@@ -222,23 +222,19 @@ function DetailTrack(props) {
     },
     {
       id: 2,
-      title: "History",
+      title: 'History',
       content: (
-        <div style={{ height: "28rem" }} className="overflow-y-auto pb-10">
+        <div style={{ height: '28rem' }} className="overflow-y-auto pb-10">
           {listHistory.map((item) => (
             <Link to={`/supervisor/sales-track/detail/detail-history/${id}/${item.id}`}>
               <div className="mt-2" key={item.id}>
                 <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                   <div className="flex">
-                    <img
-                      className="h-16 w-16"
-                      src={`${process.env.REACT_APP_HOST_HEROKU}${item.apotik.image}`}
-                      alt="img"
-                    />
+                    <img className="h-16 w-16" src={`${process.env.REACT_APP_HOST_HEROKU}${item.apotik.image}`} alt="img" />
                     <div className="ml-3">
                       <p className="font-bold text-gray-600">{item.apotik.name}</p>
                       <p className="text-xs text-gray-600">{item.apotik.address}</p>
-                      <p className="text-xs text-gray-600">Visited at : {moment(item.updatedAt).format("LLLL")}</p>
+                      <p className="text-xs text-gray-600">Visited at : {moment(item.updatedAt).format('LLLL')}</p>
                     </div>
                   </div>
                   <button className="mr-3 focus:outline-none">
@@ -252,10 +248,7 @@ function DetailTrack(props) {
       ),
     },
   ];
-  const TabItemComponent = ({
-    title = "",
-    onItemClicked = () => console.error("You passed no action to the component"),
-  }) => {
+  const TabItemComponent = ({ title = '', onItemClicked = () => console.error('You passed no action to the component') }) => {
     return (
       <div onClick={onItemClicked}>
         <p>{title}</p>
@@ -269,18 +262,18 @@ function DetailTrack(props) {
     <Container>
       <Header hSupervisor={true} />
 
-      <div style={{ paddingTop: "4.5rem" }} className="px-3">
+      <div style={{ paddingTop: '4.5rem' }} className="px-3">
         <div className="bg-white rounded-lg flex h-auto justify-around text-sm p-2 font-bold text-gray-500">
           {tabItems.map(({ id, title }) => (
             <TabItemComponent key={title} title={title} onItemClicked={() => setActive(id)} isActive={active === id} />
           ))}
         </div>
         {tabItems.map(({ id, content }) => {
-          return active === id ? content : "";
+          return active === id ? content : '';
         })}
       </div>
 
-      <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
+      <div style={{ width: '-webkit-fill-available' }} className="fixed bg-white bottom-0 max-w-md">
         <MobileNav isSupervisor={true} {...props} />
       </div>
     </Container>

@@ -164,7 +164,7 @@ function Dashboard(props) {
       <div className="overflow-y-auto h-64 pb-12">
         {status === 'Open' ? (
           listTrip
-            .filter((days) => days.includes(dateFormat))
+            // .filter((days) => days.includes(dateFormat))
             .map((data, i) => {
               return (
                 <div
