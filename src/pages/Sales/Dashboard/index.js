@@ -16,7 +16,7 @@ function Dashboard(props) {
   const [totalTrip, setTotalTrip] = useState();
   const [tripSuccess, setTripSuccess] = useState();
 
-  const [phoneSpv, setPhoneSpv] = useState('');
+  const [phoneSpv, setPhoneSpv] = useState('082299163434');
   const [status, setstatus] = useState();
 
   //untuk cek today
@@ -187,13 +187,13 @@ function Dashboard(props) {
         )}
       </div>
 
-      {/* <Link
-        to="/sales/chat"
-        // onClick={() => (window.location.href = `https://wa.me/${phoneSpv}?text=%7B0%7D+Hello+Supervisor`)}
+      <Link
+        // to="/sales/chat"
+        onClick={() => (window.location.href = `https://wa.me/${phoneSpv}?text=%7B0%7D+Hello+Supervisor`)}
         className="absolute bottom-0 right-0 z-20 mb-16 focus:outline-none"
       >
         <img src={require(`assets/icons/dashboard/ic_chat.svg`)} alt="chat" />
-      </Link> */}
+      </Link>
       <div style={{ width: '-webkit-fill-available' }} className="fixed bg-white bottom-0 max-w-md">
         <MobileNav isSales={true} {...props} />
       </div>
