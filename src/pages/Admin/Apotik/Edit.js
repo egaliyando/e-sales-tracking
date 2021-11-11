@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import Navigation from "components/Navigation";
-import axios from "configs";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+import React, { useEffect, useState } from 'react';
+import Navigation from 'components/Navigation';
+import axios from 'configs';
+import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 function Edit(props) {
   //deklarasi sweetalert
   const MySwal = withReactContent(Swal);
   //deklarasi state untuk menampung data inputan
-  const [Name, setName] = useState("");
-  const [Address, setAddress] = useState("");
-  const [Image, setImage] = useState("");
-  const [Lat, setLat] = useState("");
-  const [Long, setLong] = useState("");
+  const [Name, setName] = useState('');
+  const [Address, setAddress] = useState('');
+  const [Image, setImage] = useState('');
+  const [Lat, setLat] = useState('');
+  const [Long, setLong] = useState('');
   //function get data apotik== data di get dulu untuk diletakan di text input
   const getData = () => {
     //deklarasi id / parsing id melalui params
@@ -48,12 +48,12 @@ function Edit(props) {
     const token = localStorage.token;
     //penggunaan sweetalert
     MySwal.fire({
-      title: "Edit?",
-      icon: "success",
+      title: 'Edit?',
+      icon: 'success',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
     }).then((result) => {
       if (result.value) {
         axios
@@ -73,8 +73,8 @@ function Edit(props) {
             }
           )
           .then(function () {
-            MySwal.fire("Edit Success!", ":)", "info", "Canceled");
-            props.history.push("/admin/apotik");
+            MySwal.fire('Edit Success!', ':)', 'info', 'Canceled');
+            props.history.push('/admin/apotik');
           })
           .catch(function (error) {
             //push untuk memberitahu juka ada error / field kosong
@@ -95,7 +95,7 @@ function Edit(props) {
     <div className="flex">
       <Navigation />
       <div className="w-11/12 p-3">
-        <p className="my-3 font-bold">Edit Apotek/RS</p>
+        <p className="my-3 font-bold">Edit Apotek/Toko</p>
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="grid grid-cols-2 gap-5">
             <div>
@@ -153,7 +153,7 @@ function Edit(props) {
               to="/admin/apotik"
               className="text-white bg-red-500 px-3 shadow-lg p-2 rounded-lg background-transparent font-bold text-sm outline-none focus:outline-none"
               type="button"
-              style={{ transition: "all .15s ease" }}
+              style={{ transition: 'all .15s ease' }}
             >
               Cancel
             </Link>

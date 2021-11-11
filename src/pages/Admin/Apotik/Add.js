@@ -1,47 +1,47 @@
-import React, { useState } from "react";
-import Navigation from "components/Navigation";
-import axios from "configs";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+import React, { useState } from 'react';
+import Navigation from 'components/Navigation';
+import axios from 'configs';
+import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 function Add(props) {
-  const [Name, setName] = useState("");
-  const [Address, setAddress] = useState("");
-  const [Image, setImage] = useState("");
-  const [Lat, setLat] = useState("");
-  const [Long, setLong] = useState("");
+  const [Name, setName] = useState('');
+  const [Address, setAddress] = useState('');
+  const [Image, setImage] = useState('');
+  const [Lat, setLat] = useState('');
+  const [Long, setLong] = useState('');
   const token = localStorage.token;
 
   const MySwal = withReactContent(Swal);
 
   const handleSubmit = () => {
     let formData = new FormData();
-    formData.append("name", Name);
-    formData.append("address", Address);
-    formData.append("image", Image);
-    formData.append("lat", Lat);
-    formData.append("long", Long);
+    formData.append('name', Name);
+    formData.append('address', Address);
+    formData.append('image', Image);
+    formData.append('lat', Lat);
+    formData.append('long', Long);
 
     MySwal.fire({
-      title: "Add Apotik?",
-      icon: "info",
+      title: 'Add Apotik?',
+      icon: 'info',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
     }).then((result) => {
       if (result.value) {
         axios
-          .post("/apotik", formData, {
+          .post('/apotik', formData, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           })
           .then(function (response) {
             console.log(response);
-            MySwal.fire("Add Success!", ":)", "warning", "Canceled");
-            props.history.push("/admin/apotik");
+            MySwal.fire('Add Success!', ':)', 'warning', 'Canceled');
+            props.history.push('/admin/apotik');
           })
           .catch(function (error) {
             console.log(error.response.data.error);
@@ -49,7 +49,7 @@ function Add(props) {
             for (let i = 0; i < error.response.data.error.length; i++) {
               err.push(error.response.data.error[i].param);
             }
-            MySwal.fire("Pastikan Data Terisi");
+            MySwal.fire('Pastikan Data Terisi');
           });
       }
     });
@@ -59,7 +59,7 @@ function Add(props) {
     <div className="flex">
       <Navigation />
       <div className="w-11/12 p-3">
-        <p className="my-3 font-bold">Add Apotek/RS</p>
+        <p className="my-3 font-bold">Add Apotek/Toko</p>
         <div className="bg-white rounded-lg shadow-lg p-5">
           <div className="grid grid-cols-2 gap-5">
             <div>
@@ -109,7 +109,7 @@ function Add(props) {
               to="/admin/apotik"
               className="text-white bg-red-500 px-3 shadow-lg p-2 rounded-lg background-transparent font-bold text-sm outline-none focus:outline-none"
               type="button"
-              style={{ transition: "all .15s ease" }}
+              style={{ transition: 'all .15s ease' }}
             >
               Cancel
             </Link>
