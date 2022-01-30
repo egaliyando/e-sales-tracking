@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import Container from "components/Container";
-import Header from "components/Header";
-import MobileNav from "components/Navigation/MobileNav";
-import { Link, Redirect } from "react-router-dom";
-import axios from "configs";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-import useGeolocation from "react-hook-geolocation";
+import React, { useState, useEffect } from 'react';
+import Container from 'components/Container';
+import Header from 'components/Header';
+import MobileNav from 'components/Navigation/MobileNav';
+import { Link, Redirect } from 'react-router-dom';
+import axios from 'configs';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import useGeolocation from 'react-hook-geolocation';
 
 //ini library yang digunakan untuk metode lock gps nya
-import * as geolib from "geolib";
-import { useSelector } from "react-redux";
+import * as geolib from 'geolib';
+import { useSelector } from 'react-redux';
 
 function DetailVisit(props) {
   const token = useSelector((state) => state.users.token);
@@ -21,17 +21,17 @@ function DetailVisit(props) {
   //deklarasi geolocation (ini deklarasi untuk get lokasi kita)
   const geolocation = useGeolocation();
   //state trip & apotik
-  const [idApotik, setIdApotik] = useState("");
+  const [idApotik, setIdApotik] = useState('');
   const [radiusCount, setRadiusCount] = useState();
   const getRadius = async () => {
     const token = localStorage.token;
     try {
-      const rad = await axios.get("/radius", {
+      const rad = await axios.get('/radius', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setRadiusCount(parseInt(rad.data.data[0].name));
+      // setRadiusCount(parseInt(rad.data.data[0].name));
     } catch (error) {
       console.log(error.response);
     }
@@ -43,7 +43,9 @@ function DetailVisit(props) {
   //ini untuk nge set lokasi/ latlong apotik/trip/rs
   const lats = parseFloat(idApotik[4]);
   const longs = parseFloat(idApotik[5]);
-  const radius = localStorage.getItem("radius");
+  // const radius = localStorage.getItem('radius');
+  const radius = 2000000000;
+  console.log('radius');
   console.log(radius);
   //geolib
   //ini poin penting nya
@@ -51,7 +53,7 @@ function DetailVisit(props) {
   const test = geolib.isPointWithinRadius(
     { latitude: lats, longitude: longs }, //(apotik/trip latlong banding) //apakah latlong apotik
     { latitude: userLat, longitude: userLong }, //(user lat long banding) //sudah berada di sekitar/ radius
-    radiusCount //(satuanya meter) //ini untuk nge set radius nya
+    radius //(satuanya meter) //ini untuk nge set radius nya
   ); //kalau dia diluar 100 meter/radius maka bernilai false, artinya dia gabisa order //kalau dia didalam radius maka bernilai true, maka dia bisa order
 
   //deklarasi state detail trip
@@ -132,20 +134,20 @@ function DetailVisit(props) {
   function handleDone() {
     const token = localStorage.token;
     let formData = new FormData();
-    formData.append("image", image);
-    formData.append("sales_id", sales_id);
-    formData.append("notes", notes);
-    formData.append("lat", userLat);
-    formData.append("long", userLong);
+    formData.append('image', image);
+    formData.append('sales_id', sales_id);
+    formData.append('notes', notes);
+    formData.append('lat', userLat);
+    formData.append('long', userLong);
     return MySwal.fire({
-      title: "Done visited?",
-      icon: "warning",
+      title: 'Done visited?',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
     }).then(() => {
-      if (test == true) {
+      if (test === true) {
         axios
           .post(`/sales/checkout/${checkout_id}`, formData, {
             headers: {
@@ -153,8 +155,8 @@ function DetailVisit(props) {
             },
           })
           .then((res) => {
-            MySwal.fire("Done!", "Success Visit!", "info", "Canceled");
-            props.history.push("/sales/visit");
+            MySwal.fire('Done!', 'Success Visit!', 'info', 'Canceled');
+            props.history.push('/sales/visit');
             console.log(res);
           })
           .catch(function (error) {
@@ -162,9 +164,9 @@ function DetailVisit(props) {
           });
       } else
         MySwal.fire({
-          position: "top",
-          icon: "error",
-          title: "Maaf Anda diluar jangkauan Trip",
+          position: 'top',
+          icon: 'error',
+          title: 'Maaf Anda diluar jangkauan Trip',
           showConfirmButton: false,
           timer: 1500,
         });
@@ -175,23 +177,19 @@ function DetailVisit(props) {
     getDetailTrip();
     getRadius();
   }, []);
-  if (token === "") {
+  if (token === '') {
     return <Redirect to="/" />;
   }
   return (
     <Container>
       <Header hSalesNormal={true} />
       {/* Apotik Name Detail */}
-      <div style={{ paddingTop: "4.5rem", width: "-webkit-fill-available" }} className="fixed top-0 max-w-md px-3">
+      <div style={{ paddingTop: '4.5rem', width: '-webkit-fill-available' }} className="fixed top-0 max-w-md px-3">
         <div className="mt-2">
           <p className="text-gray-600 text-xs mb-1">Detail Visit</p>
           <div className="w-full p-2 bg-white justify-between rounded-lg h-auto flex">
             <div className="flex">
-              <img
-                className="self-center h-16 w-16"
-                src={`${process.env.REACT_APP_HOST_HEROKU}${idApotik[3]}`}
-                alt="img"
-              />
+              <img className="self-center h-16 w-16" src={`${process.env.REACT_APP_HOST_HEROKU}${idApotik[3]}`} alt="img" />
               <div className="ml-3">
                 <p className="font-bold text-gray-600">{idApotik[1]}</p>
                 <p className="text-xs text-gray-600">{idApotik[2]}</p>
@@ -202,17 +200,13 @@ function DetailVisit(props) {
         <hr className="my-3" />
         <p className="text-gray-600 text-xs mb-1">Product Order</p>
         {/* LIST PRODUCT IS ORDER */}
-        <div style={{ height: "28rem" }} className="overflow-y-auto pb-64">
+        <div style={{ height: '28rem' }} className="overflow-y-auto pb-64">
           {detailTrip.map((item, i) => {
             return (
               <div key={i} className="w-full p-2 mt-2 justify-between rounded-lg bg-white h-auto flex">
                 <div className="flex justify-between w-full">
                   <div className="flex">
-                    <img
-                      className="h-16 w-16"
-                      src={`${process.env.REACT_APP_HOST_HEROKU}${item.product.image}`}
-                      alt="img"
-                    />
+                    <img className="h-16 w-16" src={`${process.env.REACT_APP_HOST_HEROKU}${item.product.image}`} alt="img" />
                     <div className="ml-3 self-center">
                       <p className="font-bold text-gray-600">{item.product.name}</p>
                       <p className="text-xs text-gray-600">{item.qty}</p>
@@ -258,7 +252,7 @@ function DetailVisit(props) {
                   <button
                     className="focus:outline-none bg-red-400 ml-10 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"
-                    style={{ transition: "all .15s ease" }}
+                    style={{ transition: 'all .15s ease' }}
                     onClick={() => setShowModal(false)}
                   >
                     Cancel
@@ -266,7 +260,7 @@ function DetailVisit(props) {
                   <button
                     className="focus:outline-none bg-green-400 ml-10 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-1 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"
-                    style={{ transition: "all .15s ease" }}
+                    style={{ transition: 'all .15s ease' }}
                     onClick={() => setShowModal(false)}
                   >
                     Add
@@ -279,7 +273,7 @@ function DetailVisit(props) {
         </>
       ) : null}
 
-      <div style={{ width: "-webkit-fill-available" }} className="fixed mb-16 bottom-0 max-w-md">
+      <div style={{ width: '-webkit-fill-available' }} className="fixed mb-16 bottom-0 max-w-md">
         <div className="flex justify-center">
           <Link to={`/sales/visit/detail-visit/order/${id}/${checkout_id}/${apotik_id}`} className="focus:outline-none">
             <img src={require(`assets/icons/visit/ic_add.svg`)} alt="add" />
@@ -292,7 +286,7 @@ function DetailVisit(props) {
           </button>
         </div>
       </div>
-      <div style={{ width: "-webkit-fill-available" }} className="fixed bg-white bottom-0 max-w-md">
+      <div style={{ width: '-webkit-fill-available' }} className="fixed bg-white bottom-0 max-w-md">
         <MobileNav isSales={true} {...props} />
       </div>
     </Container>

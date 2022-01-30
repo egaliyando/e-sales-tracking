@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Map, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import { iconSales, iconApotik } from 'components/MapComponent/IconMarker';
 import axios from 'configs';
 import moment from 'moment';
@@ -7,11 +7,8 @@ import moment from 'moment';
 export default function MapsHook(props) {
   const today = new Date();
   const todayFormat = moment(today).format('DD-MM-YYYY');
-  console.log('todayFormat', todayFormat);
   const [tripDone, setTripDone] = useState([]);
-  console.log('tripDone', tripDone);
   const [trip, settrip] = useState([]);
-  console.log('trip', trip);
   const dataMaps = {
     dataApotik: [],
     lat: -5.45,
@@ -59,22 +56,26 @@ export default function MapsHook(props) {
         },
       })
       .then((res) => {
-        let arrayTrip = [...tripDone];
-        for (let i = 0; i < res.data.trip_to_sales_done.length; i++) {
-          arrayTrip.push([
-            res.data.trip_to_sales_done[i].sale.user.nik,
-            res.data.trip_to_sales_done[i].sale.fullname,
-            res.data.trip_to_sales_done[i].sale.image,
-            res.data.trip_to_sales_done[i].sale.user.username,
-            res.data.trip_to_sales_done[i].apotik.name,
-            res.data.trip_to_sales_done[i].apotik.address,
-            parseFloat(res.data.trip_to_sales_done[i].apotik.lat),
-            parseFloat(res.data.trip_to_sales_done[i].apotik.long),
-            moment(res.data.trip_to_sales_done[i].updatedAt).format('LLLL'),
-            res.data.trip_to_sales_done[i].apotik.image,
-            moment(res.data.trip_to_sales_done[i].createdAt).format('DD-MM-YYYY'),
-          ]);
-        }
+        let arrayTrip = [];
+        res.data.trip_to_sales_done.forEach((val) => {
+          if (val.apotik) {
+            arrayTrip.push([
+              val?.sale?.user.nik,
+              val?.sale?.fullname,
+              val?.sale?.image,
+              val?.sale?.user.username,
+              val?.apotik?.name,
+              val?.apotik?.address,
+              parseFloat(val?.apotik?.lat),
+              parseFloat(val?.apotik?.long),
+              moment(val.updatedAt).format('LLLL'),
+              val?.apotik?.image,
+              moment(val?.createdAt).format('DD-MM-YYYY'),
+            ]);
+          }
+        });
+        // console.log(arrayTrip);
+        // console.log(res.data.trip_to_sales_done);
         setTripDone(arrayTrip);
       })
       .catch((err) => {
