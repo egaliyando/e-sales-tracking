@@ -12,13 +12,13 @@ function Visit(props) {
   const [status, setstatus] = useState();
 
   //untuk cek today
-  const date = new Date();
+  // const date = new Date();
   //ubah format tanggalnya
-  const dateFormat = moment(date).format('DD-MM-YYYY');
+  // const dateFormat = moment(date).format('DD-MM-YYYY');
   //bikin state untuk mapping
   const [dayTrip, setDayTrip] = useState([]);
-  console.log('dayTrip');
-  console.log(dayTrip);
+  // console.log('dayTrip');
+  // console.log(dayTrip);
 
   const sales_id = localStorage.sales_id;
 
@@ -33,7 +33,6 @@ function Visit(props) {
       })
       .then((res) => {
         setstatus(res.data.data.status);
-        console.log(res.data.data.status);
       })
       .catch((err) => {
         console.log(err);
@@ -51,17 +50,19 @@ function Visit(props) {
         },
       })
       .then((res) => {
+        console.log(res);
         let arrayTemp = [...dayTrip];
         for (let i = 0; i < res.data.data.length; i++) {
-          arrayTemp.push([
-            res.data.data[i].id,
-            //ini poin pentinf dalam filter nya
-            moment(res.data.data[i].trip.day).format('DD-MM-YYYY'),
-            res.data.data[i].trip.apotik.name,
-            res.data.data[i].trip.apotik.address,
-            res.data.data[i].trip.apotik.image,
-            res.data.data[i].trip.apotik.id,
-          ]);
+          if (res.data.data[i]?.trip) {
+            arrayTemp.push([
+              res.data.data[i].id,
+              moment(res.data.data[i]?.trip?.day).format('DD-MM-YYYY'),
+              res.data.data[i]?.trip?.apotik.name,
+              res.data.data[i]?.trip?.apotik.address,
+              res.data.data[i]?.trip?.apotik.image,
+              res.data.data[i]?.trip?.apotik.id,
+            ]);
+          }
         }
         setDayTrip(arrayTemp);
       })
