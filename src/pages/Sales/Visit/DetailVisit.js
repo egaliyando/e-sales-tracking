@@ -44,7 +44,7 @@ function DetailVisit(props) {
      const lats = parseFloat(idApotik[4]);
      const longs = parseFloat(idApotik[5]);
      // const radius = localStorage.getItem('radius');
-     const radius = 2000000;
+     const radius = 200;
      console.log('radius');
      console.log(radius);
      //geolib
