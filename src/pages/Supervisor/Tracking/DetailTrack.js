@@ -93,19 +93,23 @@ function DetailTrack(props) {
                     let ArrayTrip = [...tagTrip];
                     let LastArr = res.data.tracking[res.data.tracking.length - 1];
                     for (let i = 0; i < res.data.tracking.length; i++) {
-                         ArrayTrip.push([
-                              parseFloat(res.data.tracking[i].apotik.lat),
-                              parseFloat(res.data.tracking[i].apotik.long),
-                              res.data.tracking[i].apotik.name,
-                              res.data.tracking[i].apotik.address,
-                              res.data.tracking[i].id,
-                              parseFloat(res.data.tracking[i].lat),
-                              parseFloat(res.data.tracking[i].long),
-                              moment(res.data.tracking[i].updatedAt).format('DD-MM-YYYY'),
-                              moment(res.data.tracking[i].updatedAt).format('LLLL'),
-                         ]);
+                         if (res.data.tracking[i]?.apotik) {
+                              ArrayTrip.push([
+                                   parseFloat(res.data.tracking[i]?.apotik.lat),
+                                   parseFloat(res.data.tracking[i]?.apotik.long),
+                                   res.data.tracking[i]?.apotik.name,
+                                   res.data.tracking[i]?.apotik.address,
+                                   res.data.tracking[i]?.id,
+                                   parseFloat(res.data.tracking[i]?.lat),
+                                   parseFloat(res.data.tracking[i]?.long),
+                                   moment(res.data.tracking[i]?.updatedAt).format('DD-MM-YYYY'),
+                                   moment(res.data.tracking[i]?.updatedAt).format('LLLL'),
+                              ]);
+                         }
                     }
                     setidSingle(LastArr.apotik);
+                    console.log('LastArr');
+                    console.log(LastArr);
                     setlistLast(LastArr);
                     setTagTrip(ArrayTrip);
                     setListHistory(res.data.tracking);
@@ -115,6 +119,8 @@ function DetailTrack(props) {
                });
      };
 
+     console.log('LastArr');
+     console.log(listLast);
      //function get sales open
      const getSales = () => {
           const token = localStorage.token;
@@ -227,11 +233,11 @@ function DetailTrack(props) {
                                    <div className="mt-2" key={item.id}>
                                         <div className="w-full p-2 justify-between rounded-lg bg-white h-auto flex">
                                              <div className="flex">
-                                                  <img className="h-16 w-16" src={`${process.env.REACT_APP_HOST_HEROKU}${item.apotik.image}`} alt="img" />
+                                                  <img className="h-16 w-16" src={`${process.env.REACT_APP_HOST_HEROKU}${item?.apotik?.image}`} alt="img" />
                                                   <div className="ml-3">
-                                                       <p className="font-bold text-gray-600">{item.apotik.name}</p>
-                                                       <p className="text-xs text-gray-600">{item.apotik.address}</p>
-                                                       <p className="text-xs text-gray-600">Visited at : {moment(item.updatedAt).format('LLLL')}</p>
+                                                       <p className="font-bold text-gray-600">{item?.apotik?.name}</p>
+                                                       <p className="text-xs text-gray-600">{item?.apotik?.address}</p>
+                                                       <p className="text-xs text-gray-600">Visited at : {moment(item?.updatedAt).format('LLLL')}</p>
                                                   </div>
                                              </div>
                                              <button className="mr-3 focus:outline-none">
