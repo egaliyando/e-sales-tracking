@@ -164,16 +164,16 @@ function DetailTrack(props) {
                                    <p className="text-sm text-green-400 self-center">
                                         {listLast.lat || 'N/A'} / {listLast.long || 'N/A'}
                                    </p>
-                                   <p className="text-gray-600 mt-3 font-bold text-md">Distance user to apotek/rs :</p>
+                                   <p className="text-gray-600 mt-3 font-bold text-md">Distance user to toko :</p>
                                    <p className="text-sm text-green-400 self-center">{dist || 'N/A'} meter</p>
                               </div>
                               <div>
                                    <div className="mb-3">
-                                        <p className="font-bold text-md text-gray-600">Apotek/RS last visited</p>
+                                        <p className="font-bold text-md text-gray-600">last visited</p>
                                         <p className="text-gray-600 tex-sm">{idSingle.name}</p>
                                    </div>
                                    <div className="mb-3">
-                                        <p className="font-bold text-md text-gray-600">Apotek/RS address</p>
+                                        <p className="font-bold text-md text-gray-600">address</p>
                                         <p className="text-gray-600 tex-sm">{idSingle.address}</p>
                                    </div>
                                    <div className="mb-3">
