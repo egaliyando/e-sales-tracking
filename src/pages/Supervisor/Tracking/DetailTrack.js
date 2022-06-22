@@ -34,15 +34,15 @@ function DetailTrack(props) {
      //list history trip
      const [listHistory, setListHistory] = useState([]);
      const [listLast, setlistLast] = useState('');
-     const [idSingle, setidSingle] = useState('');
+     const [idSingle, setidSingle] = useState(null);
      //my loc
      //state map tag trip
      const [tagTrip, setTagTrip] = useState([]);
      const userLat = parseFloat(listLast.lat);
      const userLong = parseFloat(listLast.long);
      //lat long apotek
-     const lats = parseFloat(idSingle.lat);
-     const longs = parseFloat(idSingle.long);
+     const lats = parseFloat(idSingle?.lat);
+     const longs = parseFloat(idSingle?.long);
 
      //get distance user to apotek/rs
      const dist = geolib.getPathLength([
@@ -109,7 +109,7 @@ function DetailTrack(props) {
                     }
                     setidSingle(LastArr.apotik);
                     console.log('LastArr');
-                    console.log(LastArr);
+                    console.log(res.data.tracking[res.data.tracking.length - 1]);
                     setlistLast(LastArr);
                     setTagTrip(ArrayTrip);
                     setListHistory(res.data.tracking);
@@ -170,11 +170,11 @@ function DetailTrack(props) {
                               <div>
                                    <div className="mb-3">
                                         <p className="font-bold text-md text-gray-600">last visited</p>
-                                        <p className="text-gray-600 tex-sm">{idSingle.name}</p>
+                                        <p className="text-gray-600 tex-sm">{idSingle?.name}</p>
                                    </div>
                                    <div className="mb-3">
                                         <p className="font-bold text-md text-gray-600">address</p>
-                                        <p className="text-gray-600 tex-sm">{idSingle.address}</p>
+                                        <p className="text-gray-600 tex-sm">{idSingle?.address}</p>
                                    </div>
                                    <div className="mb-3">
                                         <p className="font-bold text-lg text-gray-600">Visited at:</p>
